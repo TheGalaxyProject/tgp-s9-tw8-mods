@@ -9506,4 +9506,8 @@ Or, tap ALLOW SWITCH to switch to a mobile network whenever the %3$s internet co
 Incorrect"</string>
     <string name="zzz_lgt_password_wrong_pin_code2">"(%1$s/3)
 %1$s time(s) left"</string>
+
+    <string name="changelog_title"><b>ROM Information</b></string>
+    <string name="changelog_title_summary">View the current Changelog and info</string>
+    <string name="changelog_error">Unable to load changelog</string>
 </resources>

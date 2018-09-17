@@ -19896,6 +19896,11 @@
     <public type="string" name="screen_locktype_change_nonsecure_biometric_remove_pay_pass" id="0x7f121748" />
     <public type="string" name="unable_to_play_during_call" id="0x7f121c7e" />
     <public type="string" name="update_summary_free" id="0x7f121cf1" />
+
+    <public type="string" name="changelog_title" id="0x7f1222a9" />
+    <public type="string" name="changelog_title_summary" id="0x7f1222aa" />
+    <public type="string" name="changelog_error" id="0x7f1222ab" />
+
     <public type="style" name="AccentColorHighlightBorderlessButton" id="0x7f130000" />
     <public type="style" name="ActivityAnimation" id="0x7f130001" />
     <public type="style" name="AlertDialog.AppCompat" id="0x7f130002" />
