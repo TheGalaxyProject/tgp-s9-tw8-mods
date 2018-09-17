@@ -2,6 +2,7 @@
 <PreferenceScreen android:title="@string/device_info_software_title"
   xmlns:android="http://schemas.android.com/apk/res/android"
   xmlns:settings="http://schemas.android.com/apk/res/com.android.settings">
+    <PreferenceScreen android:layout="@layout/logo" android:key="od_logo" />
     <Preference android:enabled="false" android:title="@string/firmware_version" android:key="firmware_version" android:summary="@string/device_info_default" android:shouldDisableView="false" />
     <Preference android:enabled="false" android:title="@string/samsung_experience_version" android:key="samsung_experience_version" android:summary="@string/device_info_default" android:shouldDisableView="false" />
     <Preference android:enabled="false" android:title="@string/baseband_version" android:key="baseband_version" android:summary="@string/device_info_default" android:shouldDisableView="false" />
