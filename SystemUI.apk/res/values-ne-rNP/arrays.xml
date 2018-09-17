@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="wifi_ap_wifi_sharing">
+        <item>Wi-Fi मार्फत साझेदारीलाई अन गर्नुहोस्</item>
+        <item>Wi-Fi मार्फत साझेदारीलाई अफ गर्नुहोस्</item>
+    </string-array>
+</resources>
