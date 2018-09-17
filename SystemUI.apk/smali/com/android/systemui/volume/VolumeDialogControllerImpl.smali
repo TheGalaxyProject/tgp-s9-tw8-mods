@@ -1732,23 +1732,7 @@
 .end method
 
 .method private onShowSafetyWarningW(I)V
-    .registers 4
-
-    iget-object v0, p0, Lcom/android/systemui/volume/VolumeDialogControllerImpl;->mKnoxStateMonitor:Lcom/android/systemui/KnoxStateMonitor;
-
-    invoke-virtual {v0}, Lcom/android/systemui/KnoxStateMonitor;->isSafetyWarningDialogEnabled()Z
-
-    move-result v0
-
-    xor-int/lit8 v0, v0, 0x1
-
-    if-eqz v0, :cond_18
-
-    sget-object v0, Lcom/android/systemui/volume/VolumeDialogControllerImpl;->TAG:Ljava/lang/String;
-
-    const-string/jumbo v1, "KnoxStateMonitor : Disable SafetyWarningDialog"
-
-    invoke-static {v0, v1}, Landroid/util/Log;->d(Ljava/lang/String;Ljava/lang/String;)I
+    .locals 2
 
     iget-object v0, p0, Lcom/android/systemui/volume/VolumeDialogControllerImpl;->mAudio:Landroid/media/AudioManager;
 
@@ -1756,12 +1740,6 @@
 
     return-void
 
-    :cond_18
-    iget-object v0, p0, Lcom/android/systemui/volume/VolumeDialogControllerImpl;->mCallbacks:Lcom/android/systemui/volume/VolumeDialogControllerImpl$C;
-
-    invoke-virtual {v0, p1}, Lcom/android/systemui/volume/VolumeDialogControllerImpl$C;->onShowSafetyWarning(I)V
-
-    return-void
 .end method
 
 .method private onShowVolumeLimiterToast()V
