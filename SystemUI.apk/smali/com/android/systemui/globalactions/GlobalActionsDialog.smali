@@ -391,6 +391,8 @@
 
 .field private final scrollViewTouchListener:Landroid/view/View$OnTouchListener;
 
+.field private mGrxRecoveryAction:Lcom/android/systemui/globalactions/GlobalActionsDialog$SinglePressAction;
+
 
 # direct methods
 .method static synthetic -get0()Ljava/lang/String;
@@ -5408,6 +5410,16 @@
     move-object/from16 v0, v25
 
     move-object/from16 v1, v28
+
+    invoke-virtual {v0, v1}, Ljava/util/ArrayList;->add(Ljava/lang/Object;)Z
+
+    move-object/from16 v0, p0
+
+    iget-object v0, v0, Lcom/android/systemui/globalactions/GlobalActionsDialog;->mItems:Ljava/util/ArrayList;
+
+    move-object/from16 v1, p0
+
+    iget-object v1, v1, Lcom/android/systemui/globalactions/GlobalActionsDialog;->mGrxRecoveryAction:Lcom/android/systemui/globalactions/GlobalActionsDialog$SinglePressAction;
 
     invoke-virtual {v0, v1}, Ljava/util/ArrayList;->add(Ljava/lang/Object;)Z
 
@@ -12214,6 +12226,8 @@
 
     iput-object v1, p0, Lcom/android/systemui/globalactions/GlobalActionsDialog;->mRestartAction:Lcom/android/systemui/globalactions/GlobalActionsDialog$SinglePressAction;
 
+  	invoke-virtual  {p0}, Lcom/android/systemui/globalactions/GlobalActionsDialog;->grxBuildCustomButtons()V
+
     iget-boolean v0, p0, Lcom/android/systemui/globalactions/GlobalActionsDialog;->SUPPORT_BIKEMODE_ACTION:Z
 
     if-eqz v0, :cond_15a
@@ -13985,6 +13999,46 @@
 
 
 # virtual methods
+.method public grxBuildCustomButtons()V
+    .registers 8
+
+    iget-object v0, p0, Lcom/android/systemui/globalactions/GlobalActionsDialog;->mContext:Landroid/content/Context;
+
+    invoke-virtual {v0}, Landroid/content/Context;->getPackageName()Ljava/lang/String;
+
+    move-result-object v3
+
+    iget-object v0, p0, Lcom/android/systemui/globalactions/GlobalActionsDialog;->mContext:Landroid/content/Context;
+
+    invoke-virtual {v0}, Landroid/content/Context;->getResources()Landroid/content/res/Resources;
+
+    move-result-object v0
+
+    const-string v2, "drawable"
+
+    const-string v1, "grx_pow_recovery"
+
+    invoke-virtual {v0, v1, v2, v3}, Landroid/content/res/Resources;->getIdentifier(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)I
+
+    move-result v4
+
+    const-string/jumbo v2, "string"
+
+    const-string v1, "gs_reb_recovery"
+
+    invoke-virtual {v0, v1, v2, v3}, Landroid/content/res/Resources;->getIdentifier(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)I
+
+    move-result v5
+
+    new-instance v1, Lcom/android/systemui/globalactions/GlobalActionsDialog$GrxRecovery;
+
+    invoke-direct {v1, p0, v4, v5}, Lcom/android/systemui/globalactions/GlobalActionsDialog$GrxRecovery;-><init>(Lcom/android/systemui/globalactions/GlobalActionsDialog;II)V
+
+    iput-object v1, p0, Lcom/android/systemui/globalactions/GlobalActionsDialog;->mGrxRecoveryAction:Lcom/android/systemui/globalactions/GlobalActionsDialog$SinglePressAction;
+
+    return-void
+.end method
+
 .method isDialogShowing()Z
     .registers 2
 

@@ -5302,6 +5302,9 @@
     <public type="drawable" name="keyguard_default_wallpaper_thumbnail_orchid" id="0x7f08037a" />
     <public type="drawable" name="keyguard_default_wallpaper_thumbnail_purple" id="0x7f08037b" />
     <public type="drawable" name="pip_dismiss_scrim" id="0x7f0804a1" />
+
+    <public type="drawable" name="grx_pow_recovery" id="0x7f080803" />
+
     <public type="fraction" name="battery_button_height_fraction" id="0x7f090000" />
     <public type="fraction" name="battery_subpixel_smoothing_left" id="0x7f090001" />
     <public type="fraction" name="battery_subpixel_smoothing_right" id="0x7f090002" />
@@ -10452,6 +10455,10 @@
     <public type="string" name="screenshot_failed_to_capture_text" id="0x7f1209bc" />
     <public type="string" name="screenshot_failed_to_save_text" id="0x7f1209bd" />
     <public type="string" name="screenshot_failed_to_save_unknown_text" id="0x7f1209be" />
+
+    <public type="string" name="gs_reb_recovery" id="0x7f120bb6" />
+    <public type="string" name="gs_reb_recovery_conf" id="0x7f120bb7" />
+
     <public type="style" name="AlertDialog.AppCompat" id="0x7f130000" />
     <public type="style" name="AlertDialog.AppCompat.Light" id="0x7f130001" />
     <public type="style" name="AllAppsMenuIcon" id="0x7f130002" />
