@@ -36,52 +36,11 @@
 .end method
 
 .method private b(Ljava/lang/String;)Z
-    .registers 10
+    .registers 4
 
     const/4 v0, 0x1
 
-    const/16 v1, 0x10
-
-    :try_start_3
-    invoke-static {p1, v1}, Ljava/lang/Long;->parseLong(Ljava/lang/String;I)J
-    :try_end_6
-    .catch Ljava/lang/Exception; {:try_start_3 .. :try_end_6} :catch_1d
-
-    move-result-wide v2
-
-    const-wide/32 v4, -0x1000000
-
-    and-long/2addr v4, v2
-
-    const/16 v1, 0x18
-
-    shr-long/2addr v4, v1
-
-    const-wide/16 v6, 0xff
-
-    cmp-long v1, v4, v6
-
-    if-nez v1, :cond_1b
-
-    :goto_14
-    const-wide/32 v4, 0xffff
-
-    and-long/2addr v2, v4
-
-    iput-wide v2, p0, Lcom/sec/android/app/sysscope/job/KernelStatusChecker;->b:J
-
-    :goto_1a
     return v0
-
-    :cond_1b
-    const/4 v0, 0x0
-
-    goto :goto_14
-
-    :catch_1d
-    move-exception v1
-
-    goto :goto_1a
 .end method
 
 

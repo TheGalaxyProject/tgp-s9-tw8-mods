@@ -74,55 +74,11 @@
 
 # virtual methods
 .method public a()I
-    .registers 5
+    .registers 3
 
-    const/4 v1, 0x1
+    const v0, 0x1
 
-    iget-object v0, p0, Lcom/sec/android/app/sysscope/service/SysScopeResultInfo;->b:Ljava/util/ArrayList;
-
-    if-nez v0, :cond_7
-
-    move v0, v1
-
-    :goto_6
     return v0
-
-    :cond_7
-    iget-object v0, p0, Lcom/sec/android/app/sysscope/service/SysScopeResultInfo;->b:Ljava/util/ArrayList;
-
-    invoke-virtual {v0}, Ljava/util/ArrayList;->iterator()Ljava/util/Iterator;
-
-    move-result-object v2
-
-    :cond_d
-    invoke-interface {v2}, Ljava/util/Iterator;->hasNext()Z
-
-    move-result v0
-
-    if-eqz v0, :cond_23
-
-    invoke-interface {v2}, Ljava/util/Iterator;->next()Ljava/lang/Object;
-
-    move-result-object v0
-
-    check-cast v0, Lcom/sec/android/app/sysscope/service/g;
-
-    sget-object v3, Lcom/sec/android/app/sysscope/service/g;->a:Lcom/sec/android/app/sysscope/service/g;
-
-    invoke-virtual {v0, v3}, Lcom/sec/android/app/sysscope/service/g;->equals(Ljava/lang/Object;)Z
-
-    move-result v0
-
-    if-nez v0, :cond_d
-
-    const/4 v0, 0x2
-
-    goto :goto_6
-
-    :cond_23
-    move v0, v1
-
-    goto :goto_6
 .end method
 
 .method public a(J)V
@@ -159,7 +115,7 @@
     const/4 v0, 0x0
 
     :goto_13
-    if-ge v0, v1, :cond_2e
+    if-ge v0, v1, :cond_2b
 
     invoke-virtual {p1}, Landroid/os/Parcel;->readInt()I
 
@@ -169,7 +125,7 @@
 
     move-result-object v2
 
-    if-eqz v2, :cond_2b
+    if-eqz v2, :cond_28
 
     invoke-virtual {p1}, Landroid/os/Parcel;->readString()Ljava/lang/String;
 
@@ -179,14 +135,12 @@
 
     iget-object v3, p0, Lcom/sec/android/app/sysscope/service/SysScopeResultInfo;->b:Ljava/util/ArrayList;
 
-    invoke-virtual {v3, v2}, Ljava/util/ArrayList;->add(Ljava/lang/Object;)Z
-
-    :cond_2b
+    :cond_28
     add-int/lit8 v0, v0, 0x1
 
     goto :goto_13
 
-    :cond_2e
+    :cond_2b
     return-void
 .end method
 
@@ -194,8 +148,6 @@
     .registers 3
 
     iget-object v0, p0, Lcom/sec/android/app/sysscope/service/SysScopeResultInfo;->b:Ljava/util/ArrayList;
-
-    invoke-virtual {v0, p1}, Ljava/util/ArrayList;->add(Ljava/lang/Object;)Z
 
     return-void
 .end method

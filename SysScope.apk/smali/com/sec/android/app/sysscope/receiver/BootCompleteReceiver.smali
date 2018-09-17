@@ -35,14 +35,6 @@
 
     if-eqz v0, :cond_6
 
-    invoke-static {}, Landroid/os/Process;->myUid()I
-
-    move-result v0
-
-    const/16 v1, 0x3e8
-
-    if-ne v0, v1, :cond_6
-
     new-instance v0, Landroid/content/Intent;
 
     const-class v1, Lcom/sec/android/app/sysscope/service/SysScopeService;

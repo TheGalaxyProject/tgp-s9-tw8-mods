@@ -710,7 +710,12 @@
     goto :goto_46
 .end method
 
-.method public native checkIsApprivedProcess(Ljava/lang/String;)I
+.method public checkIsApprivedProcess(Ljava/lang/String;)I
+    .registers 4
+
+    const v0, 0x1
+
+    return v0
 .end method
 
 .method public d()V
