@@ -1251,7 +1251,7 @@
 
     if-nez p1, :cond_4
 
-    const/4 v0, 0x1
+    const/4 v0, 0x0
 
     :cond_4
     iput-boolean v0, p0, Lcom/android/systemui/settings/ToggleSliderView;->showEyeStrainDialog:Z
