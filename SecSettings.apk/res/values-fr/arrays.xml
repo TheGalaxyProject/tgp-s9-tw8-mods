@@ -1,13 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string-array name="animator_duration_scale_entries">
-        <item>Animation désactivée</item>
-        <item>"Échelle d'animation x 0,5"</item>
-        <item>"Échelle d'animation x 1"</item>
-        <item>"Échelle d'animation x 1,5"</item>
-        <item>"Échelle d'animation x 2"</item>
-        <item>"Échelle d'animation x 5"</item>
-        <item>"Échelle d'animation x 10"</item>
+        <item>"L'animation est désactivée."</item>
+        <item>Échelle animation 0.25x</item>
+        <item>Échelle animation 0.5x</item>
+        <item>Échelle animation 0.75x</item>
+        <item>Échelle animation 1x</item>
+        <item>Échelle animation 1.25x</item>
+        <item>Échelle animation 1.5x</item>
+        <item>Échelle animation 1.75x</item>
+        <item>Échelle animation 2x</item>
+        <item>Échelle animation 5x</item>
+        <item>Échelle animation 10x</item>
     </string-array>
     <string-array name="apn_auth_entries">
         <item>Aucune</item>
@@ -627,13 +631,17 @@
         <item>Dans adb shell dumpsys gfxinfo</item>
     </string-array>
     <string-array name="transition_animation_scale_entries">
-        <item>Animation désactivée</item>
-        <item>"Échelle d'animation x 0,5"</item>
-        <item>"Échelle d'animation x 1"</item>
-        <item>"Échelle d'animation x 1,5"</item>
-        <item>"Échelle d'animation x 2"</item>
-        <item>"Échelle d'animation x 0,5"</item>
-        <item>"Échelle d'animation x 10"</item>
+        <item>"L'animation est désactivée."</item>
+        <item>Échelle animation 0.25x</item>
+        <item>Échelle animation 0.5x</item>
+        <item>Échelle animation 0.75x</item>
+        <item>Échelle animation 1x</item>
+        <item>Échelle animation 1.25x</item>
+        <item>Échelle animation 1.5x</item>
+        <item>Échelle animation 1.75x</item>
+        <item>Échelle animation 2x</item>
+        <item>Échelle animation 5x</item>
+        <item>Échelle animation 10x</item>
     </string-array>
     <string-array name="tts_rate_entries">
         <item>Très lente</item>
@@ -816,12 +824,16 @@
         <item>Mauvaise connexion évitée momentanément</item>
     </string-array>
     <string-array name="window_animation_scale_entries">
-        <item>Animation désactivée</item>
-        <item>"Échelle d'animation x 0,5"</item>
-        <item>"Échelle d'animation x 1"</item>
-        <item>"Échelle d'animation x 1,5"</item>
-        <item>"Échelle d'animation x 2"</item>
-        <item>"Échelle d'animation x 5"</item>
-        <item>"Échelle d'animation x 10"</item>
+        <item>"L'animation est désactivée."</item>
+        <item>Échelle animation 0.25x</item>
+        <item>Échelle animation 0.5x</item>
+        <item>Échelle animation 0.75x</item>
+        <item>Échelle animation 1x</item>
+        <item>Échelle animation 1.25x</item>
+        <item>Échelle animation 1.5x</item>
+        <item>Échelle animation 1.75x</item>
+        <item>Échelle animation 2x</item>
+        <item>Échelle animation 5x</item>
+        <item>Échelle animation 10x</item>
     </string-array>
 </resources>

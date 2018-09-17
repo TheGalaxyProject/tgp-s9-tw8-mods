@@ -25,18 +25,26 @@
     </string-array>
     <string-array name="animator_duration_scale_entries">
         <item>Animation off</item>
+        <item>Animation scale 0.25x</item>
         <item>Animation scale 0.5x</item>
+        <item>Animation scale 0.75x</item>
         <item>Animation scale 1x</item>
+        <item>Animation scale 1.25x</item>
         <item>Animation scale 1.5x</item>
+        <item>Animation scale 1.75x</item>
         <item>Animation scale 2x</item>
         <item>Animation scale 5x</item>
         <item>Animation scale 10x</item>
     </string-array>
     <string-array name="animator_duration_scale_values">
         <item>0</item>
-        <item>.5</item>
+        <item>0.25</item>
+        <item>0.5</item>
+        <item>0.75</item>
         <item>1</item>
+        <item>1.25</item>
         <item>1.5</item>
+        <item>1.75</item>
         <item>2</item>
         <item>5</item>
         <item>10</item>
@@ -440,6 +448,7 @@
         <item>1xRTT</item>
         <item>IS95B</item>
         <item>IS95A</item>
+        <item>IWLAN</item>
     </string-array>
     <string-array name="bearer_entries_dcm_kdi">
         <item>Unspecified</item>
@@ -458,6 +467,7 @@
         <item>1xRTT</item>
         <item>IS95B</item>
         <item>IS95A</item>
+        <item>IWLAN</item>
     </string-array>
     <string-array name="bearer_values">
         <item>0</item>
@@ -476,6 +486,7 @@
         <item>6</item>
         <item>5</item>
         <item>4</item>
+        <item>19</item>
     </string-array>
     <string-array name="bluetooth_a2dp_codec_bits_per_sample_summaries">
         <item>Use System Selection (Default)</item>
@@ -2614,18 +2625,26 @@
     </string-array>
     <string-array name="transition_animation_scale_entries">
         <item>Animation off</item>
+        <item>Animation scale 0.25x</item>
         <item>Animation scale 0.5x</item>
+        <item>Animation scale 0.75x</item>
         <item>Animation scale 1x</item>
+        <item>Animation scale 1.25x</item>
         <item>Animation scale 1.5x</item>
+        <item>Animation scale 1.75x</item>
         <item>Animation scale 2x</item>
         <item>Animation scale 5x</item>
         <item>Animation scale 10x</item>
     </string-array>
     <string-array name="transition_animation_scale_values">
         <item>0</item>
-        <item>.5</item>
+        <item>0.25</item>
+        <item>0.5</item>
+        <item>0.75</item>
         <item>1</item>
+        <item>1.25</item>
         <item>1.5</item>
+        <item>1.75</item>
         <item>2</item>
         <item>5</item>
         <item>10</item>
@@ -3056,18 +3075,26 @@
     </string-array>
     <string-array name="window_animation_scale_entries">
         <item>Animation off</item>
+        <item>Animation scale 0.25x</item>
         <item>Animation scale 0.5x</item>
+        <item>Animation scale 0.75x</item>
         <item>Animation scale 1x</item>
+        <item>Animation scale 1.25x</item>
         <item>Animation scale 1.5x</item>
+        <item>Animation scale 1.75x</item>
         <item>Animation scale 2x</item>
         <item>Animation scale 5x</item>
         <item>Animation scale 10x</item>
     </string-array>
     <string-array name="window_animation_scale_values">
         <item>0</item>
-        <item>.5</item>
+        <item>0.25</item>
+        <item>0.5</item>
+        <item>0.75</item>
         <item>1</item>
+        <item>1.25</item>
         <item>1.5</item>
+        <item>1.75</item>
         <item>2</item>
         <item>5</item>
         <item>10</item>

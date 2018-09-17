@@ -1,13 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string-array name="animator_duration_scale_entries">
-        <item>Animazione disattivata</item>
-        <item>Scala animazione 0,5x</item>
-        <item>Scala animazione 1x</item>
-        <item>Scala animazione 1,5x</item>
-        <item>Scala animazione 2x</item>
-        <item>Scala animazione 5x</item>
-        <item>Scala animazione 10x</item>
+        <item>Animazione disattivata.</item>
+        <item>Scala animazione a 0.25x</item>
+        <item>Scala animazione a 0.5x</item>
+        <item>Scala animazione a 0.75x</item>
+        <item>Scala animazione a 1x</item>
+        <item>Scala animazione a 1.25x</item>
+        <item>Scala animazione a 1.5x</item>
+        <item>Scala animazione a 1.75x</item>
+        <item>Scala animazione a 2x</item>
+        <item>Scala animazione a 5x</item>
+        <item>Scala animazione a 10x</item>
     </string-array>
     <string-array name="apn_auth_entries">
         <item>Nessuno</item>
@@ -622,13 +626,17 @@
         <item>Tra adb shell dumpsys gfxinfo</item>
     </string-array>
     <string-array name="transition_animation_scale_entries">
-        <item>Animazione disattivata</item>
-        <item>Scala animazione 0,5x</item>
-        <item>Scala animazione 1x</item>
-        <item>Scala animazione 1,5x</item>
-        <item>Scala animazione 2x</item>
-        <item>Scala animazione 5x</item>
-        <item>Scala animazione 10x</item>
+        <item>Animazione disattivata.</item>
+        <item>Scala animazione a 0.25x</item>
+        <item>Scala animazione a 0.5x</item>
+        <item>Scala animazione a 0.75x</item>
+        <item>Scala animazione a 1x</item>
+        <item>Scala animazione a 1.25x</item>
+        <item>Scala animazione a 1.5x</item>
+        <item>Scala animazione a 1.75x</item>
+        <item>Scala animazione a 2x</item>
+        <item>Scala animazione a 5x</item>
+        <item>Scala animazione a 10x</item>
     </string-array>
     <string-array name="tts_rate_entries">
         <item>Molto lenta</item>
@@ -811,12 +819,16 @@
         <item>Al momento vengono evitate connessioni deboli</item>
     </string-array>
     <string-array name="window_animation_scale_entries">
-        <item>Animazione disattivata</item>
-        <item>Scala animazione 0,5x</item>
-        <item>Scala animazione 1x</item>
-        <item>Scala animazione 1,5x</item>
-        <item>Scala animazione 2x</item>
-        <item>Scala animazione 5x</item>
-        <item>Scala animazione 10x</item>
+        <item>Animazione disattivata.</item>
+        <item>Scala animazione a 0.25x</item>
+        <item>Scala animazione a 0.5x</item>
+        <item>Scala animazione a 0.75x</item>
+        <item>Scala animazione a 1x</item>
+        <item>Scala animazione a 1.25x</item>
+        <item>Scala animazione a 1.5x</item>
+        <item>Scala animazione a 1.75x</item>
+        <item>Scala animazione a 2x</item>
+        <item>Scala animazione a 5x</item>
+        <item>Scala animazione a 10x</item>
     </string-array>
 </resources>
