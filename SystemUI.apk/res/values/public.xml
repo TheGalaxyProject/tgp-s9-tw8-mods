@@ -5303,6 +5303,7 @@
     <public type="drawable" name="keyguard_default_wallpaper_thumbnail_purple" id="0x7f08037b" />
     <public type="drawable" name="pip_dismiss_scrim" id="0x7f0804a1" />
 
+    <public type="drawable" name="grx_screen_recorder" id="0x7f080802" />
     <public type="drawable" name="grx_pow_recovery" id="0x7f080803" />
 
     <public type="fraction" name="battery_button_height_fraction" id="0x7f090000" />
