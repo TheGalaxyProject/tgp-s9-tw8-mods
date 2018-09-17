@@ -2532,7 +2532,7 @@ disturb"</string>
 visibility"</string>
     <string name="quick_settings_tethering_label">Tethering</string>
     <string name="quick_settings_tiles">default</string>
-    <string name="quick_settings_tiles_default">Wifi,SoundMode,Bluetooth,RotationLock,Flashlight,AirplaneMode,PowerSaving,MobileData,BikeMode,Performance,BlueLightFilter,Hotspot,PersonalMode,SecureFolder,Location,Nfc,Aod,AllShareCast,DeviceVisibility,Dnd,Ebook,Sync,UDS,PowerPlanning,EdgeLighting,WifiCalling,Dolby</string>
+    <string name="quick_settings_tiles_default">Wifi,SoundMode,Bluetooth,RotationLock,Flashlight,ScreenCapture,GrxScreenRecord,NightDisplay,AirplaneMode,PowerSaving,MobileData,BikeMode,Performance,BlueLightFilter,Hotspot,PersonalMode,Location,Nfc,Aod,AllShareCast,DeviceVisibility,Dnd,Ebook,Sync,UDS,PowerPlanning,EdgeLighting,WifiCalling,VoLte,Dolby</string>
     <string name="quick_settings_tiles_retail_mode">cell,battery,dnd,flashlight,rotation,location</string>
     <string name="quick_settings_tiles_stock">wifi,cell,battery,dnd,flashlight,rotation,bt,airplane,location,hotspot,inversion,saver,work,cast,night</string>
     <string name="quick_settings_tiles_upsm">Wifi,Bluetooth,AirplaneMode,custom(com.sec.android.emergencymode.service/.PowerSavingTile),MobileData,Location</string>
