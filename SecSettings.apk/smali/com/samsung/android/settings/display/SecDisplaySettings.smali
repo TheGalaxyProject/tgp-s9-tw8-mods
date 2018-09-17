@@ -8209,7 +8209,7 @@
     goto/16 :goto_58f
 
     :cond_73c
-    const/16 v25, 0x0
+    const/16 v25, 0x1
 
     goto/16 :goto_5b8
 
