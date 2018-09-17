@@ -20276,6 +20276,12 @@
 
     invoke-virtual {v0, v2}, Landroid/content/IntentFilter;->addAction(Ljava/lang/String;)V
 
+    const-string/jumbo v2, "com.mods.grx.SERVICES"
+
+    move-object/from16 v0, v19
+
+    invoke-virtual {v0, v2}, Landroid/content/IntentFilter;->addAction(Ljava/lang/String;)V
+
     move-object/from16 v0, p0
 
     iget-object v2, v0, Lcom/android/server/policy/PhoneWindowManager;->mDockReceiver:Landroid/content/BroadcastReceiver;
@@ -36327,4 +36333,89 @@
     const/4 v1, 0x1
 
     return v1
+.end method
+
+
+
+.method public grxGoToDownload()V
+    .locals 5
+
+    const-string/jumbo v0, "power"
+
+    invoke-static {v0}, Landroid/os/ServiceManager;->getService(Ljava/lang/String;)Landroid/os/IBinder;
+
+    move-result-object v0
+
+    invoke-static {v0}, Landroid/os/IPowerManager$Stub;->asInterface(Landroid/os/IBinder;)Landroid/os/IPowerManager;
+
+    move-result-object v0
+
+    const/4 v1, 0x0
+
+    const-string/jumbo v2, "download"
+
+    const/4 v3, 0x0
+
+    invoke-interface {v0, v1, v2, v3}, Landroid/os/IPowerManager;->reboot(ZLjava/lang/String;Z)V
+
+    return-void
+.end method
+
+.method public grxGoToRecovery()V
+    .locals 5
+
+    const-string/jumbo v0, "power"
+
+    invoke-static {v0}, Landroid/os/ServiceManager;->getService(Ljava/lang/String;)Landroid/os/IBinder;
+
+    move-result-object v0
+
+    invoke-static {v0}, Landroid/os/IPowerManager$Stub;->asInterface(Landroid/os/IBinder;)Landroid/os/IPowerManager;
+
+    move-result-object v0
+
+    const/4 v1, 0x0
+
+    const-string/jumbo v2, "recovery"
+
+    const/4 v3, 0x0
+
+    invoke-interface {v0, v1, v2, v3}, Landroid/os/IPowerManager;->reboot(ZLjava/lang/String;Z)V
+
+    return-void
+.end method
+
+
+.method public grxOnActionReceived(Ljava/lang/String;)V
+    .registers 5
+
+    if-eqz p1, :cond_exit 
+
+    const-string v0, "RECOVERY"
+
+    invoke-virtual {p1, v0}, Ljava/lang/String;->equals(Ljava/lang/Object;)Z
+
+    move-result v1
+
+    if-eqz v1, :cond_checkdownload
+
+    invoke-virtual {p0}, Lcom/android/server/policy/PhoneWindowManager;->grxGoToRecovery()V
+
+    :cond_exit
+    :goto_exit
+    return-void
+
+    :cond_checkdownload
+
+	const-string v0, "DOWNLOAD"
+
+    invoke-virtual {p1, v0}, Ljava/lang/String;->equals(Ljava/lang/Object;)Z
+
+    move-result v1
+
+	if-eqz v1, :cond_exit
+
+    invoke-virtual {p0}, Lcom/android/server/policy/PhoneWindowManager;->grxGoToDownload()V
+
+    goto :goto_exit
 .end method
