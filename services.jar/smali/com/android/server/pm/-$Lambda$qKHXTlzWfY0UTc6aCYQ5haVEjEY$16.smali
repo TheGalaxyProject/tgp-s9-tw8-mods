@@ -27,7 +27,7 @@
 
     check-cast v1, Ljava/lang/String;
 
-    invoke-virtual {v0, v2, v1}, Lcom/android/server/pm/ShortcutService;->lambda$-com_android_server_pm_ShortcutService_57637(ILjava/lang/String;)V
+    invoke-virtual {v0, v2, v1}, Lcom/android/server/pm/ShortcutService;->lambda$-com_android_server_pm_ShortcutService_58306(ILjava/lang/String;)V
 
     return-void
 .end method

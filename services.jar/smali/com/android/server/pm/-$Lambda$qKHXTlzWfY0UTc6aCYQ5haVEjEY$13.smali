@@ -19,7 +19,7 @@
 
     check-cast p1, Landroid/content/pm/ShortcutInfo;
 
-    invoke-static {v0, p1}, Lcom/android/server/pm/ShortcutService$LocalService;->lambda$-com_android_server_pm_ShortcutService$LocalService_93673(Ljava/lang/String;Landroid/content/pm/ShortcutInfo;)Z
+    invoke-static {v0, p1}, Lcom/android/server/pm/ShortcutService$LocalService;->lambda$-com_android_server_pm_ShortcutService$LocalService_94647(Ljava/lang/String;Landroid/content/pm/ShortcutInfo;)Z
 
     move-result v0
 

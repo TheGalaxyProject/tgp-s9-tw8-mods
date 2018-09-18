@@ -25,7 +25,7 @@
 
     check-cast p1, Lcom/android/server/pm/ShortcutPackageItem;
 
-    invoke-virtual {v0, v1, p1}, Lcom/android/server/pm/ShortcutService;->lambda$-com_android_server_pm_ShortcutService_105401(Ljava/util/ArrayList;Lcom/android/server/pm/ShortcutPackageItem;)V
+    invoke-virtual {v0, v1, p1}, Lcom/android/server/pm/ShortcutService;->lambda$-com_android_server_pm_ShortcutService_106375(Ljava/util/ArrayList;Lcom/android/server/pm/ShortcutPackageItem;)V
 
     return-void
 .end method

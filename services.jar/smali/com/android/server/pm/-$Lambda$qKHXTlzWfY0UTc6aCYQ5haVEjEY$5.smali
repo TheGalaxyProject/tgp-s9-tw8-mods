@@ -11,7 +11,7 @@
 
     check-cast p1, Lcom/android/server/pm/ShortcutUser;
 
-    invoke-static {p1}, Lcom/android/server/pm/ShortcutService;->lambda$-com_android_server_pm_ShortcutService_101055(Lcom/android/server/pm/ShortcutUser;)V
+    invoke-static {p1}, Lcom/android/server/pm/ShortcutService;->lambda$-com_android_server_pm_ShortcutService_102029(Lcom/android/server/pm/ShortcutUser;)V
 
     return-void
 .end method

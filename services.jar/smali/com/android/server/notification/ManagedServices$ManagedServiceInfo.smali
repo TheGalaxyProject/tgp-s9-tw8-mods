@@ -118,23 +118,30 @@
     :cond_a
     iget-boolean v1, p0, Lcom/android/server/notification/ManagedServices$ManagedServiceInfo;->isSystem:Z
 
-    if-nez v1, :cond_29
+    if-nez v1, :cond_2f
 
     iget-boolean v1, p0, Lcom/android/server/notification/ManagedServices$ManagedServiceInfo;->isWhiteListedGear:Z
 
     xor-int/lit8 v1, v1, 0x1
 
-    if-eqz v1, :cond_29
+    if-eqz v1, :cond_2f
 
     invoke-static {p1}, Lcom/samsung/android/knox/SemPersonaManager;->isLegacyClId(I)Z
 
     move-result v1
 
-    if-eqz v1, :cond_29
+    if-nez v1, :cond_20
 
+    invoke-static {p1}, Lcom/samsung/android/knox/SemPersonaManager;->isSecureFolderId(I)Z
+
+    move-result v1
+
+    if-eqz v1, :cond_2f
+
+    :cond_20
     iget v1, p0, Lcom/android/server/notification/ManagedServices$ManagedServiceInfo;->userid:I
 
-    if-eq v1, p1, :cond_29
+    if-eq v1, p1, :cond_2f
 
     iget-object v1, p0, Lcom/android/server/notification/ManagedServices$ManagedServiceInfo;->this$0:Lcom/android/server/notification/ManagedServices;
 
@@ -146,36 +153,36 @@
 
     return v0
 
-    :cond_29
+    :cond_2f
     iget v1, p0, Lcom/android/server/notification/ManagedServices$ManagedServiceInfo;->userid:I
 
-    if-ne v1, v3, :cond_2e
+    if-ne v1, v3, :cond_34
 
     return v2
 
-    :cond_2e
+    :cond_34
     iget-boolean v1, p0, Lcom/android/server/notification/ManagedServices$ManagedServiceInfo;->isSystem:Z
 
-    if-eqz v1, :cond_33
+    if-eqz v1, :cond_39
 
     return v2
 
-    :cond_33
-    if-eq p1, v3, :cond_39
+    :cond_39
+    if-eq p1, v3, :cond_3f
 
     iget v1, p0, Lcom/android/server/notification/ManagedServices$ManagedServiceInfo;->userid:I
 
-    if-ne p1, v1, :cond_3a
+    if-ne p1, v1, :cond_40
 
-    :cond_39
+    :cond_3f
     return v2
 
-    :cond_3a
+    :cond_40
     invoke-virtual {p0}, Lcom/android/server/notification/ManagedServices$ManagedServiceInfo;->supportsProfiles()Z
 
     move-result v1
 
-    if-eqz v1, :cond_50
+    if-eqz v1, :cond_56
 
     iget-object v1, p0, Lcom/android/server/notification/ManagedServices$ManagedServiceInfo;->this$0:Lcom/android/server/notification/ManagedServices;
 
@@ -187,13 +194,13 @@
 
     move-result v1
 
-    if-eqz v1, :cond_50
+    if-eqz v1, :cond_56
 
     invoke-virtual {p0, p1}, Lcom/android/server/notification/ManagedServices$ManagedServiceInfo;->isPermittedForProfile(I)Z
 
     move-result v0
 
-    :cond_50
+    :cond_56
     return v0
 .end method
 

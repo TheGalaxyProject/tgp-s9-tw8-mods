@@ -23,7 +23,7 @@
 
     check-cast p1, Lcom/android/server/SdpManagerService;
 
-    invoke-static {v0, v1, p1}, Lcom/android/server/devicepolicy/DevicePolicyManagerService;->lambda$-com_android_server_devicepolicy_DevicePolicyManagerService_669005(Ljava/lang/String;ILcom/android/server/SdpManagerService;)[B
+    invoke-static {v0, v1, p1}, Lcom/android/server/devicepolicy/DevicePolicyManagerService;->lambda$-com_android_server_devicepolicy_DevicePolicyManagerService_669708(Ljava/lang/String;ILcom/android/server/SdpManagerService;)[B
 
     move-result-object v0
 

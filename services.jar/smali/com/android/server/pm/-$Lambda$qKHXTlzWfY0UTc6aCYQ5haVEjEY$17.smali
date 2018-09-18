@@ -25,7 +25,7 @@
 
     iget v1, p0, Lcom/android/server/pm/-$Lambda$qKHXTlzWfY0UTc6aCYQ5haVEjEY$17;->-$f0:I
 
-    invoke-virtual {v0, v2, v3, v1}, Lcom/android/server/pm/ShortcutService;->lambda$-com_android_server_pm_ShortcutService_22934(JI)V
+    invoke-virtual {v0, v2, v3, v1}, Lcom/android/server/pm/ShortcutService;->lambda$-com_android_server_pm_ShortcutService_22960(JI)V
 
     return-void
 .end method

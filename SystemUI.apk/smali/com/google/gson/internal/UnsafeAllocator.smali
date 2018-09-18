@@ -171,11 +171,11 @@
 
     aput-object v9, v8, v10
 
-    const-string/jumbo v9, "getConstructorId"
+    const-class v9, Ljava/io/ObjectStreamClass;
 
-    const-class v10, Ljava/io/ObjectStreamClass;
+    const-string/jumbo v10, "getConstructorId"
 
-    invoke-virtual {v10, v9, v8}, Ljava/lang/Class;->getDeclaredMethod(Ljava/lang/String;[Ljava/lang/Class;)Ljava/lang/reflect/Method;
+    invoke-virtual {v9, v10, v8}, Ljava/lang/Class;->getDeclaredMethod(Ljava/lang/String;[Ljava/lang/Class;)Ljava/lang/reflect/Method;
 
     move-result-object v4
 
@@ -221,11 +221,11 @@
 
     aput-object v9, v8, v10
 
-    const-string/jumbo v9, "newInstance"
+    const-class v9, Ljava/io/ObjectStreamClass;
 
-    const-class v10, Ljava/io/ObjectStreamClass;
+    const-string/jumbo v10, "newInstance"
 
-    invoke-virtual {v10, v9, v8}, Ljava/lang/Class;->getDeclaredMethod(Ljava/lang/String;[Ljava/lang/Class;)Ljava/lang/reflect/Method;
+    invoke-virtual {v9, v10, v8}, Ljava/lang/Class;->getDeclaredMethod(Ljava/lang/String;[Ljava/lang/Class;)Ljava/lang/reflect/Method;
 
     move-result-object v5
 
@@ -261,11 +261,11 @@
 
     aput-object v9, v8, v10
 
-    const-string/jumbo v9, "newInstance"
+    const-class v9, Ljava/io/ObjectInputStream;
 
-    const-class v10, Ljava/io/ObjectInputStream;
+    const-string/jumbo v10, "newInstance"
 
-    invoke-virtual {v10, v9, v8}, Ljava/lang/Class;->getDeclaredMethod(Ljava/lang/String;[Ljava/lang/Class;)Ljava/lang/reflect/Method;
+    invoke-virtual {v9, v10, v8}, Ljava/lang/Class;->getDeclaredMethod(Ljava/lang/String;[Ljava/lang/Class;)Ljava/lang/reflect/Method;
 
     move-result-object v5
 

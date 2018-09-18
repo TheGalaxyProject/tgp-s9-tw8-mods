@@ -19,7 +19,7 @@
 
     check-cast p1, Lcom/android/server/pm/ShortcutPackage;
 
-    invoke-static {v0, p1}, Lcom/android/server/pm/ShortcutService;->lambda$-com_android_server_pm_ShortcutService_130884(Ljava/util/ArrayList;Lcom/android/server/pm/ShortcutPackage;)V
+    invoke-static {v0, p1}, Lcom/android/server/pm/ShortcutService;->lambda$-com_android_server_pm_ShortcutService_131858(Ljava/util/ArrayList;Lcom/android/server/pm/ShortcutPackage;)V
 
     return-void
 .end method

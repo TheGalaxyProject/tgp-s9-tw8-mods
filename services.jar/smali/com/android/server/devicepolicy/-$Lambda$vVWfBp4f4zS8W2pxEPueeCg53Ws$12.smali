@@ -27,7 +27,7 @@
 
     check-cast p1, Lcom/android/internal/widget/ILockSettings;
 
-    invoke-static {v0, v2, v3, v1, p1}, Lcom/android/server/devicepolicy/DevicePolicyManagerService;->lambda$-com_android_server_devicepolicy_DevicePolicyManagerService_671428([BJILcom/android/internal/widget/ILockSettings;)Lcom/android/internal/widget/VerifyCredentialResponse;
+    invoke-static {v0, v2, v3, v1, p1}, Lcom/android/server/devicepolicy/DevicePolicyManagerService;->lambda$-com_android_server_devicepolicy_DevicePolicyManagerService_672131([BJILcom/android/internal/widget/ILockSettings;)Lcom/android/internal/widget/VerifyCredentialResponse;
 
     move-result-object v0
 

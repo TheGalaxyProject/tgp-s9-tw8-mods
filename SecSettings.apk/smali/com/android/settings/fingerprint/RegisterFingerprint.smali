@@ -1914,7 +1914,7 @@
 
     new-instance v1, Landroid/content/Intent;
 
-    const-class v2, Lcom/android/settings/ChooseLockGeneric;
+    const-class v2, Lcom/android/settings/ChooseLockGeneric$InternalActivity;
 
     invoke-direct {v1, p0, v2}, Landroid/content/Intent;-><init>(Landroid/content/Context;Ljava/lang/Class;)V
 
@@ -6694,6 +6694,15 @@
 
     invoke-static {v4, v7}, Landroid/util/Log;->d(Ljava/lang/String;Ljava/lang/String;)I
 
+    iget-object v4, p0, Lcom/android/settings/fingerprint/RegisterFingerprint;->mPreviousStage:Ljava/lang/String;
+
+    if-nez v4, :cond_50
+
+    const-string/jumbo v4, "com.samsung.android.sdk.pass.SpassFingerprint"
+
+    iput-object v4, p0, Lcom/android/settings/fingerprint/RegisterFingerprint;->mPreviousStage:Ljava/lang/String;
+
+    :cond_50
     const-string/jumbo v4, "android.intent.extra.USER_ID"
 
     invoke-static {}, Landroid/os/UserHandle;->myUserId()I
@@ -6730,7 +6739,7 @@
 
     invoke-static {v4, v7}, Landroid/util/Log;->secD(Ljava/lang/String;Ljava/lang/String;)I
 
-    if-eqz p1, :cond_277
+    if-eqz p1, :cond_280
 
     iget v4, p0, Lcom/android/settings/fingerprint/RegisterFingerprint;->mUserId:I
 
@@ -6738,18 +6747,18 @@
 
     move-result v4
 
-    if-eqz v4, :cond_277
+    if-eqz v4, :cond_280
 
     iput-object v9, p0, Lcom/android/settings/fingerprint/RegisterFingerprint;->mToken:[B
 
-    :goto_7c
+    :goto_85
     iget v4, p0, Lcom/android/settings/fingerprint/RegisterFingerprint;->mUserId:I
 
     invoke-static {v4}, Lcom/samsung/android/knox/SemPersonaManager;->isSecureFolderId(I)Z
 
     move-result v4
 
-    if-eqz v4, :cond_a2
+    if-eqz v4, :cond_ab
 
     iput v6, p0, Lcom/android/settings/fingerprint/RegisterFingerprint;->mUserId:I
 
@@ -6777,7 +6786,7 @@
 
     invoke-static {v4, v7}, Landroid/util/Log;->secD(Ljava/lang/String;Ljava/lang/String;)I
 
-    :cond_a2
+    :cond_ab
     const-string/jumbo v7, "FpstRegisterTouchFingerprint"
 
     new-instance v4, Ljava/lang/StringBuilder;
@@ -6792,7 +6801,7 @@
 
     iget-object v4, p0, Lcom/android/settings/fingerprint/RegisterFingerprint;->mToken:[B
 
-    if-eqz v4, :cond_282
+    if-eqz v4, :cond_28b
 
     iget-object v4, p0, Lcom/android/settings/fingerprint/RegisterFingerprint;->mToken:[B
 
@@ -6800,7 +6809,7 @@
 
     move-result-object v4
 
-    :goto_bb
+    :goto_c4
     invoke-virtual {v8, v4}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
 
     move-result-object v4
@@ -6859,7 +6868,7 @@
 
     move-result v4
 
-    if-eqz v4, :cond_108
+    if-eqz v4, :cond_111
 
     const-string/jumbo v4, "password"
 
@@ -6869,7 +6878,7 @@
 
     iput-object v4, p0, Lcom/android/settings/fingerprint/RegisterFingerprint;->mUserPassword:Ljava/lang/String;
 
-    :cond_108
+    :cond_111
     const-string/jumbo v4, "identifyFingerprint"
 
     invoke-virtual {v0, v4, v6}, Landroid/content/Intent;->getBooleanExtra(Ljava/lang/String;Z)Z
@@ -7144,11 +7153,11 @@
 
     iget-boolean v4, p0, Lcom/android/settings/fingerprint/RegisterFingerprint;->mIsInMultiWindowMode:Z
 
-    if-nez v4, :cond_24b
+    if-nez v4, :cond_254
 
     iget-boolean v4, p0, Lcom/android/settings/fingerprint/RegisterFingerprint;->mIsDesktopMode:Z
 
-    if-nez v4, :cond_24b
+    if-nez v4, :cond_254
 
     invoke-virtual {p0}, Lcom/android/settings/fingerprint/RegisterFingerprint;->getBaseContext()Landroid/content/Context;
 
@@ -7158,9 +7167,9 @@
 
     move-result v4
 
-    if-eqz v4, :cond_29a
+    if-eqz v4, :cond_2a3
 
-    :cond_24b
+    :cond_254
     new-instance v3, Landroid/content/Intent;
 
     invoke-direct {v3}, Landroid/content/Intent;-><init>()V
@@ -7179,7 +7188,7 @@
 
     iget-boolean v4, p0, Lcom/android/settings/fingerprint/RegisterFingerprint;->mIsDesktopMode:Z
 
-    if-eqz v4, :cond_287
+    if-eqz v4, :cond_290
 
     const v4, 0x7f120bb1
 
@@ -7193,13 +7202,13 @@
 
     invoke-virtual {v4}, Landroid/widget/Toast;->show()V
 
-    :cond_273
-    :goto_273
+    :cond_27c
+    :goto_27c
     invoke-virtual {p0}, Lcom/android/settings/fingerprint/RegisterFingerprint;->finish()V
 
     return-void
 
-    :cond_277
+    :cond_280
     const-string/jumbo v4, "hw_auth_token"
 
     invoke-virtual {v0, v4}, Landroid/content/Intent;->getByteArrayExtra(Ljava/lang/String;)[B
@@ -7208,17 +7217,17 @@
 
     iput-object v4, p0, Lcom/android/settings/fingerprint/RegisterFingerprint;->mToken:[B
 
-    goto/16 :goto_7c
+    goto/16 :goto_85
 
-    :cond_282
+    :cond_28b
     const-string/jumbo v4, "NULL"
 
-    goto/16 :goto_bb
+    goto/16 :goto_c4
 
-    :cond_287
+    :cond_290
     iget-boolean v4, p0, Lcom/android/settings/fingerprint/RegisterFingerprint;->mIsInMultiWindowMode:Z
 
-    if-eqz v4, :cond_273
+    if-eqz v4, :cond_27c
 
     const v4, 0x7f120b6d
 
@@ -7232,9 +7241,9 @@
 
     invoke-virtual {v4}, Landroid/widget/Toast;->show()V
 
-    goto :goto_273
+    goto :goto_27c
 
-    :cond_29a
+    :cond_2a3
     invoke-virtual {p0}, Lcom/android/settings/fingerprint/RegisterFingerprint;->getContentResolver()Landroid/content/ContentResolver;
 
     move-result-object v4
@@ -7245,11 +7254,11 @@
 
     move-result v4
 
-    if-ne v4, v5, :cond_2c4
+    if-ne v4, v5, :cond_2cd
 
     iput-boolean v5, p0, Lcom/android/settings/fingerprint/RegisterFingerprint;->mConfirmedDisclaimer:Z
 
-    :goto_2a9
+    :goto_2b2
     const-class v4, Landroid/hardware/fingerprint/FingerprintManager;
 
     invoke-virtual {p0, v4}, Lcom/android/settings/fingerprint/RegisterFingerprint;->getSystemService(Ljava/lang/Class;)Ljava/lang/Object;
@@ -7262,7 +7271,7 @@
 
     iget-object v4, p0, Lcom/android/settings/fingerprint/RegisterFingerprint;->mFingerprintManager:Landroid/hardware/fingerprint/FingerprintManager;
 
-    if-nez v4, :cond_304
+    if-nez v4, :cond_30d
 
     const-string/jumbo v4, "FpstRegisterTouchFingerprint"
 
@@ -7274,7 +7283,7 @@
 
     return-void
 
-    :cond_2c4
+    :cond_2cd
     invoke-static {p0}, Landroid/preference/PreferenceManager;->getDefaultSharedPreferences(Landroid/content/Context;)Landroid/content/SharedPreferences;
 
     move-result-object v2
@@ -7285,7 +7294,7 @@
 
     move-result v4
 
-    if-nez v4, :cond_2ff
+    if-nez v4, :cond_308
 
     iput-boolean v6, p0, Lcom/android/settings/fingerprint/RegisterFingerprint;->mConfirmedDisclaimer:Z
 
@@ -7313,7 +7322,7 @@
 
     invoke-static {v4, v7}, Landroid/util/Log;->d(Ljava/lang/String;Ljava/lang/String;)I
 
-    :goto_2ef
+    :goto_2f8
     invoke-virtual {p0}, Lcom/android/settings/fingerprint/RegisterFingerprint;->getContentResolver()Landroid/content/ContentResolver;
 
     move-result-object v7
@@ -7322,26 +7331,26 @@
 
     iget-boolean v4, p0, Lcom/android/settings/fingerprint/RegisterFingerprint;->mConfirmedDisclaimer:Z
 
-    if-eqz v4, :cond_302
+    if-eqz v4, :cond_30b
 
     move v4, v5
 
-    :goto_2fb
+    :goto_304
     invoke-static {v7, v8, v4}, Landroid/provider/Settings$System;->putInt(Landroid/content/ContentResolver;Ljava/lang/String;I)Z
 
-    goto :goto_2a9
+    goto :goto_2b2
 
-    :cond_2ff
+    :cond_308
     iput-boolean v5, p0, Lcom/android/settings/fingerprint/RegisterFingerprint;->mConfirmedDisclaimer:Z
 
-    goto :goto_2ef
+    goto :goto_2f8
 
-    :cond_302
+    :cond_30b
     move v4, v6
 
-    goto :goto_2fb
+    goto :goto_304
 
-    :cond_304
+    :cond_30d
     iget-object v4, p0, Lcom/android/settings/fingerprint/RegisterFingerprint;->mFingerprintManager:Landroid/hardware/fingerprint/FingerprintManager;
 
     invoke-virtual {v4}, Landroid/hardware/fingerprint/FingerprintManager;->isHardwareDetected()Z
@@ -7356,21 +7365,21 @@
 
     iput v4, p0, Lcom/android/settings/fingerprint/RegisterFingerprint;->mSensorStatus:I
 
-    if-eqz v1, :cond_322
+    if-eqz v1, :cond_32b
 
     iget v4, p0, Lcom/android/settings/fingerprint/RegisterFingerprint;->mSensorStatus:I
 
     const v7, 0x186c8
 
-    if-eq v4, v7, :cond_344
+    if-eq v4, v7, :cond_34d
 
     iget v4, p0, Lcom/android/settings/fingerprint/RegisterFingerprint;->mSensorStatus:I
 
     const v7, 0x186c9
 
-    if-eq v4, v7, :cond_344
+    if-eq v4, v7, :cond_34d
 
-    :cond_322
+    :cond_32b
     const-string/jumbo v4, "FpstRegisterTouchFingerprint"
 
     new-instance v5, Ljava/lang/StringBuilder;
@@ -7401,7 +7410,7 @@
 
     return-void
 
-    :cond_344
+    :cond_34d
     iget-object v4, p0, Lcom/android/settings/fingerprint/RegisterFingerprint;->mFingerprintManager:Landroid/hardware/fingerprint/FingerprintManager;
 
     iget v7, p0, Lcom/android/settings/fingerprint/RegisterFingerprint;->mUserId:I
@@ -7424,9 +7433,9 @@
 
     iget-object v4, p0, Lcom/android/settings/fingerprint/RegisterFingerprint;->mToken:[B
 
-    if-nez v4, :cond_3be
+    if-nez v4, :cond_3c7
 
-    if-eqz p1, :cond_3be
+    if-eqz p1, :cond_3c7
 
     const-string/jumbo v4, "hw_auth_token"
 
@@ -7468,35 +7477,35 @@
 
     iput-boolean v4, p0, Lcom/android/settings/fingerprint/RegisterFingerprint;->mWasSecureBefore:Z
 
-    :goto_38a
+    :goto_393
     iget-object v4, p0, Lcom/android/settings/fingerprint/RegisterFingerprint;->mToken:[B
 
-    if-eqz v4, :cond_3c9
+    if-eqz v4, :cond_3d2
 
     iget-object v4, p0, Lcom/android/settings/fingerprint/RegisterFingerprint;->mToken:[B
 
     array-length v4, v4
 
-    if-ne v4, v5, :cond_399
+    if-ne v4, v5, :cond_3a2
 
     iget-object v4, p0, Lcom/android/settings/fingerprint/RegisterFingerprint;->mToken:[B
 
     aget-byte v4, v4, v6
 
-    if-eq v4, v10, :cond_3c9
+    if-eq v4, v10, :cond_3d2
 
-    :cond_399
+    :cond_3a2
     invoke-direct {p0}, Lcom/android/settings/fingerprint/RegisterFingerprint;->updateRegisterFingerprint()V
 
-    :cond_39c
-    :goto_39c
+    :cond_3a5
+    :goto_3a5
     iget v4, p0, Lcom/android/settings/fingerprint/RegisterFingerprint;->mSelectedFingerIndex:I
 
-    if-nez v4, :cond_3a3
+    if-nez v4, :cond_3ac
 
     invoke-virtual {p0}, Lcom/android/settings/fingerprint/RegisterFingerprint;->finish()V
 
-    :cond_3a3
+    :cond_3ac
     invoke-virtual {p0}, Lcom/android/settings/fingerprint/RegisterFingerprint;->getResources()Landroid/content/res/Resources;
 
     move-result-object v4
@@ -7523,7 +7532,7 @@
 
     return-void
 
-    :cond_3be
+    :cond_3c7
     iget-object v4, p0, Lcom/android/settings/fingerprint/RegisterFingerprint;->mLockPatternUtils:Lcom/android/internal/widget/LockPatternUtils;
 
     iget v7, p0, Lcom/android/settings/fingerprint/RegisterFingerprint;->mUserId:I
@@ -7534,33 +7543,41 @@
 
     iput-boolean v4, p0, Lcom/android/settings/fingerprint/RegisterFingerprint;->mWasSecureBefore:Z
 
-    goto :goto_38a
+    goto :goto_393
 
-    :cond_3c9
+    :cond_3d2
     iget-boolean v4, p0, Lcom/android/settings/fingerprint/RegisterFingerprint;->mIsPreEnrolled:Z
 
-    if-nez v4, :cond_39c
+    if-nez v4, :cond_3a5
 
     iget-boolean v4, p0, Lcom/android/settings/fingerprint/RegisterFingerprint;->mIsFromKnoxOtherCases:Z
 
-    if-nez v4, :cond_3dd
+    if-nez v4, :cond_3ee
 
     iget-boolean v4, p0, Lcom/android/settings/fingerprint/RegisterFingerprint;->mIsFromKnoxSetupWizard:Z
 
-    if-nez v4, :cond_3dd
+    if-nez v4, :cond_3ee
 
     iget-boolean v4, p0, Lcom/android/settings/fingerprint/RegisterFingerprint;->mIsFromKnoxTwoStep:Z
 
-    if-nez v4, :cond_3dd
+    if-nez v4, :cond_3ee
 
     iget-boolean v4, p0, Lcom/android/settings/fingerprint/RegisterFingerprint;->mIsFromKnoxFingerprintPlus:Z
 
-    if-eqz v4, :cond_440
+    if-nez v4, :cond_3ee
 
-    :cond_3dd
+    iget v4, p0, Lcom/android/settings/fingerprint/RegisterFingerprint;->mUserId:I
+
+    invoke-static {v4}, Lcom/samsung/android/knox/SemPersonaManager;->isDoEnabled(I)Z
+
+    move-result v4
+
+    if-eqz v4, :cond_451
+
+    :cond_3ee
     iget-object v4, p0, Lcom/android/settings/fingerprint/RegisterFingerprint;->mFingerprintManager:Landroid/hardware/fingerprint/FingerprintManager;
 
-    if-eqz v4, :cond_39c
+    if-eqz v4, :cond_3a5
 
     iget-object v4, p0, Lcom/android/settings/fingerprint/RegisterFingerprint;->mFingerprintManager:Landroid/hardware/fingerprint/FingerprintManager;
 
@@ -7570,13 +7587,13 @@
 
     move-result v4
 
-    if-eqz v4, :cond_3ef
+    if-eqz v4, :cond_400
 
     iget-boolean v4, p0, Lcom/android/settings/fingerprint/RegisterFingerprint;->mIsFromKnoxFingerprintPlus:Z
 
-    if-eqz v4, :cond_39c
+    if-eqz v4, :cond_3a5
 
-    :cond_3ef
+    :cond_400
     const-string/jumbo v4, "FpstRegisterTouchFingerprint"
 
     const-string/jumbo v7, "[KNOX FINGERPRPINT] : nonFinger chooseLock CASE"
@@ -7591,7 +7608,7 @@
 
     move-result v4
 
-    if-eqz v4, :cond_41f
+    if-eqz v4, :cond_430
 
     iget-object v4, p0, Lcom/android/settings/fingerprint/RegisterFingerprint;->mLockPatternUtils:Lcom/android/internal/widget/LockPatternUtils;
 
@@ -7601,13 +7618,13 @@
 
     move-result v4
 
-    if-nez v4, :cond_410
+    if-nez v4, :cond_421
 
     iget v4, p0, Lcom/android/settings/fingerprint/RegisterFingerprint;->mUserId:I
 
-    if-nez v4, :cond_41f
+    if-nez v4, :cond_430
 
-    :cond_410
+    :cond_421
     invoke-virtual {p0}, Lcom/android/settings/fingerprint/RegisterFingerprint;->getIntent()Landroid/content/Intent;
 
     move-result-object v4
@@ -7618,16 +7635,16 @@
 
     invoke-direct {p0}, Lcom/android/settings/fingerprint/RegisterFingerprint;->launchConfirmLock()V
 
-    goto/16 :goto_39c
+    goto/16 :goto_3a5
 
-    :cond_41f
+    :cond_430
     iget v4, p0, Lcom/android/settings/fingerprint/RegisterFingerprint;->mUserId:I
 
     invoke-static {v4}, Lcom/samsung/android/knox/SemPersonaManager;->isKnoxId(I)Z
 
     move-result v4
 
-    if-eqz v4, :cond_43b
+    if-eqz v4, :cond_44c
 
     iget-object v4, p0, Lcom/android/settings/fingerprint/RegisterFingerprint;->mLockPatternUtils:Lcom/android/internal/widget/LockPatternUtils;
 
@@ -7639,7 +7656,7 @@
 
     xor-int/lit8 v4, v4, 0x1
 
-    if-eqz v4, :cond_43b
+    if-eqz v4, :cond_44c
 
     iget-object v4, p0, Lcom/android/settings/fingerprint/RegisterFingerprint;->mLockPatternUtils:Lcom/android/internal/widget/LockPatternUtils;
 
@@ -7647,17 +7664,17 @@
 
     move-result v4
 
-    if-nez v4, :cond_410
+    if-nez v4, :cond_421
 
-    :cond_43b
+    :cond_44c
     invoke-direct {p0}, Lcom/android/settings/fingerprint/RegisterFingerprint;->startBiometricsLockSetup()V
 
-    goto/16 :goto_39c
+    goto/16 :goto_3a5
 
-    :cond_440
+    :cond_451
     iget-boolean v4, p0, Lcom/android/settings/fingerprint/RegisterFingerprint;->mIsSharedDevice:Z
 
-    if-nez v4, :cond_46a
+    if-nez v4, :cond_47b
 
     iget-object v4, p0, Lcom/android/settings/fingerprint/RegisterFingerprint;->mLockPatternUtils:Lcom/android/internal/widget/LockPatternUtils;
 
@@ -7667,7 +7684,7 @@
 
     move-result v4
 
-    if-eqz v4, :cond_46f
+    if-eqz v4, :cond_480
 
     const-string/jumbo v4, "lock_screen_fingerprint"
 
@@ -7677,13 +7694,13 @@
 
     move-result v4
 
-    if-eqz v4, :cond_45d
+    if-eqz v4, :cond_46e
 
     iget-boolean v4, p0, Lcom/android/settings/fingerprint/RegisterFingerprint;->mIsFromSecureFolder:Z
 
-    if-eqz v4, :cond_46f
+    if-eqz v4, :cond_480
 
-    :cond_45d
+    :cond_46e
     iget-object v4, p0, Lcom/android/settings/fingerprint/RegisterFingerprint;->mLockPatternUtils:Lcom/android/internal/widget/LockPatternUtils;
 
     iget v5, p0, Lcom/android/settings/fingerprint/RegisterFingerprint;->mUserId:I
@@ -7694,17 +7711,17 @@
 
     const v5, 0x61000
 
-    if-eq v4, v5, :cond_46f
+    if-eq v4, v5, :cond_480
 
-    :cond_46a
+    :cond_47b
     invoke-direct {p0}, Lcom/android/settings/fingerprint/RegisterFingerprint;->launchConfirmLock()V
 
-    goto/16 :goto_39c
+    goto/16 :goto_3a5
 
-    :cond_46f
+    :cond_480
     invoke-direct {p0}, Lcom/android/settings/fingerprint/RegisterFingerprint;->startBiometricsLockSetup()V
 
-    goto/16 :goto_39c
+    goto/16 :goto_3a5
 .end method
 
 .method public onCreateOptionsMenu(Landroid/view/Menu;)Z

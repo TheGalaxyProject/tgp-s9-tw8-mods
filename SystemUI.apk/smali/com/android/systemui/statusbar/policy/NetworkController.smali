@@ -34,16 +34,6 @@
 .method public abstract addCallback(Lcom/android/systemui/statusbar/policy/NetworkController$SignalCallback;)V
 .end method
 
-.method public bridge synthetic addCallback(Ljava/lang/Object;)V
-    .registers 2
-
-    check-cast p1, Lcom/android/systemui/statusbar/policy/NetworkController$SignalCallback;
-
-    invoke-interface {p0, p1}, Lcom/android/systemui/statusbar/policy/NetworkController;->addCallback(Lcom/android/systemui/statusbar/policy/NetworkController$SignalCallback;)V
-
-    return-void
-.end method
-
 .method public abstract addEmergencyListener(Lcom/android/systemui/statusbar/policy/NetworkController$EmergencyListener;)V
 .end method
 
@@ -75,16 +65,6 @@
 .end method
 
 .method public abstract removeCallback(Lcom/android/systemui/statusbar/policy/NetworkController$SignalCallback;)V
-.end method
-
-.method public bridge synthetic removeCallback(Ljava/lang/Object;)V
-    .registers 2
-
-    check-cast p1, Lcom/android/systemui/statusbar/policy/NetworkController$SignalCallback;
-
-    invoke-interface {p0, p1}, Lcom/android/systemui/statusbar/policy/NetworkController;->removeCallback(Lcom/android/systemui/statusbar/policy/NetworkController$SignalCallback;)V
-
-    return-void
 .end method
 
 .method public abstract removeEmergencyListener(Lcom/android/systemui/statusbar/policy/NetworkController$EmergencyListener;)V

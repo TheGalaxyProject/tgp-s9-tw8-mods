@@ -2603,54 +2603,93 @@
 .end method
 
 .method private setVpnForcedLocked(Z)V
-    .registers 8
+    .registers 11
     .annotation build Lcom/android/internal/annotations/GuardedBy;
         value = "this"
     .end annotation
 
-    const/4 v5, 0x0
+    const/4 v8, 0x1
 
-    new-instance v1, Landroid/util/ArraySet;
+    const/4 v7, 0x0
 
-    iget-object v2, p0, Lcom/android/server/connectivity/Vpn;->mBlockedUsers:Ljava/util/Set;
+    new-instance v3, Landroid/util/ArraySet;
 
-    invoke-direct {v1, v2}, Landroid/util/ArraySet;-><init>(Ljava/util/Collection;)V
+    iget-object v4, p0, Lcom/android/server/connectivity/Vpn;->mBlockedUsers:Ljava/util/Set;
 
-    if-eqz p1, :cond_27
+    invoke-direct {v3, v4}, Landroid/util/ArraySet;-><init>(Ljava/util/Collection;)V
 
-    iget v2, p0, Lcom/android/server/connectivity/Vpn;->mUserHandle:I
+    if-eqz p1, :cond_4d
 
-    iget-object v3, p0, Lcom/android/server/connectivity/Vpn;->mPackage:Ljava/lang/String;
+    iget v4, p0, Lcom/android/server/connectivity/Vpn;->mUserHandle:I
 
-    invoke-static {v3}, Ljava/util/Collections;->singletonList(Ljava/lang/Object;)Ljava/util/List;
+    iget-object v5, p0, Lcom/android/server/connectivity/Vpn;->mPackage:Ljava/lang/String;
 
-    move-result-object v3
+    invoke-static {v5}, Ljava/util/Collections;->singletonList(Ljava/lang/Object;)Ljava/util/List;
 
-    const/4 v4, 0x0
+    move-result-object v5
 
-    invoke-virtual {p0, v2, v4, v3}, Lcom/android/server/connectivity/Vpn;->createUserAndRestrictedProfilesRanges(ILjava/util/List;Ljava/util/List;)Ljava/util/Set;
+    const/4 v6, 0x0
+
+    invoke-virtual {p0, v4, v6, v5}, Lcom/android/server/connectivity/Vpn;->createUserAndRestrictedProfilesRanges(ILjava/util/List;Ljava/util/List;)Ljava/util/Set;
 
     move-result-object v0
 
-    invoke-interface {v1, v0}, Ljava/util/Set;->removeAll(Ljava/util/Collection;)Z
+    invoke-interface {v0}, Ljava/lang/Iterable;->iterator()Ljava/util/Iterator;
 
-    iget-object v2, p0, Lcom/android/server/connectivity/Vpn;->mBlockedUsers:Ljava/util/Set;
+    move-result-object v2
 
-    invoke-interface {v0, v2}, Ljava/util/Set;->removeAll(Ljava/util/Collection;)Z
+    :cond_1c
+    :goto_1c
+    invoke-interface {v2}, Ljava/util/Iterator;->hasNext()Z
 
-    invoke-direct {p0, v5, v1}, Lcom/android/server/connectivity/Vpn;->setAllowOnlyVpnForUids(ZLjava/util/Collection;)Z
+    move-result v4
 
-    const/4 v2, 0x1
+    if-eqz v4, :cond_3e
 
-    invoke-direct {p0, v2, v0}, Lcom/android/server/connectivity/Vpn;->setAllowOnlyVpnForUids(ZLjava/util/Collection;)Z
+    invoke-interface {v2}, Ljava/util/Iterator;->next()Ljava/lang/Object;
 
-    :goto_26
+    move-result-object v1
+
+    check-cast v1, Landroid/net/UidRange;
+
+    iget v4, v1, Landroid/net/UidRange;->start:I
+
+    if-nez v4, :cond_1c
+
+    invoke-interface {v0, v1}, Ljava/util/Set;->remove(Ljava/lang/Object;)Z
+
+    iget v4, v1, Landroid/net/UidRange;->stop:I
+
+    if-eqz v4, :cond_1c
+
+    new-instance v4, Landroid/net/UidRange;
+
+    iget v5, v1, Landroid/net/UidRange;->stop:I
+
+    invoke-direct {v4, v8, v5}, Landroid/net/UidRange;-><init>(II)V
+
+    invoke-interface {v0, v4}, Ljava/util/Set;->add(Ljava/lang/Object;)Z
+
+    goto :goto_1c
+
+    :cond_3e
+    invoke-interface {v3, v0}, Ljava/util/Set;->removeAll(Ljava/util/Collection;)Z
+
+    iget-object v4, p0, Lcom/android/server/connectivity/Vpn;->mBlockedUsers:Ljava/util/Set;
+
+    invoke-interface {v0, v4}, Ljava/util/Set;->removeAll(Ljava/util/Collection;)Z
+
+    invoke-direct {p0, v7, v3}, Lcom/android/server/connectivity/Vpn;->setAllowOnlyVpnForUids(ZLjava/util/Collection;)Z
+
+    invoke-direct {p0, v8, v0}, Lcom/android/server/connectivity/Vpn;->setAllowOnlyVpnForUids(ZLjava/util/Collection;)Z
+
+    :goto_4c
     return-void
 
-    :cond_27
-    invoke-direct {p0, v5, v1}, Lcom/android/server/connectivity/Vpn;->setAllowOnlyVpnForUids(ZLjava/util/Collection;)Z
+    :cond_4d
+    invoke-direct {p0, v7, v3}, Lcom/android/server/connectivity/Vpn;->setAllowOnlyVpnForUids(ZLjava/util/Collection;)Z
 
-    goto :goto_26
+    goto :goto_4c
 .end method
 
 .method private showNotification(Ljava/lang/String;Landroid/graphics/Bitmap;I)V

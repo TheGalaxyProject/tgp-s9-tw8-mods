@@ -753,11 +753,11 @@
 
     sget-object v0, Lcom/google/gson/internal/bind/TypeAdapters;->CALENDAR:Lcom/google/gson/TypeAdapter;
 
-    const-class v1, Ljava/util/Calendar;
+    const-class v1, Ljava/util/GregorianCalendar;
 
-    const-class v2, Ljava/util/GregorianCalendar;
+    const-class v2, Ljava/util/Calendar;
 
-    invoke-static {v1, v2, v0}, Lcom/google/gson/internal/bind/TypeAdapters;->newFactoryForMultipleTypes(Ljava/lang/Class;Ljava/lang/Class;Lcom/google/gson/TypeAdapter;)Lcom/google/gson/TypeAdapterFactory;
+    invoke-static {v2, v1, v0}, Lcom/google/gson/internal/bind/TypeAdapters;->newFactoryForMultipleTypes(Ljava/lang/Class;Ljava/lang/Class;Lcom/google/gson/TypeAdapter;)Lcom/google/gson/TypeAdapterFactory;
 
     move-result-object v0
 

@@ -4505,11 +4505,11 @@
 
     move-result v16
 
-    const/16 v18, 0x0
-
     const/16 v17, 0x0
 
     const/16 v19, 0x0
+
+    const/16 v18, 0x0
 
     invoke-virtual/range {p0 .. p0}, Lcom/samsung/android/support/sesl/core/widget/SeslNestedScrollView;->getScrollRange()I
 
@@ -4586,11 +4586,11 @@
 
     move-result v16
 
-    const/16 v18, 0x0
-
     const/16 v17, 0x0
 
     const/16 v19, 0x0
+
+    const/16 v18, 0x0
 
     invoke-virtual/range {p0 .. p0}, Lcom/samsung/android/support/sesl/core/widget/SeslNestedScrollView;->getScrollRange()I
 

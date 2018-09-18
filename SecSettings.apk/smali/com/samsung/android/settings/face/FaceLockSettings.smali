@@ -587,7 +587,7 @@
 
     new-instance v1, Landroid/content/Intent;
 
-    const-class v2, Lcom/android/settings/ChooseLockGeneric;
+    const-class v2, Lcom/android/settings/ChooseLockGeneric$InternalActivity;
 
     invoke-direct {v1, p0, v2}, Landroid/content/Intent;-><init>(Landroid/content/Context;Ljava/lang/Class;)V
 

@@ -35,7 +35,7 @@
 
     check-cast v5, Landroid/content/pm/ShortcutInfo;
 
-    invoke-static/range {v0 .. v5}, Lcom/android/server/pm/ShortcutService$LocalService;->lambda$-com_android_server_pm_ShortcutService$LocalService_90727(JLandroid/util/ArraySet;Landroid/content/ComponentName;ILandroid/content/pm/ShortcutInfo;)Z
+    invoke-static/range {v0 .. v5}, Lcom/android/server/pm/ShortcutService$LocalService;->lambda$-com_android_server_pm_ShortcutService$LocalService_91701(JLandroid/util/ArraySet;Landroid/content/ComponentName;ILandroid/content/pm/ShortcutInfo;)Z
 
     move-result v0
 

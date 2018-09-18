@@ -36,11 +36,11 @@
 
     move-result-object v1
 
-    const/4 v2, 0x1
+    const-string/jumbo v2, "m"
 
-    const-string/jumbo v3, "m"
+    const/4 v3, 0x1
 
-    invoke-virtual {p0, v3, v2}, Lorg/json/JSONObject;->optInt(Ljava/lang/String;I)I
+    invoke-virtual {p0, v2, v3}, Lorg/json/JSONObject;->optInt(Ljava/lang/String;I)I
 
     move-result v2
 

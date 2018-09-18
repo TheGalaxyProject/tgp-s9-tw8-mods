@@ -192,7 +192,7 @@
     return-void
 .end method
 
-.method static synthetic lambda$-com_android_server_pm_ShortcutService$LocalService_90727(JLandroid/util/ArraySet;Landroid/content/ComponentName;ILandroid/content/pm/ShortcutInfo;)Z
+.method static synthetic lambda$-com_android_server_pm_ShortcutService$LocalService_91701(JLandroid/util/ArraySet;Landroid/content/ComponentName;ILandroid/content/pm/ShortcutInfo;)Z
     .registers 10
 
     const/4 v3, 0x1
@@ -292,7 +292,7 @@
     return v2
 .end method
 
-.method static synthetic lambda$-com_android_server_pm_ShortcutService$LocalService_93673(Ljava/lang/String;Landroid/content/pm/ShortcutInfo;)Z
+.method static synthetic lambda$-com_android_server_pm_ShortcutService$LocalService_94647(Ljava/lang/String;Landroid/content/pm/ShortcutInfo;)Z
     .registers 3
 
     invoke-virtual {p1}, Landroid/content/pm/ShortcutInfo;->getId()Ljava/lang/String;
@@ -1017,7 +1017,7 @@
     return v0
 .end method
 
-.method synthetic lambda$-com_android_server_pm_ShortcutService$LocalService_89611(ILjava/lang/String;Ljava/util/List;JLandroid/content/ComponentName;IILjava/util/ArrayList;ILcom/android/server/pm/ShortcutPackage;)V
+.method synthetic lambda$-com_android_server_pm_ShortcutService$LocalService_90585(ILjava/lang/String;Ljava/util/List;JLandroid/content/ComponentName;IILjava/util/ArrayList;ILcom/android/server/pm/ShortcutPackage;)V
     .registers 26
 
     invoke-virtual/range {p11 .. p11}, Lcom/android/server/pm/ShortcutPackage;->getPackageName()Ljava/lang/String;

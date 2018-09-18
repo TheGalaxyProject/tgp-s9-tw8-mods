@@ -82,27 +82,23 @@
 
     move-result-object v16
 
-    const/16 v4, 0xff
+    const/4 v4, 0x0
 
-    const/16 v18, 0x0
+    const/16 v18, 0xff
 
     move-object/from16 v0, v16
 
-    move/from16 v1, v18
+    invoke-virtual {v0, v4}, Lorg/json/JSONArray;->optDouble(I)D
 
-    invoke-virtual {v0, v1}, Lorg/json/JSONArray;->optDouble(I)D
+    move-result-wide v20
 
-    move-result-wide v18
+    const-wide v22, 0x406fe00000000000L    # 255.0
 
-    const-wide v20, 0x406fe00000000000L    # 255.0
+    mul-double v20, v20, v22
 
-    mul-double v18, v18, v20
+    move-wide/from16 v0, v20
 
-    move-wide/from16 v0, v18
-
-    double-to-int v0, v0
-
-    move/from16 v18, v0
+    double-to-int v4, v0
 
     const/16 v19, 0x1
 
@@ -150,7 +146,7 @@
 
     move/from16 v2, v20
 
-    invoke-static {v4, v0, v1, v2}, Landroid/graphics/Color;->argb(IIII)I
+    invoke-static {v0, v4, v1, v2}, Landroid/graphics/Color;->argb(IIII)I
 
     move-result v12
 
@@ -164,9 +160,9 @@
 
     const/4 v13, 0x0
 
-    if-nez v17, :cond_b1
+    if-nez v17, :cond_ac
 
-    :goto_99
+    :goto_94
     const-string/jumbo v4, "sw"
 
     move-object/from16 v0, p0
@@ -189,24 +185,24 @@
 
     return-object v4
 
-    :cond_b1
-    const/16 v4, 0xff
+    :cond_ac
+    const/4 v4, 0x0
 
-    const/16 v18, 0x0
+    const/16 v18, 0xff
 
-    invoke-virtual/range {v17 .. v18}, Lorg/json/JSONArray;->optDouble(I)D
+    move-object/from16 v0, v17
 
-    move-result-wide v18
+    invoke-virtual {v0, v4}, Lorg/json/JSONArray;->optDouble(I)D
 
-    const-wide v20, 0x406fe00000000000L    # 255.0
+    move-result-wide v20
 
-    mul-double v18, v18, v20
+    const-wide v22, 0x406fe00000000000L    # 255.0
 
-    move-wide/from16 v0, v18
+    mul-double v20, v20, v22
 
-    double-to-int v0, v0
+    move-wide/from16 v0, v20
 
-    move/from16 v18, v0
+    double-to-int v4, v0
 
     const/16 v19, 0x1
 
@@ -254,9 +250,9 @@
 
     move/from16 v2, v20
 
-    invoke-static {v4, v0, v1, v2}, Landroid/graphics/Color;->argb(IIII)I
+    invoke-static {v0, v4, v1, v2}, Landroid/graphics/Color;->argb(IIII)I
 
     move-result v13
 
-    goto :goto_99
+    goto :goto_94
 .end method

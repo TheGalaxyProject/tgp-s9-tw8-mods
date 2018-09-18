@@ -9493,8 +9493,6 @@
     <public type="string" name="notification_num_channels" id="0x7f1207f6" />
     <public type="string" name="notification_settings_icon_description" id="0x7f1207f7" />
     <public type="string" name="notification_tap_again" id="0x7f1207f8" />
-    <public type="string" name="APKTOOL_DUMMY_7f9" id="0x7f1207f9" />
-    <public type="string" name="APKTOOL_DUMMY_7fa" id="0x7f1207fa" />
     <public type="string" name="oem_preferred_feedback_reporter" id="0x7f1207fb" />
     <public type="string" name="oem_unlock_enable" id="0x7f1207fc" />
     <public type="string" name="oem_unlock_enable_summary" id="0x7f1207fd" />
@@ -10445,6 +10443,8 @@
     <public type="string" name="zen_priority_introduction" id="0x7f120bb3" />
     <public type="string" name="zen_silence_introduction" id="0x7f120bb4" />
     <public type="string" name="zen_silence_introduction_voice" id="0x7f120bb5" />
+    <public type="string" name="APKTOOL_DUMMY_7f9" id="0x7f1207f9" />
+    <public type="string" name="APKTOOL_DUMMY_7fa" id="0x7f1207fa" />
     <public type="string" name="status_bar_date_formatter" id="0x7f120a39" />
     <public type="string" name="toast_rotation_locked" id="0x7f120aa6" />
     <public type="string" name="dcm_lockscreen_unlock_help_text_fingerprints_iris" id="0x7f120255" />
