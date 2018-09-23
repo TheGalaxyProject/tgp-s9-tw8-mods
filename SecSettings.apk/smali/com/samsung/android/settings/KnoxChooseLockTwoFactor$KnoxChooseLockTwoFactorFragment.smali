@@ -29,6 +29,10 @@
 
 .field private static mCurrentLockTypeIdx:I
 
+.field private static mKnoxChooseLockTwoFactorFragment:Lcom/samsung/android/settings/KnoxChooseLockTwoFactor$KnoxChooseLockTwoFactorFragment;
+
+.field private static sUserId:I
+
 
 # instance fields
 .field private activity:Landroid/app/Activity;
@@ -48,6 +52,8 @@
 .field private mConfimationStarted:Z
 
 .field private mDPM:Landroid/app/admin/DevicePolicyManager;
+
+.field private mDisableStatusBarCount:I
 
 .field private mFPM:Lcom/samsung/android/fingerprint/FingerprintManager;
 
@@ -69,9 +75,26 @@
 
 .field mIsKnoxVersionSupported:Z
 
+.field private mIsSecondStep:Z
+
 .field private mIsSecured:Z
 
 .field private mLockPatternUtils:Lcom/android/internal/widget/LockPatternUtils;
+
+.field private mMultifactorAuthEnforced:Z
+
+.field private mNewPassword:Ljava/lang/String;
+
+.field private mNewPattern:Ljava/util/List;
+    .annotation system Ldalvik/annotation/Signature;
+        value = {
+            "Ljava/util/List",
+            "<",
+            "Lcom/android/internal/widget/LockPatternView$Cell;",
+            ">;"
+        }
+    .end annotation
+.end field
 
 .field private mPassWordQuality:I
 
@@ -84,6 +107,8 @@
 .field private mPrefPin:Lcom/android/settingslib/RestrictedPreference;
 
 .field private mRequirePassword:Z
+
+.field private mStatusBarManager:Landroid/app/StatusBarManager;
 
 .field private mSwitchPrefFingerprint:Landroid/support/v14/preference/SwitchPreference;
 
@@ -111,7 +136,15 @@
     return-object v0
 .end method
 
-.method static synthetic -get1(Lcom/samsung/android/settings/KnoxChooseLockTwoFactor$KnoxChooseLockTwoFactorFragment;)Lcom/samsung/android/fingerprint/FingerprintManager;
+.method static synthetic -get1()I
+    .registers 1
+
+    sget v0, Lcom/samsung/android/settings/KnoxChooseLockTwoFactor$KnoxChooseLockTwoFactorFragment;->mCurrentLockTypeIdx:I
+
+    return v0
+.end method
+
+.method static synthetic -get2(Lcom/samsung/android/settings/KnoxChooseLockTwoFactor$KnoxChooseLockTwoFactorFragment;)Lcom/samsung/android/fingerprint/FingerprintManager;
     .registers 2
 
     iget-object v0, p0, Lcom/samsung/android/settings/KnoxChooseLockTwoFactor$KnoxChooseLockTwoFactorFragment;->mFPM:Lcom/samsung/android/fingerprint/FingerprintManager;
@@ -119,10 +152,42 @@
     return-object v0
 .end method
 
-.method static synthetic -get2(Lcom/samsung/android/settings/KnoxChooseLockTwoFactor$KnoxChooseLockTwoFactorFragment;)Z
+.method static synthetic -get3(Lcom/samsung/android/settings/KnoxChooseLockTwoFactor$KnoxChooseLockTwoFactorFragment;)Z
+    .registers 2
+
+    iget-boolean v0, p0, Lcom/samsung/android/settings/KnoxChooseLockTwoFactor$KnoxChooseLockTwoFactorFragment;->mIsSecondStep:Z
+
+    return v0
+.end method
+
+.method static synthetic -get4(Lcom/samsung/android/settings/KnoxChooseLockTwoFactor$KnoxChooseLockTwoFactorFragment;)Z
     .registers 2
 
     iget-boolean v0, p0, Lcom/samsung/android/settings/KnoxChooseLockTwoFactor$KnoxChooseLockTwoFactorFragment;->mIsSecured:Z
+
+    return v0
+.end method
+
+.method static synthetic -get5()Lcom/samsung/android/settings/KnoxChooseLockTwoFactor$KnoxChooseLockTwoFactorFragment;
+    .registers 1
+
+    sget-object v0, Lcom/samsung/android/settings/KnoxChooseLockTwoFactor$KnoxChooseLockTwoFactorFragment;->mKnoxChooseLockTwoFactorFragment:Lcom/samsung/android/settings/KnoxChooseLockTwoFactor$KnoxChooseLockTwoFactorFragment;
+
+    return-object v0
+.end method
+
+.method static synthetic -get6(Lcom/samsung/android/settings/KnoxChooseLockTwoFactor$KnoxChooseLockTwoFactorFragment;)I
+    .registers 2
+
+    iget v0, p0, Lcom/samsung/android/settings/KnoxChooseLockTwoFactor$KnoxChooseLockTwoFactorFragment;->mUserId:I
+
+    return v0
+.end method
+
+.method static synthetic -get7()I
+    .registers 1
+
+    sget v0, Lcom/samsung/android/settings/KnoxChooseLockTwoFactor$KnoxChooseLockTwoFactorFragment;->sUserId:I
 
     return v0
 .end method
@@ -148,7 +213,7 @@
 .method static synthetic -wrap1(Lcom/samsung/android/settings/KnoxChooseLockTwoFactor$KnoxChooseLockTwoFactorFragment;)V
     .registers 1
 
-    invoke-direct {p0}, Lcom/samsung/android/settings/KnoxChooseLockTwoFactor$KnoxChooseLockTwoFactorFragment;->setBiometricsLock()V
+    invoke-direct {p0}, Lcom/samsung/android/settings/KnoxChooseLockTwoFactor$KnoxChooseLockTwoFactorFragment;->checkPasswordForSDPUnlock()V
 
     return-void
 .end method
@@ -156,12 +221,28 @@
 .method static synthetic -wrap2(Lcom/samsung/android/settings/KnoxChooseLockTwoFactor$KnoxChooseLockTwoFactorFragment;)V
     .registers 1
 
-    invoke-direct {p0}, Lcom/samsung/android/settings/KnoxChooseLockTwoFactor$KnoxChooseLockTwoFactorFragment;->showSensorErrorDialog()V
+    invoke-direct {p0}, Lcom/samsung/android/settings/KnoxChooseLockTwoFactor$KnoxChooseLockTwoFactorFragment;->checkPatternForSDPUnlock()V
 
     return-void
 .end method
 
 .method static synthetic -wrap3(Lcom/samsung/android/settings/KnoxChooseLockTwoFactor$KnoxChooseLockTwoFactorFragment;)V
+    .registers 1
+
+    invoke-direct {p0}, Lcom/samsung/android/settings/KnoxChooseLockTwoFactor$KnoxChooseLockTwoFactorFragment;->setBiometricsLock()V
+
+    return-void
+.end method
+
+.method static synthetic -wrap4(Lcom/samsung/android/settings/KnoxChooseLockTwoFactor$KnoxChooseLockTwoFactorFragment;)V
+    .registers 1
+
+    invoke-direct {p0}, Lcom/samsung/android/settings/KnoxChooseLockTwoFactor$KnoxChooseLockTwoFactorFragment;->showSensorErrorDialog()V
+
+    return-void
+.end method
+
+.method static synthetic -wrap5(Lcom/samsung/android/settings/KnoxChooseLockTwoFactor$KnoxChooseLockTwoFactorFragment;)V
     .registers 1
 
     invoke-direct {p0}, Lcom/samsung/android/settings/KnoxChooseLockTwoFactor$KnoxChooseLockTwoFactorFragment;->startRedactionInterstitial()V
@@ -226,9 +307,15 @@
 
     iput-object v1, p0, Lcom/samsung/android/settings/KnoxChooseLockTwoFactor$KnoxChooseLockTwoFactorFragment;->mIdentifyDialog:Landroid/app/Dialog;
 
+    iput-boolean v2, p0, Lcom/samsung/android/settings/KnoxChooseLockTwoFactor$KnoxChooseLockTwoFactorFragment;->mMultifactorAuthEnforced:Z
+
     iput-boolean v2, p0, Lcom/samsung/android/settings/KnoxChooseLockTwoFactor$KnoxChooseLockTwoFactorFragment;->mConfimationStarted:Z
 
     iput v2, p0, Lcom/samsung/android/settings/KnoxChooseLockTwoFactor$KnoxChooseLockTwoFactorFragment;->mPassWordQuality:I
+
+    iput-boolean v2, p0, Lcom/samsung/android/settings/KnoxChooseLockTwoFactor$KnoxChooseLockTwoFactorFragment;->mIsSecondStep:Z
+
+    iput v2, p0, Lcom/samsung/android/settings/KnoxChooseLockTwoFactor$KnoxChooseLockTwoFactorFragment;->mDisableStatusBarCount:I
 
     iput-boolean v2, p0, Lcom/samsung/android/settings/KnoxChooseLockTwoFactor$KnoxChooseLockTwoFactorFragment;->mFingerDisabledByEDM:Z
 
@@ -258,7 +345,151 @@
 
     iput-object v0, p0, Lcom/samsung/android/settings/KnoxChooseLockTwoFactor$KnoxChooseLockTwoFactorFragment;->mFingerprintListener:Lcom/samsung/android/fingerprint/FingerprintIdentifyDialog$FingerprintListener;
 
+    sput-object p0, Lcom/samsung/android/settings/KnoxChooseLockTwoFactor$KnoxChooseLockTwoFactorFragment;->mKnoxChooseLockTwoFactorFragment:Lcom/samsung/android/settings/KnoxChooseLockTwoFactor$KnoxChooseLockTwoFactorFragment;
+
     return-void
+.end method
+
+.method private checkPasswordForSDPUnlock()V
+    .registers 5
+
+    iget v0, p0, Lcom/samsung/android/settings/KnoxChooseLockTwoFactor$KnoxChooseLockTwoFactorFragment;->mUserId:I
+
+    invoke-static {v0}, Lcom/samsung/android/knox/SemPersonaManager;->isDoEnabled(I)Z
+
+    move-result v0
+
+    if-nez v0, :cond_c
+
+    iget-object v0, p0, Lcom/samsung/android/settings/KnoxChooseLockTwoFactor$KnoxChooseLockTwoFactorFragment;->mNewPassword:Ljava/lang/String;
+
+    if-nez v0, :cond_d
+
+    :cond_c
+    return-void
+
+    :cond_d
+    iget-object v0, p0, Lcom/samsung/android/settings/KnoxChooseLockTwoFactor$KnoxChooseLockTwoFactorFragment;->mLockPatternUtils:Lcom/android/internal/widget/LockPatternUtils;
+
+    iget-object v1, p0, Lcom/samsung/android/settings/KnoxChooseLockTwoFactor$KnoxChooseLockTwoFactorFragment;->mNewPassword:Ljava/lang/String;
+
+    iget v2, p0, Lcom/samsung/android/settings/KnoxChooseLockTwoFactor$KnoxChooseLockTwoFactorFragment;->mUserId:I
+
+    new-instance v3, Lcom/samsung/android/settings/KnoxChooseLockTwoFactor$KnoxChooseLockTwoFactorFragment$6;
+
+    invoke-direct {v3, p0}, Lcom/samsung/android/settings/KnoxChooseLockTwoFactor$KnoxChooseLockTwoFactorFragment$6;-><init>(Lcom/samsung/android/settings/KnoxChooseLockTwoFactor$KnoxChooseLockTwoFactorFragment;)V
+
+    invoke-static {v0, v1, v2, v3}, Lcom/android/internal/widget/LockPatternChecker;->checkPassword(Lcom/android/internal/widget/LockPatternUtils;Ljava/lang/String;ILcom/android/internal/widget/LockPatternChecker$OnCheckCallback;)Landroid/os/AsyncTask;
+
+    return-void
+.end method
+
+.method private checkPatternForSDPUnlock()V
+    .registers 5
+
+    iget v0, p0, Lcom/samsung/android/settings/KnoxChooseLockTwoFactor$KnoxChooseLockTwoFactorFragment;->mUserId:I
+
+    invoke-static {v0}, Lcom/samsung/android/knox/SemPersonaManager;->isDoEnabled(I)Z
+
+    move-result v0
+
+    if-nez v0, :cond_c
+
+    iget-object v0, p0, Lcom/samsung/android/settings/KnoxChooseLockTwoFactor$KnoxChooseLockTwoFactorFragment;->mNewPattern:Ljava/util/List;
+
+    if-nez v0, :cond_d
+
+    :cond_c
+    return-void
+
+    :cond_d
+    iget-object v0, p0, Lcom/samsung/android/settings/KnoxChooseLockTwoFactor$KnoxChooseLockTwoFactorFragment;->mLockPatternUtils:Lcom/android/internal/widget/LockPatternUtils;
+
+    iget-object v1, p0, Lcom/samsung/android/settings/KnoxChooseLockTwoFactor$KnoxChooseLockTwoFactorFragment;->mNewPattern:Ljava/util/List;
+
+    iget v2, p0, Lcom/samsung/android/settings/KnoxChooseLockTwoFactor$KnoxChooseLockTwoFactorFragment;->mUserId:I
+
+    new-instance v3, Lcom/samsung/android/settings/KnoxChooseLockTwoFactor$KnoxChooseLockTwoFactorFragment$7;
+
+    invoke-direct {v3, p0}, Lcom/samsung/android/settings/KnoxChooseLockTwoFactor$KnoxChooseLockTwoFactorFragment$7;-><init>(Lcom/samsung/android/settings/KnoxChooseLockTwoFactor$KnoxChooseLockTwoFactorFragment;)V
+
+    invoke-static {v0, v1, v2, v3}, Lcom/android/internal/widget/LockPatternChecker;->checkPattern(Lcom/android/internal/widget/LockPatternUtils;Ljava/util/List;ILcom/android/internal/widget/LockPatternChecker$OnCheckCallback;)Landroid/os/AsyncTask;
+
+    return-void
+.end method
+
+.method private disableStatusBar()V
+    .registers 3
+
+    monitor-enter p0
+
+    :try_start_1
+    iget v0, p0, Lcom/samsung/android/settings/KnoxChooseLockTwoFactor$KnoxChooseLockTwoFactorFragment;->mDisableStatusBarCount:I
+
+    add-int/lit8 v1, v0, 0x1
+
+    iput v1, p0, Lcom/samsung/android/settings/KnoxChooseLockTwoFactor$KnoxChooseLockTwoFactorFragment;->mDisableStatusBarCount:I
+
+    if-nez v0, :cond_10
+
+    iget-object v0, p0, Lcom/samsung/android/settings/KnoxChooseLockTwoFactor$KnoxChooseLockTwoFactorFragment;->mStatusBarManager:Landroid/app/StatusBarManager;
+
+    const/high16 v1, 0x10000
+
+    invoke-virtual {v0, v1}, Landroid/app/StatusBarManager;->disable(I)V
+    :try_end_10
+    .catchall {:try_start_1 .. :try_end_10} :catchall_12
+
+    :cond_10
+    monitor-exit p0
+
+    return-void
+
+    :catchall_12
+    move-exception v0
+
+    monitor-exit p0
+
+    throw v0
+.end method
+
+.method private enableStatusBar()V
+    .registers 3
+
+    monitor-enter p0
+
+    :try_start_1
+    iget v0, p0, Lcom/samsung/android/settings/KnoxChooseLockTwoFactor$KnoxChooseLockTwoFactorFragment;->mDisableStatusBarCount:I
+
+    if-lez v0, :cond_13
+
+    iget v0, p0, Lcom/samsung/android/settings/KnoxChooseLockTwoFactor$KnoxChooseLockTwoFactorFragment;->mDisableStatusBarCount:I
+
+    add-int/lit8 v0, v0, -0x1
+
+    iput v0, p0, Lcom/samsung/android/settings/KnoxChooseLockTwoFactor$KnoxChooseLockTwoFactorFragment;->mDisableStatusBarCount:I
+
+    if-nez v0, :cond_13
+
+    iget-object v0, p0, Lcom/samsung/android/settings/KnoxChooseLockTwoFactor$KnoxChooseLockTwoFactorFragment;->mStatusBarManager:Landroid/app/StatusBarManager;
+
+    const/4 v1, 0x0
+
+    invoke-virtual {v0, v1}, Landroid/app/StatusBarManager;->disable(I)V
+    :try_end_13
+    .catchall {:try_start_1 .. :try_end_13} :catchall_15
+
+    :cond_13
+    monitor-exit p0
+
+    return-void
+
+    :catchall_15
+    move-exception v0
+
+    monitor-exit p0
+
+    throw v0
 .end method
 
 .method private getCurrentLockTypeToString()Ljava/lang/String;
@@ -1157,316 +1388,447 @@
 .end method
 
 .method private setEnterpriseIdentityPolicy(I)V
-    .registers 24
+    .registers 30
 
     :try_start_0
     invoke-static {}, Lcom/samsung/android/knox/EnterpriseKnoxManager;->getInstance()Lcom/samsung/android/knox/EnterpriseKnoxManager;
 
-    move-result-object v5
+    move-result-object v7
 
-    if-eqz v5, :cond_113
+    if-eqz v7, :cond_19e
 
     invoke-virtual/range {p0 .. p0}, Lcom/samsung/android/settings/KnoxChooseLockTwoFactor$KnoxChooseLockTwoFactorFragment;->getActivity()Landroid/app/Activity;
 
-    move-result-object v19
+    move-result-object v25
 
-    move-object/from16 v0, v19
+    move-object/from16 v0, v25
 
     move/from16 v1, p1
 
-    invoke-virtual {v5, v0, v1}, Lcom/samsung/android/knox/EnterpriseKnoxManager;->getKnoxContainerManager(Landroid/content/Context;I)Lcom/samsung/android/knox/container/KnoxContainerManager;
+    invoke-virtual {v7, v0, v1}, Lcom/samsung/android/knox/EnterpriseKnoxManager;->getKnoxContainerManager(Landroid/content/Context;I)Lcom/samsung/android/knox/container/KnoxContainerManager;
 
-    move-result-object v3
+    move-result-object v4
 
-    const/4 v2, 0x0
+    const/4 v3, 0x0
 
-    const/4 v10, 0x0
+    const/4 v13, 0x0
 
-    const/4 v11, 0x0
-
-    const/4 v9, 0x0
-
-    const/16 v17, 0x0
+    const/4 v14, 0x0
 
     const/4 v12, 0x0
 
+    const/16 v20, 0x0
+
     const/4 v15, 0x0
 
-    const/4 v13, 0x0
+    const/4 v9, 0x0
+
+    const/16 v18, 0x0
+
+    const/16 v16, 0x0
 
     move-object/from16 v0, p0
 
     iget-object v0, v0, Lcom/samsung/android/settings/KnoxChooseLockTwoFactor$KnoxChooseLockTwoFactorFragment;->activity:Landroid/app/Activity;
 
-    move-object/from16 v19, v0
+    move-object/from16 v25, v0
 
-    invoke-virtual/range {v19 .. v19}, Landroid/app/Activity;->getIntent()Landroid/content/Intent;
+    invoke-virtual/range {v25 .. v25}, Landroid/app/Activity;->getIntent()Landroid/content/Intent;
 
-    move-result-object v19
+    move-result-object v25
 
-    const-string/jumbo v20, "is_sdp_enabled"
+    const-string/jumbo v26, "is_sdp_enabled"
 
-    const/16 v21, 0x0
+    const/16 v27, 0x0
 
-    invoke-virtual/range {v19 .. v21}, Landroid/content/Intent;->getBooleanExtra(Ljava/lang/String;Z)Z
+    invoke-virtual/range {v25 .. v27}, Landroid/content/Intent;->getBooleanExtra(Ljava/lang/String;Z)Z
 
-    move-result v14
+    move-result v17
 
-    const-string/jumbo v19, "persona"
+    const-string/jumbo v25, "persona"
 
     move-object/from16 v0, p0
 
-    move-object/from16 v1, v19
+    move-object/from16 v1, v25
 
     invoke-virtual {v0, v1}, Lcom/samsung/android/settings/KnoxChooseLockTwoFactor$KnoxChooseLockTwoFactorFragment;->getSystemService(Ljava/lang/String;)Ljava/lang/Object;
 
-    move-result-object v16
+    move-result-object v19
 
-    check-cast v16, Lcom/samsung/android/knox/SemPersonaManager;
+    check-cast v19, Lcom/samsung/android/knox/SemPersonaManager;
 
     invoke-static {}, Landroid/os/UserHandle;->getCallingUserId()I
 
-    move-result v19
+    move-result v25
 
-    move-object/from16 v0, v16
+    move-object/from16 v0, v19
 
-    move/from16 v1, v19
+    move/from16 v1, v25
 
     invoke-virtual {v0, v1}, Lcom/samsung/android/knox/SemPersonaManager;->getPersonaInfo(I)Lcom/samsung/android/knox/SemPersonaInfo;
 
-    move-result-object v6
-
-    if-eqz v6, :cond_58
-
-    iget-boolean v0, v6, Lcom/samsung/android/knox/SemPersonaInfo;->sdpEnabled:Z
-
-    move/from16 v19, v0
-
-    if-eqz v19, :cond_58
-
-    iget-boolean v0, v6, Lcom/samsung/android/knox/SemPersonaInfo;->isSdpMinor:Z
-
-    move/from16 v19, v0
-
-    xor-int/lit8 v19, v19, 0x1
-
-    if-eqz v19, :cond_58
-
-    const/4 v13, 0x1
-
-    :cond_58
-    const/4 v8, 0x0
-
-    if-eqz v3, :cond_71
-
-    invoke-virtual {v3}, Lcom/samsung/android/knox/container/KnoxContainerManager;->getPasswordPolicy()Lcom/samsung/android/knox/devicesecurity/PasswordPolicy;
-
-    move-result-object v19
-
-    invoke-virtual/range {v19 .. v19}, Lcom/samsung/android/knox/devicesecurity/PasswordPolicy;->getEnterpriseIdentityAuthentication()Lcom/samsung/android/knox/container/AuthenticationConfig;
-
     move-result-object v8
 
-    if-eqz v8, :cond_71
+    if-eqz v8, :cond_5c
 
-    invoke-virtual {v8}, Lcom/samsung/android/knox/container/AuthenticationConfig;->getEnforceEnterpriseIdentityLock()Z
+    iget-boolean v0, v8, Lcom/samsung/android/knox/SemPersonaInfo;->sdpEnabled:Z
 
-    move-result v10
+    move/from16 v25, v0
 
-    invoke-virtual {v8}, Lcom/samsung/android/knox/container/AuthenticationConfig;->getHideEnterpriseIdentityLock()Z
+    if-eqz v25, :cond_5c
 
-    move-result v11
+    iget-boolean v0, v8, Lcom/samsung/android/knox/SemPersonaInfo;->isSdpMinor:Z
 
-    invoke-virtual {v8}, Lcom/samsung/android/knox/container/AuthenticationConfig;->getAuthenticatorPkgName()Ljava/lang/String;
+    move/from16 v25, v0
 
-    move-result-object v15
+    xor-int/lit8 v25, v25, 0x1
 
-    :cond_71
-    if-nez v15, :cond_76
+    if-eqz v25, :cond_5c
 
-    const-string/jumbo v15, "com.sec.android.service.singlesignon"
+    const/16 v16, 0x1
 
-    :cond_76
-    if-eqz v3, :cond_7c
+    :cond_5c
+    const/4 v11, 0x0
 
-    invoke-virtual {v3}, Lcom/samsung/android/knox/container/KnoxContainerManager;->getApplicationPolicy()Lcom/samsung/android/knox/application/ApplicationPolicy;
+    if-eqz v4, :cond_75
 
-    move-result-object v2
+    invoke-virtual {v4}, Lcom/samsung/android/knox/container/KnoxContainerManager;->getPasswordPolicy()Lcom/samsung/android/knox/devicesecurity/PasswordPolicy;
 
-    :cond_7c
-    if-eqz v2, :cond_85
+    move-result-object v25
 
-    invoke-virtual {v2, v15}, Lcom/samsung/android/knox/application/ApplicationPolicy;->isApplicationInstalled(Ljava/lang/String;)Z
+    invoke-virtual/range {v25 .. v25}, Lcom/samsung/android/knox/devicesecurity/PasswordPolicy;->getEnterpriseIdentityAuthentication()Lcom/samsung/android/knox/container/AuthenticationConfig;
 
-    move-result v19
+    move-result-object v11
 
-    if-eqz v19, :cond_85
+    if-eqz v11, :cond_75
 
-    const/4 v9, 0x1
+    invoke-virtual {v11}, Lcom/samsung/android/knox/container/AuthenticationConfig;->getEnforceEnterpriseIdentityLock()Z
 
-    :cond_85
+    move-result v13
+
+    invoke-virtual {v11}, Lcom/samsung/android/knox/container/AuthenticationConfig;->getHideEnterpriseIdentityLock()Z
+
+    move-result v14
+
+    invoke-virtual {v11}, Lcom/samsung/android/knox/container/AuthenticationConfig;->getAuthenticatorPkgName()Ljava/lang/String;
+
+    move-result-object v18
+
+    :cond_75
+    if-nez v18, :cond_7a
+
+    const-string/jumbo v18, "com.sec.android.service.singlesignon"
+
+    :cond_7a
+    if-eqz v4, :cond_80
+
+    invoke-virtual {v4}, Lcom/samsung/android/knox/container/KnoxContainerManager;->getApplicationPolicy()Lcom/samsung/android/knox/application/ApplicationPolicy;
+
+    move-result-object v3
+
+    :cond_80
+    if-eqz v3, :cond_8b
+
+    move-object/from16 v0, v18
+
+    invoke-virtual {v3, v0}, Lcom/samsung/android/knox/application/ApplicationPolicy;->isApplicationInstalled(Ljava/lang/String;)Z
+
+    move-result v25
+
+    if-eqz v25, :cond_8b
+
+    const/4 v12, 0x1
+
+    :cond_8b
     move-object/from16 v0, p0
 
     iget v0, v0, Lcom/samsung/android/settings/KnoxChooseLockTwoFactor$KnoxChooseLockTwoFactorFragment;->mUserId:I
 
-    move/from16 v19, v0
+    move/from16 v25, v0
 
-    invoke-static/range {v19 .. v19}, Lcom/samsung/android/knox/SemPersonaManager;->isLegacyClId(I)Z
+    invoke-static/range {v25 .. v25}, Lcom/samsung/android/knox/SemPersonaManager;->isLegacyClId(I)Z
 
-    move-result v19
+    move-result v25
 
-    if-nez v19, :cond_dd
+    if-nez v25, :cond_12b
 
     invoke-virtual/range {p0 .. p0}, Lcom/samsung/android/settings/KnoxChooseLockTwoFactor$KnoxChooseLockTwoFactorFragment;->getActivity()Landroid/app/Activity;
 
-    move-result-object v19
+    move-result-object v25
 
     move-object/from16 v0, p0
 
     iget v0, v0, Lcom/samsung/android/settings/KnoxChooseLockTwoFactor$KnoxChooseLockTwoFactorFragment;->mUserId:I
 
-    move/from16 v20, v0
+    move/from16 v26, v0
 
-    invoke-static/range {v19 .. v20}, Lcom/android/settings/Utils;->isPremiumContainer(Landroid/content/Context;I)Z
+    invoke-static/range {v25 .. v26}, Lcom/android/settings/Utils;->isPremiumContainer(Landroid/content/Context;I)Z
 
-    move-result v19
+    move-result v25
 
-    :goto_9f
-    xor-int/lit8 v7, v19, 0x1
+    :goto_a5
+    xor-int/lit8 v10, v25, 0x1
 
-    sget-object v19, Lcom/samsung/android/knox/SemPersonaManager$KnoxContainerVersion;->KNOX_CONTAINER_VERSION_2_4_0:Lcom/samsung/android/knox/SemPersonaManager$KnoxContainerVersion;
+    sget-object v25, Lcom/samsung/android/knox/SemPersonaManager$KnoxContainerVersion;->KNOX_CONTAINER_VERSION_2_4_0:Lcom/samsung/android/knox/SemPersonaManager$KnoxContainerVersion;
 
-    invoke-static/range {v19 .. v19}, Lcom/samsung/android/knox/SemPersonaManager;->isKnoxVersionSupported(Lcom/samsung/android/knox/SemPersonaManager$KnoxContainerVersion;)Z
+    invoke-static/range {v25 .. v25}, Lcom/samsung/android/knox/SemPersonaManager;->isKnoxVersionSupported(Lcom/samsung/android/knox/SemPersonaManager$KnoxContainerVersion;)Z
 
-    move-result v12
+    move-result v15
 
-    if-nez v13, :cond_e0
+    invoke-virtual/range {p0 .. p0}, Lcom/samsung/android/settings/KnoxChooseLockTwoFactor$KnoxChooseLockTwoFactorFragment;->getActivity()Landroid/app/Activity;
 
-    if-nez v14, :cond_e0
+    move-result-object v25
 
-    xor-int/lit8 v19, v9, 0x1
+    invoke-virtual/range {v25 .. v25}, Landroid/app/Activity;->getApplicationContext()Landroid/content/Context;
 
-    if-nez v19, :cond_e0
+    move-result-object v5
 
-    xor-int/lit8 v19, v12, 0x1
+    const-string/jumbo v25, "activity"
 
-    if-nez v19, :cond_e0
+    move-object/from16 v0, v25
 
-    move/from16 v17, v7
+    invoke-virtual {v5, v0}, Landroid/content/Context;->getSystemService(Ljava/lang/String;)Ljava/lang/Object;
 
-    :goto_b5
-    if-eqz v10, :cond_e3
+    move-result-object v2
 
-    xor-int/lit8 v19, v17, 0x1
+    check-cast v2, Landroid/app/ActivityManager;
 
-    if-eqz v19, :cond_e3
+    const v25, 0x7fffffff
+
+    move/from16 v0, v25
+
+    invoke-virtual {v2, v0}, Landroid/app/ActivityManager;->getRunningTasks(I)Ljava/util/List;
+
+    move-result-object v24
+
+    if-eqz v24, :cond_12f
+
+    invoke-interface/range {v24 .. v24}, Ljava/lang/Iterable;->iterator()Ljava/util/Iterator;
+
+    move-result-object v23
+
+    :cond_cf
+    :goto_cf
+    invoke-interface/range {v23 .. v23}, Ljava/util/Iterator;->hasNext()Z
+
+    move-result v25
+
+    if-eqz v25, :cond_12f
+
+    invoke-interface/range {v23 .. v23}, Ljava/util/Iterator;->next()Ljava/lang/Object;
+
+    move-result-object v22
+
+    check-cast v22, Landroid/app/ActivityManager$RunningTaskInfo;
+
+    move-object/from16 v0, v22
+
+    iget-object v0, v0, Landroid/app/ActivityManager$RunningTaskInfo;->baseActivity:Landroid/content/ComponentName;
+
+    move-object/from16 v25, v0
+
+    invoke-virtual/range {v25 .. v25}, Landroid/content/ComponentName;->getPackageName()Ljava/lang/String;
+
+    move-result-object v25
+
+    move-object/from16 v0, v18
+
+    move-object/from16 v1, v25
+
+    invoke-virtual {v0, v1}, Ljava/lang/String;->equalsIgnoreCase(Ljava/lang/String;)Z
+
+    move-result v25
+
+    if-eqz v25, :cond_cf
+
+    const/4 v9, 0x1
+
+    const-string/jumbo v25, "KnoxChooseLockTwoFactor"
+
+    new-instance v26, Ljava/lang/StringBuilder;
+
+    invoke-direct/range {v26 .. v26}, Ljava/lang/StringBuilder;-><init>()V
+
+    const-string/jumbo v27, "isAuthAppRunningBehind: "
+
+    invoke-virtual/range {v26 .. v27}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    move-result-object v26
+
+    move-object/from16 v0, v26
+
+    invoke-virtual {v0, v9}, Ljava/lang/StringBuilder;->append(Z)Ljava/lang/StringBuilder;
+
+    move-result-object v26
+
+    invoke-virtual/range {v26 .. v26}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;
+
+    move-result-object v26
+
+    invoke-static/range {v25 .. v26}, Landroid/util/secutil/Log;->d(Ljava/lang/String;Ljava/lang/String;)I
+    :try_end_10c
+    .catch Ljava/lang/SecurityException; {:try_start_0 .. :try_end_10c} :catch_10d
+
+    goto :goto_cf
+
+    :catch_10d
+    move-exception v6
+
+    const-string/jumbo v25, "KnoxChooseLockTwoFactor"
+
+    new-instance v26, Ljava/lang/StringBuilder;
+
+    invoke-direct/range {v26 .. v26}, Ljava/lang/StringBuilder;-><init>()V
+
+    const-string/jumbo v27, "SecurityException: "
+
+    invoke-virtual/range {v26 .. v27}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    move-result-object v26
+
+    move-object/from16 v0, v26
+
+    invoke-virtual {v0, v6}, Ljava/lang/StringBuilder;->append(Ljava/lang/Object;)Ljava/lang/StringBuilder;
+
+    move-result-object v26
+
+    invoke-virtual/range {v26 .. v26}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;
+
+    move-result-object v26
+
+    invoke-static/range {v25 .. v26}, Landroid/util/secutil/Log;->d(Ljava/lang/String;Ljava/lang/String;)I
+
+    :cond_12a
+    :goto_12a
+    return-void
+
+    :cond_12b
+    const/16 v25, 0x1
+
+    goto/16 :goto_a5
+
+    :cond_12f
+    if-nez v16, :cond_185
+
+    if-nez v17, :cond_185
+
+    xor-int/lit8 v25, v12, 0x1
+
+    if-nez v25, :cond_185
+
+    xor-int/lit8 v25, v15, 0x1
+
+    if-nez v25, :cond_185
+
+    if-nez v10, :cond_185
+
+    move/from16 v20, v9
+
+    :goto_13f
+    :try_start_13f
+    const-string/jumbo v25, "KnoxChooseLockTwoFactor"
+
+    new-instance v26, Ljava/lang/StringBuilder;
+
+    invoke-direct/range {v26 .. v26}, Ljava/lang/StringBuilder;-><init>()V
+
+    const-string/jumbo v27, "removeEnterpriseIdentity: "
+
+    invoke-virtual/range {v26 .. v27}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    move-result-object v26
+
+    move-object/from16 v0, v26
+
+    move/from16 v1, v20
+
+    invoke-virtual {v0, v1}, Ljava/lang/StringBuilder;->append(Z)Ljava/lang/StringBuilder;
+
+    move-result-object v26
+
+    invoke-virtual/range {v26 .. v26}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;
+
+    move-result-object v26
+
+    invoke-static/range {v25 .. v26}, Landroid/util/secutil/Log;->d(Ljava/lang/String;Ljava/lang/String;)I
+
+    if-eqz v13, :cond_188
+
+    xor-int/lit8 v25, v20, 0x1
+
+    if-eqz v25, :cond_188
 
     move-object/from16 v0, p0
 
     iget-object v0, v0, Lcom/samsung/android/settings/KnoxChooseLockTwoFactor$KnoxChooseLockTwoFactorFragment;->mPrefPassword:Lcom/android/settingslib/RestrictedPreference;
 
-    move-object/from16 v19, v0
+    move-object/from16 v25, v0
 
-    const/16 v20, 0x0
+    const/16 v26, 0x0
 
-    invoke-virtual/range {v19 .. v20}, Lcom/android/settingslib/RestrictedPreference;->setEnabled(Z)V
+    invoke-virtual/range {v25 .. v26}, Lcom/android/settingslib/RestrictedPreference;->setEnabled(Z)V
 
     move-object/from16 v0, p0
 
     iget-object v0, v0, Lcom/samsung/android/settings/KnoxChooseLockTwoFactor$KnoxChooseLockTwoFactorFragment;->mPrefPin:Lcom/android/settingslib/RestrictedPreference;
 
-    move-object/from16 v19, v0
+    move-object/from16 v25, v0
 
-    const/16 v20, 0x0
+    const/16 v26, 0x0
 
-    invoke-virtual/range {v19 .. v20}, Lcom/android/settingslib/RestrictedPreference;->setEnabled(Z)V
+    invoke-virtual/range {v25 .. v26}, Lcom/android/settingslib/RestrictedPreference;->setEnabled(Z)V
 
     move-object/from16 v0, p0
 
     iget-object v0, v0, Lcom/samsung/android/settings/KnoxChooseLockTwoFactor$KnoxChooseLockTwoFactorFragment;->mPrefPattern:Lcom/android/settingslib/RestrictedPreference;
 
-    move-object/from16 v19, v0
+    move-object/from16 v25, v0
 
-    const/16 v20, 0x0
+    const/16 v26, 0x0
 
-    invoke-virtual/range {v19 .. v20}, Lcom/android/settingslib/RestrictedPreference;->setEnabled(Z)V
+    invoke-virtual/range {v25 .. v26}, Lcom/android/settingslib/RestrictedPreference;->setEnabled(Z)V
 
-    :cond_dc
-    :goto_dc
-    return-void
+    goto :goto_12a
 
-    :cond_dd
-    const/16 v19, 0x1
+    :cond_185
+    const/16 v20, 0x1
 
-    goto :goto_9f
+    goto :goto_13f
 
-    :cond_e0
-    const/16 v17, 0x1
+    :cond_188
+    if-nez v14, :cond_18c
 
-    goto :goto_b5
+    if-eqz v20, :cond_12a
 
-    :cond_e3
-    if-nez v11, :cond_e7
-
-    if-eqz v17, :cond_dc
-
-    :cond_e7
+    :cond_18c
     invoke-virtual/range {p0 .. p0}, Lcom/samsung/android/settings/KnoxChooseLockTwoFactor$KnoxChooseLockTwoFactorFragment;->getPreferenceScreen()Landroid/support/v7/preference/PreferenceScreen;
 
-    move-result-object v18
+    move-result-object v21
 
     move-object/from16 v0, p0
 
     iget-object v0, v0, Lcom/samsung/android/settings/KnoxChooseLockTwoFactor$KnoxChooseLockTwoFactorFragment;->mPrefEnterpriseIdentity:Lcom/android/settingslib/RestrictedPreference;
 
-    move-object/from16 v19, v0
+    move-object/from16 v25, v0
 
-    invoke-virtual/range {v18 .. v19}, Landroid/support/v7/preference/PreferenceScreen;->removePreference(Landroid/support/v7/preference/Preference;)Z
-    :try_end_f4
-    .catch Ljava/lang/SecurityException; {:try_start_0 .. :try_end_f4} :catch_f5
+    move-object/from16 v0, v21
 
-    goto :goto_dc
+    move-object/from16 v1, v25
 
-    :catch_f5
-    move-exception v4
+    invoke-virtual {v0, v1}, Landroid/support/v7/preference/PreferenceScreen;->removePreference(Landroid/support/v7/preference/Preference;)Z
 
-    const-string/jumbo v19, "KnoxChooseLockTwoFactor"
+    goto :goto_12a
 
-    new-instance v20, Ljava/lang/StringBuilder;
+    :cond_19e
+    const-string/jumbo v25, "KnoxChooseLockTwoFactor"
 
-    invoke-direct/range {v20 .. v20}, Ljava/lang/StringBuilder;-><init>()V
+    const-string/jumbo v26, "ekm is null"
 
-    const-string/jumbo v21, "SecurityException: "
+    invoke-static/range {v25 .. v26}, Landroid/util/secutil/Log;->d(Ljava/lang/String;Ljava/lang/String;)I
+    :try_end_1a7
+    .catch Ljava/lang/SecurityException; {:try_start_13f .. :try_end_1a7} :catch_10d
 
-    invoke-virtual/range {v20 .. v21}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
-
-    move-result-object v20
-
-    move-object/from16 v0, v20
-
-    invoke-virtual {v0, v4}, Ljava/lang/StringBuilder;->append(Ljava/lang/Object;)Ljava/lang/StringBuilder;
-
-    move-result-object v20
-
-    invoke-virtual/range {v20 .. v20}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;
-
-    move-result-object v20
-
-    invoke-static/range {v19 .. v20}, Landroid/util/secutil/Log;->d(Ljava/lang/String;Ljava/lang/String;)I
-
-    goto :goto_dc
-
-    :cond_113
-    :try_start_113
-    const-string/jumbo v19, "KnoxChooseLockTwoFactor"
-
-    const-string/jumbo v20, "ekm is null"
-
-    invoke-static/range {v19 .. v20}, Landroid/util/secutil/Log;->d(Ljava/lang/String;Ljava/lang/String;)I
-    :try_end_11c
-    .catch Ljava/lang/SecurityException; {:try_start_113 .. :try_end_11c} :catch_f5
-
-    goto :goto_dc
+    goto :goto_12a
 .end method
 
 .method private setPasswordEnabledByPolicy(I)V
@@ -1678,6 +2040,10 @@
     invoke-virtual {v0, v1}, Landroid/app/ActionBar;->setTitle(Ljava/lang/CharSequence;)V
 
     :cond_a8
+    const/4 v3, 0x0
+
+    iput-boolean v3, p0, Lcom/samsung/android/settings/KnoxChooseLockTwoFactor$KnoxChooseLockTwoFactorFragment;->mIsSecondStep:Z
+
     return-void
 .end method
 
@@ -1775,7 +2141,7 @@
 
     iget-boolean v3, p0, Lcom/samsung/android/settings/KnoxChooseLockTwoFactor$KnoxChooseLockTwoFactorFragment;->mFingerDisabledByEDM:Z
 
-    if-eqz v3, :cond_cc
+    if-eqz v3, :cond_ce
 
     iget-object v3, p0, Lcom/samsung/android/settings/KnoxChooseLockTwoFactor$KnoxChooseLockTwoFactorFragment;->mSwitchPrefFingerprint:Landroid/support/v14/preference/SwitchPreference;
 
@@ -1819,7 +2185,7 @@
 
     iget-boolean v3, p0, Lcom/samsung/android/settings/KnoxChooseLockTwoFactor$KnoxChooseLockTwoFactorFragment;->mIrisDisabledByEDM:Z
 
-    if-eqz v3, :cond_eb
+    if-eqz v3, :cond_ed
 
     iget-object v3, p0, Lcom/samsung/android/settings/KnoxChooseLockTwoFactor$KnoxChooseLockTwoFactorFragment;->mSwitchPrefIris:Landroid/support/v14/preference/SwitchPreference;
 
@@ -1873,16 +2239,18 @@
     invoke-virtual {v0, v1}, Landroid/app/ActionBar;->setTitle(Ljava/lang/CharSequence;)V
 
     :cond_cb
+    iput-boolean v9, p0, Lcom/samsung/android/settings/KnoxChooseLockTwoFactor$KnoxChooseLockTwoFactorFragment;->mIsSecondStep:Z
+
     return-void
 
-    :cond_cc
+    :cond_ce
     iget v3, p0, Lcom/samsung/android/settings/KnoxChooseLockTwoFactor$KnoxChooseLockTwoFactorFragment;->mUserId:I
 
     invoke-direct {p0, v3}, Lcom/samsung/android/settings/KnoxChooseLockTwoFactor$KnoxChooseLockTwoFactorFragment;->hasEnrolledFingerprint(I)Z
 
     move-result v3
 
-    if-eqz v3, :cond_e2
+    if-eqz v3, :cond_e4
 
     iget-object v3, p0, Lcom/samsung/android/settings/KnoxChooseLockTwoFactor$KnoxChooseLockTwoFactorFragment;->mSwitchPrefFingerprint:Landroid/support/v14/preference/SwitchPreference;
 
@@ -1898,7 +2266,7 @@
 
     goto :goto_76
 
-    :cond_e2
+    :cond_e4
     iget-object v3, p0, Lcom/samsung/android/settings/KnoxChooseLockTwoFactor$KnoxChooseLockTwoFactorFragment;->mSwitchPrefFingerprint:Landroid/support/v14/preference/SwitchPreference;
 
     const-string/jumbo v4, ""
@@ -1907,14 +2275,14 @@
 
     goto :goto_76
 
-    :cond_eb
+    :cond_ed
     iget v3, p0, Lcom/samsung/android/settings/KnoxChooseLockTwoFactor$KnoxChooseLockTwoFactorFragment;->mUserId:I
 
     invoke-direct {p0, v3}, Lcom/samsung/android/settings/KnoxChooseLockTwoFactor$KnoxChooseLockTwoFactorFragment;->hasEnrolledIrises(I)Z
 
     move-result v3
 
-    if-eqz v3, :cond_101
+    if-eqz v3, :cond_103
 
     iget-object v3, p0, Lcom/samsung/android/settings/KnoxChooseLockTwoFactor$KnoxChooseLockTwoFactorFragment;->mSwitchPrefIris:Landroid/support/v14/preference/SwitchPreference;
 
@@ -1930,7 +2298,7 @@
 
     goto :goto_a5
 
-    :cond_101
+    :cond_103
     iget-object v3, p0, Lcom/samsung/android/settings/KnoxChooseLockTwoFactor$KnoxChooseLockTwoFactorFragment;->mSwitchPrefIris:Landroid/support/v14/preference/SwitchPreference;
 
     const-string/jumbo v4, ""
@@ -2216,394 +2584,466 @@
 .end method
 
 .method public onActivityResult(IILandroid/content/Intent;)V
-    .registers 13
+    .registers 15
 
-    const v8, 0x7f121a6e
+    const v10, 0x7f121a6e
 
-    const/4 v7, 0x1
+    const/4 v9, 0x1
 
-    const/4 v6, 0x0
+    const/4 v8, 0x0
 
-    const/4 v5, -0x1
+    const/4 v7, -0x1
 
     invoke-super {p0, p1, p2, p3}, Lcom/android/settings/SettingsPreferenceFragment;->onActivityResult(IILandroid/content/Intent;)V
 
-    const-string/jumbo v2, "KnoxChooseLockTwoFactor"
+    const-string/jumbo v4, "KnoxChooseLockTwoFactor"
 
-    new-instance v3, Ljava/lang/StringBuilder;
+    new-instance v5, Ljava/lang/StringBuilder;
 
-    invoke-direct {v3}, Ljava/lang/StringBuilder;-><init>()V
+    invoke-direct {v5}, Ljava/lang/StringBuilder;-><init>()V
 
-    const-string/jumbo v4, "[FingerPlusActivity] onActivityResult : requestCode : "
+    const-string/jumbo v6, "[FingerPlusActivity] onActivityResult : requestCode : "
 
-    invoke-virtual {v3, v4}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+    invoke-virtual {v5, v6}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
 
-    move-result-object v3
+    move-result-object v5
 
-    invoke-virtual {v3, p1}, Ljava/lang/StringBuilder;->append(I)Ljava/lang/StringBuilder;
+    invoke-virtual {v5, p1}, Ljava/lang/StringBuilder;->append(I)Ljava/lang/StringBuilder;
 
-    move-result-object v3
+    move-result-object v5
 
-    const-string/jumbo v4, " resultCode : "
+    const-string/jumbo v6, " resultCode : "
 
-    invoke-virtual {v3, v4}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+    invoke-virtual {v5, v6}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
 
-    move-result-object v3
+    move-result-object v5
 
-    invoke-virtual {v3, p2}, Ljava/lang/StringBuilder;->append(I)Ljava/lang/StringBuilder;
+    invoke-virtual {v5, p2}, Ljava/lang/StringBuilder;->append(I)Ljava/lang/StringBuilder;
 
-    move-result-object v3
+    move-result-object v5
 
-    invoke-virtual {v3}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;
+    invoke-virtual {v5}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;
 
-    move-result-object v3
+    move-result-object v5
 
-    invoke-static {v2, v3}, Landroid/util/secutil/Log;->d(Ljava/lang/String;Ljava/lang/String;)I
+    invoke-static {v4, v5}, Landroid/util/secutil/Log;->d(Ljava/lang/String;Ljava/lang/String;)I
 
-    const/16 v2, 0x2774
+    const/16 v4, 0x2774
 
-    if-ne p1, v2, :cond_d7
+    if-ne p1, v4, :cond_116
 
-    const-string/jumbo v2, "KnoxChooseLockTwoFactor"
+    const-string/jumbo v4, "KnoxChooseLockTwoFactor"
 
-    const-string/jumbo v3, "requestCode == REQUEST_TWO_FACTOR_SET_FIRST"
+    const-string/jumbo v5, "requestCode == REQUEST_TWO_FACTOR_SET_FIRST"
 
-    invoke-static {v2, v3}, Landroid/util/secutil/Log;->d(Ljava/lang/String;Ljava/lang/String;)I
+    invoke-static {v4, v5}, Landroid/util/secutil/Log;->d(Ljava/lang/String;Ljava/lang/String;)I
 
-    if-ne p2, v7, :cond_c1
+    if-ne p2, v9, :cond_100
 
-    const-string/jumbo v2, "KnoxChooseLockTwoFactor"
+    const-string/jumbo v4, "KnoxChooseLockTwoFactor"
 
-    const-string/jumbo v3, "resultCode == Activity.RESULT_FIRST_USER"
+    const-string/jumbo v5, "resultCode == Activity.RESULT_FIRST_USER"
 
-    invoke-static {v2, v3}, Landroid/util/secutil/Log;->d(Ljava/lang/String;Ljava/lang/String;)I
+    invoke-static {v4, v5}, Landroid/util/secutil/Log;->d(Ljava/lang/String;Ljava/lang/String;)I
 
-    invoke-virtual {p0}, Lcom/samsung/android/settings/KnoxChooseLockTwoFactor$KnoxChooseLockTwoFactorFragment;->getActivity()Landroid/app/Activity;
+    iget-boolean v4, p0, Lcom/samsung/android/settings/KnoxChooseLockTwoFactor$KnoxChooseLockTwoFactorFragment;->mMultifactorAuthEnforced:Z
 
-    move-result-object v2
-
-    iget v3, p0, Lcom/samsung/android/settings/KnoxChooseLockTwoFactor$KnoxChooseLockTwoFactorFragment;->mUserId:I
-
-    invoke-static {v2, v3}, Lcom/android/settings/Utils;->isMultifactorAuthEnforced(Landroid/content/Context;I)Z
-
-    move-result v2
-
-    if-nez v2, :cond_5e
+    if-nez v4, :cond_56
 
     invoke-virtual {p0}, Lcom/samsung/android/settings/KnoxChooseLockTwoFactor$KnoxChooseLockTwoFactorFragment;->getContentResolver()Landroid/content/ContentResolver;
 
-    move-result-object v2
+    move-result-object v4
 
-    const-string/jumbo v3, "knox_finger_print_plus"
+    const-string/jumbo v5, "knox_finger_print_plus"
+
+    iget v6, p0, Lcom/samsung/android/settings/KnoxChooseLockTwoFactor$KnoxChooseLockTwoFactorFragment;->mUserId:I
+
+    invoke-static {v4, v5, v8, v6}, Landroid/provider/Settings$System;->putIntForUser(Landroid/content/ContentResolver;Ljava/lang/String;II)Z
+
+    :cond_56
+    const-string/jumbo v4, "KnoxChooseLockTwoFactor"
+
+    const-string/jumbo v5, "two factor : REMOVE"
+
+    invoke-static {v4, v5}, Landroid/util/secutil/Log;->d(Ljava/lang/String;Ljava/lang/String;)I
+
+    if-eqz p3, :cond_85
+
+    const-string/jumbo v4, "hw_auth_token"
+
+    invoke-virtual {p3, v4}, Landroid/content/Intent;->getByteArrayExtra(Ljava/lang/String;)[B
+
+    move-result-object v4
+
+    iput-object v4, p0, Lcom/samsung/android/settings/KnoxChooseLockTwoFactor$KnoxChooseLockTwoFactorFragment;->mToken:[B
+
+    const-string/jumbo v4, "hw_auth_token_iris"
+
+    invoke-virtual {p3, v4}, Landroid/content/Intent;->getByteArrayExtra(Ljava/lang/String;)[B
+
+    move-result-object v4
+
+    iput-object v4, p0, Lcom/samsung/android/settings/KnoxChooseLockTwoFactor$KnoxChooseLockTwoFactorFragment;->mTokenIris:[B
+
+    :try_start_73
+    sget v4, Lcom/samsung/android/settings/KnoxChooseLockTwoFactor$KnoxChooseLockTwoFactorFragment;->mCurrentLockTypeIdx:I
+
+    if-eqz v4, :cond_7c
+
+    sget v4, Lcom/samsung/android/settings/KnoxChooseLockTwoFactor$KnoxChooseLockTwoFactorFragment;->mCurrentLockTypeIdx:I
+
+    const/4 v5, 0x2
+
+    if-ne v4, v5, :cond_cb
+
+    :cond_7c
+    const-string/jumbo v4, "password"
+
+    invoke-virtual {p3, v4}, Landroid/content/Intent;->getStringExtra(Ljava/lang/String;)Ljava/lang/String;
+
+    move-result-object v4
+
+    iput-object v4, p0, Lcom/samsung/android/settings/KnoxChooseLockTwoFactor$KnoxChooseLockTwoFactorFragment;->mNewPassword:Ljava/lang/String;
+    :try_end_85
+    .catch Ljava/lang/Exception; {:try_start_73 .. :try_end_85} :catch_e0
+
+    :cond_85
+    :goto_85
+    if-ne p2, v9, :cond_c7
+
+    iget-object v4, p0, Lcom/samsung/android/settings/KnoxChooseLockTwoFactor$KnoxChooseLockTwoFactorFragment;->mFingerprintManager:Landroid/hardware/fingerprint/FingerprintManager;
+
+    if-eqz v4, :cond_a7
+
+    iget-object v4, p0, Lcom/samsung/android/settings/KnoxChooseLockTwoFactor$KnoxChooseLockTwoFactorFragment;->mToken:[B
+
+    if-eqz v4, :cond_a7
 
     iget v4, p0, Lcom/samsung/android/settings/KnoxChooseLockTwoFactor$KnoxChooseLockTwoFactorFragment;->mUserId:I
 
-    invoke-static {v2, v3, v6, v4}, Landroid/provider/Settings$System;->putIntForUser(Landroid/content/ContentResolver;Ljava/lang/String;II)Z
+    invoke-direct {p0, v4}, Lcom/samsung/android/settings/KnoxChooseLockTwoFactor$KnoxChooseLockTwoFactorFragment;->hasEnrolledFingerprint(I)Z
 
-    :cond_5e
-    const-string/jumbo v2, "KnoxChooseLockTwoFactor"
+    move-result v4
 
-    const-string/jumbo v3, "two factor : REMOVE"
+    if-eqz v4, :cond_a7
 
-    invoke-static {v2, v3}, Landroid/util/secutil/Log;->d(Ljava/lang/String;Ljava/lang/String;)I
+    const-string/jumbo v4, "KnoxChooseLockTwoFactor"
 
-    if-eqz p3, :cond_7b
+    const-string/jumbo v5, "mFingerprintManager.requestUpdateSID called"
 
-    const-string/jumbo v2, "hw_auth_token"
+    invoke-static {v4, v5}, Landroid/util/secutil/Log;->d(Ljava/lang/String;Ljava/lang/String;)I
 
-    invoke-virtual {p3, v2}, Landroid/content/Intent;->getByteArrayExtra(Ljava/lang/String;)[B
+    iget-object v4, p0, Lcom/samsung/android/settings/KnoxChooseLockTwoFactor$KnoxChooseLockTwoFactorFragment;->mFingerprintManager:Landroid/hardware/fingerprint/FingerprintManager;
 
-    move-result-object v2
+    iget-object v5, p0, Lcom/samsung/android/settings/KnoxChooseLockTwoFactor$KnoxChooseLockTwoFactorFragment;->mToken:[B
 
-    iput-object v2, p0, Lcom/samsung/android/settings/KnoxChooseLockTwoFactor$KnoxChooseLockTwoFactorFragment;->mToken:[B
+    invoke-virtual {v4, v5}, Landroid/hardware/fingerprint/FingerprintManager;->requestUpdateSID([B)Z
 
-    const-string/jumbo v2, "hw_auth_token_iris"
+    :cond_a7
+    iget-object v4, p0, Lcom/samsung/android/settings/KnoxChooseLockTwoFactor$KnoxChooseLockTwoFactorFragment;->mIrisManager:Lcom/samsung/android/camera/iris/SemIrisManager;
 
-    invoke-virtual {p3, v2}, Landroid/content/Intent;->getByteArrayExtra(Ljava/lang/String;)[B
+    if-eqz v4, :cond_c7
 
-    move-result-object v2
+    iget-object v4, p0, Lcom/samsung/android/settings/KnoxChooseLockTwoFactor$KnoxChooseLockTwoFactorFragment;->mTokenIris:[B
 
-    iput-object v2, p0, Lcom/samsung/android/settings/KnoxChooseLockTwoFactor$KnoxChooseLockTwoFactorFragment;->mTokenIris:[B
+    if-eqz v4, :cond_c7
 
-    :cond_7b
-    if-ne p2, v7, :cond_bd
+    iget v4, p0, Lcom/samsung/android/settings/KnoxChooseLockTwoFactor$KnoxChooseLockTwoFactorFragment;->mUserId:I
 
-    iget-object v2, p0, Lcom/samsung/android/settings/KnoxChooseLockTwoFactor$KnoxChooseLockTwoFactorFragment;->mFingerprintManager:Landroid/hardware/fingerprint/FingerprintManager;
+    invoke-direct {p0, v4}, Lcom/samsung/android/settings/KnoxChooseLockTwoFactor$KnoxChooseLockTwoFactorFragment;->hasEnrolledIrises(I)Z
 
-    if-eqz v2, :cond_9d
+    move-result v4
 
-    iget-object v2, p0, Lcom/samsung/android/settings/KnoxChooseLockTwoFactor$KnoxChooseLockTwoFactorFragment;->mToken:[B
+    if-eqz v4, :cond_c7
 
-    if-eqz v2, :cond_9d
+    const-string/jumbo v4, "KnoxChooseLockTwoFactor"
 
-    iget v2, p0, Lcom/samsung/android/settings/KnoxChooseLockTwoFactor$KnoxChooseLockTwoFactorFragment;->mUserId:I
+    const-string/jumbo v5, "mIrisManager.requestUpdateSID called"
 
-    invoke-direct {p0, v2}, Lcom/samsung/android/settings/KnoxChooseLockTwoFactor$KnoxChooseLockTwoFactorFragment;->hasEnrolledFingerprint(I)Z
+    invoke-static {v4, v5}, Landroid/util/secutil/Log;->d(Ljava/lang/String;Ljava/lang/String;)I
 
-    move-result v2
+    iget-object v4, p0, Lcom/samsung/android/settings/KnoxChooseLockTwoFactor$KnoxChooseLockTwoFactorFragment;->mIrisManager:Lcom/samsung/android/camera/iris/SemIrisManager;
 
-    if-eqz v2, :cond_9d
+    iget-object v5, p0, Lcom/samsung/android/settings/KnoxChooseLockTwoFactor$KnoxChooseLockTwoFactorFragment;->mTokenIris:[B
 
-    const-string/jumbo v2, "KnoxChooseLockTwoFactor"
+    invoke-virtual {v4, v5}, Lcom/samsung/android/camera/iris/SemIrisManager;->requestUpdateSID([B)Z
 
-    const-string/jumbo v3, "mFingerprintManager.requestUpdateSID called"
-
-    invoke-static {v2, v3}, Landroid/util/secutil/Log;->d(Ljava/lang/String;Ljava/lang/String;)I
-
-    iget-object v2, p0, Lcom/samsung/android/settings/KnoxChooseLockTwoFactor$KnoxChooseLockTwoFactorFragment;->mFingerprintManager:Landroid/hardware/fingerprint/FingerprintManager;
-
-    iget-object v3, p0, Lcom/samsung/android/settings/KnoxChooseLockTwoFactor$KnoxChooseLockTwoFactorFragment;->mToken:[B
-
-    invoke-virtual {v2, v3}, Landroid/hardware/fingerprint/FingerprintManager;->requestUpdateSID([B)Z
-
-    :cond_9d
-    iget-object v2, p0, Lcom/samsung/android/settings/KnoxChooseLockTwoFactor$KnoxChooseLockTwoFactorFragment;->mIrisManager:Lcom/samsung/android/camera/iris/SemIrisManager;
-
-    if-eqz v2, :cond_bd
-
-    iget-object v2, p0, Lcom/samsung/android/settings/KnoxChooseLockTwoFactor$KnoxChooseLockTwoFactorFragment;->mTokenIris:[B
-
-    if-eqz v2, :cond_bd
-
-    iget v2, p0, Lcom/samsung/android/settings/KnoxChooseLockTwoFactor$KnoxChooseLockTwoFactorFragment;->mUserId:I
-
-    invoke-direct {p0, v2}, Lcom/samsung/android/settings/KnoxChooseLockTwoFactor$KnoxChooseLockTwoFactorFragment;->hasEnrolledIrises(I)Z
-
-    move-result v2
-
-    if-eqz v2, :cond_bd
-
-    const-string/jumbo v2, "KnoxChooseLockTwoFactor"
-
-    const-string/jumbo v3, "mIrisManager.requestUpdateSID called"
-
-    invoke-static {v2, v3}, Landroid/util/secutil/Log;->d(Ljava/lang/String;Ljava/lang/String;)I
-
-    iget-object v2, p0, Lcom/samsung/android/settings/KnoxChooseLockTwoFactor$KnoxChooseLockTwoFactorFragment;->mIrisManager:Lcom/samsung/android/camera/iris/SemIrisManager;
-
-    iget-object v3, p0, Lcom/samsung/android/settings/KnoxChooseLockTwoFactor$KnoxChooseLockTwoFactorFragment;->mTokenIris:[B
-
-    invoke-virtual {v2, v3}, Lcom/samsung/android/camera/iris/SemIrisManager;->requestUpdateSID([B)Z
-
-    :cond_bd
+    :cond_c7
     invoke-direct {p0}, Lcom/samsung/android/settings/KnoxChooseLockTwoFactor$KnoxChooseLockTwoFactorFragment;->showSecondStep()V
 
-    :cond_c0
-    :goto_c0
+    :cond_ca
+    :goto_ca
     return-void
 
-    :cond_c1
-    if-ne p2, v5, :cond_cd
+    :cond_cb
+    :try_start_cb
+    sget v4, Lcom/samsung/android/settings/KnoxChooseLockTwoFactor$KnoxChooseLockTwoFactorFragment;->mCurrentLockTypeIdx:I
 
-    const-string/jumbo v2, "KnoxChooseLockTwoFactor"
+    const/4 v5, 0x3
 
-    const-string/jumbo v3, "resultCode == Activity.RESULT_OK"
+    if-ne v4, v5, :cond_85
 
-    invoke-static {v2, v3}, Landroid/util/secutil/Log;->d(Ljava/lang/String;Ljava/lang/String;)I
+    const-string/jumbo v4, "password"
 
-    goto :goto_c0
+    invoke-virtual {p3, v4}, Landroid/content/Intent;->getStringExtra(Ljava/lang/String;)Ljava/lang/String;
 
-    :cond_cd
-    const-string/jumbo v2, "KnoxChooseLockTwoFactor"
+    move-result-object v3
 
-    const-string/jumbo v3, "requestCode == else"
+    iget-object v4, p0, Lcom/samsung/android/settings/KnoxChooseLockTwoFactor$KnoxChooseLockTwoFactorFragment;->mLockPatternUtils:Lcom/android/internal/widget/LockPatternUtils;
 
-    invoke-static {v2, v3}, Landroid/util/secutil/Log;->d(Ljava/lang/String;Ljava/lang/String;)I
+    invoke-static {v3}, Lcom/android/internal/widget/LockPatternUtils;->stringToPattern(Ljava/lang/String;)Ljava/util/List;
 
-    goto :goto_c0
+    move-result-object v4
 
-    :cond_d7
-    const/16 v2, 0x3f7
+    iput-object v4, p0, Lcom/samsung/android/settings/KnoxChooseLockTwoFactor$KnoxChooseLockTwoFactorFragment;->mNewPattern:Ljava/util/List;
+    :try_end_df
+    .catch Ljava/lang/Exception; {:try_start_cb .. :try_end_df} :catch_e0
 
-    if-ne p1, v2, :cond_f7
+    goto :goto_85
 
-    if-ne p2, v5, :cond_ec
+    :catch_e0
+    move-exception v0
 
-    iget-object v2, p0, Lcom/samsung/android/settings/KnoxChooseLockTwoFactor$KnoxChooseLockTwoFactorFragment;->content:Landroid/widget/LinearLayout;
+    const-string/jumbo v4, "KnoxChooseLockTwoFactor"
 
-    invoke-virtual {v2, v6}, Landroid/widget/LinearLayout;->setVisibility(I)V
+    new-instance v5, Ljava/lang/StringBuilder;
 
-    const-string/jumbo v2, "KnoxChooseLockTwoFactor"
+    invoke-direct {v5}, Ljava/lang/StringBuilder;-><init>()V
 
-    const-string/jumbo v3, "[Two Factor] fingeridentified"
+    const-string/jumbo v6, "exception : "
 
-    invoke-static {v2, v3}, Landroid/util/secutil/Log;->d(Ljava/lang/String;Ljava/lang/String;)I
+    invoke-virtual {v5, v6}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
 
-    goto :goto_c0
+    move-result-object v5
 
-    :cond_ec
-    iget-object v2, p0, Lcom/samsung/android/settings/KnoxChooseLockTwoFactor$KnoxChooseLockTwoFactorFragment;->activity:Landroid/app/Activity;
+    invoke-virtual {v0}, Ljava/lang/Exception;->getMessage()Ljava/lang/String;
 
-    invoke-virtual {v2, v6}, Landroid/app/Activity;->setResult(I)V
+    move-result-object v6
 
-    iget-object v2, p0, Lcom/samsung/android/settings/KnoxChooseLockTwoFactor$KnoxChooseLockTwoFactorFragment;->activity:Landroid/app/Activity;
+    invoke-virtual {v5, v6}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
 
-    invoke-virtual {v2}, Landroid/app/Activity;->finish()V
+    move-result-object v5
 
-    goto :goto_c0
+    invoke-virtual {v5}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;
 
-    :cond_f7
-    const/16 v2, 0x2718
+    move-result-object v5
 
-    if-ne p1, v2, :cond_138
+    invoke-static {v4, v5}, Landroid/util/secutil/Log;->e(Ljava/lang/String;Ljava/lang/String;)I
 
-    const-string/jumbo v2, "KnoxChooseLockTwoFactor"
+    goto :goto_85
 
-    const-string/jumbo v3, "[Two Factor] iris by switch"
+    :cond_100
+    if-ne p2, v7, :cond_10c
 
-    invoke-static {v2, v3}, Landroid/util/secutil/Log;->d(Ljava/lang/String;Ljava/lang/String;)I
+    const-string/jumbo v4, "KnoxChooseLockTwoFactor"
 
-    const-string/jumbo v2, "switch_iris"
+    const-string/jumbo v5, "resultCode == Activity.RESULT_OK"
 
-    invoke-virtual {p0, v2}, Lcom/samsung/android/settings/KnoxChooseLockTwoFactor$KnoxChooseLockTwoFactorFragment;->findPreference(Ljava/lang/CharSequence;)Landroid/support/v7/preference/Preference;
+    invoke-static {v4, v5}, Landroid/util/secutil/Log;->d(Ljava/lang/String;Ljava/lang/String;)I
+
+    goto :goto_ca
+
+    :cond_10c
+    const-string/jumbo v4, "KnoxChooseLockTwoFactor"
+
+    const-string/jumbo v5, "requestCode == else"
+
+    invoke-static {v4, v5}, Landroid/util/secutil/Log;->d(Ljava/lang/String;Ljava/lang/String;)I
+
+    goto :goto_ca
+
+    :cond_116
+    const/16 v4, 0x3f7
+
+    if-ne p1, v4, :cond_136
+
+    if-ne p2, v7, :cond_12b
+
+    iget-object v4, p0, Lcom/samsung/android/settings/KnoxChooseLockTwoFactor$KnoxChooseLockTwoFactorFragment;->content:Landroid/widget/LinearLayout;
+
+    invoke-virtual {v4, v8}, Landroid/widget/LinearLayout;->setVisibility(I)V
+
+    const-string/jumbo v4, "KnoxChooseLockTwoFactor"
+
+    const-string/jumbo v5, "[Two Factor] fingeridentified"
+
+    invoke-static {v4, v5}, Landroid/util/secutil/Log;->d(Ljava/lang/String;Ljava/lang/String;)I
+
+    goto :goto_ca
+
+    :cond_12b
+    iget-object v4, p0, Lcom/samsung/android/settings/KnoxChooseLockTwoFactor$KnoxChooseLockTwoFactorFragment;->activity:Landroid/app/Activity;
+
+    invoke-virtual {v4, v8}, Landroid/app/Activity;->setResult(I)V
+
+    iget-object v4, p0, Lcom/samsung/android/settings/KnoxChooseLockTwoFactor$KnoxChooseLockTwoFactorFragment;->activity:Landroid/app/Activity;
+
+    invoke-virtual {v4}, Landroid/app/Activity;->finish()V
+
+    goto :goto_ca
+
+    :cond_136
+    const/16 v4, 0x2718
+
+    if-ne p1, v4, :cond_178
+
+    const-string/jumbo v4, "KnoxChooseLockTwoFactor"
+
+    const-string/jumbo v5, "[Two Factor] iris by switch"
+
+    invoke-static {v4, v5}, Landroid/util/secutil/Log;->d(Ljava/lang/String;Ljava/lang/String;)I
+
+    const-string/jumbo v4, "switch_iris"
+
+    invoke-virtual {p0, v4}, Lcom/samsung/android/settings/KnoxChooseLockTwoFactor$KnoxChooseLockTwoFactorFragment;->findPreference(Ljava/lang/CharSequence;)Landroid/support/v7/preference/Preference;
+
+    move-result-object v2
+
+    check-cast v2, Landroid/support/v14/preference/SwitchPreference;
+
+    invoke-static {}, Lcom/android/settings/Utils;->isSupportIris()Z
+
+    move-result v4
+
+    if-eqz v4, :cond_16f
+
+    iget v4, p0, Lcom/samsung/android/settings/KnoxChooseLockTwoFactor$KnoxChooseLockTwoFactorFragment;->mUserId:I
+
+    invoke-direct {p0, v4}, Lcom/samsung/android/settings/KnoxChooseLockTwoFactor$KnoxChooseLockTwoFactorFragment;->hasEnrolledIrises(I)Z
+
+    move-result v4
+
+    if-eqz v4, :cond_16f
+
+    invoke-virtual {v2, v9}, Landroid/support/v14/preference/SwitchPreference;->setChecked(Z)V
+
+    iget-object v4, p0, Lcom/samsung/android/settings/KnoxChooseLockTwoFactor$KnoxChooseLockTwoFactorFragment;->mSwitchPrefIris:Landroid/support/v14/preference/SwitchPreference;
+
+    invoke-virtual {p0}, Lcom/samsung/android/settings/KnoxChooseLockTwoFactor$KnoxChooseLockTwoFactorFragment;->getResources()Landroid/content/res/Resources;
+
+    move-result-object v5
+
+    invoke-virtual {v5, v10}, Landroid/content/res/Resources;->getString(I)Ljava/lang/String;
+
+    move-result-object v5
+
+    invoke-virtual {v4, v5}, Landroid/support/v14/preference/SwitchPreference;->setSummary(Ljava/lang/CharSequence;)V
+
+    :goto_16a
+    invoke-virtual {p0}, Lcom/samsung/android/settings/KnoxChooseLockTwoFactor$KnoxChooseLockTwoFactorFragment;->setEnableNextButton()V
+
+    goto/16 :goto_ca
+
+    :cond_16f
+    iget-object v4, p0, Lcom/samsung/android/settings/KnoxChooseLockTwoFactor$KnoxChooseLockTwoFactorFragment;->mSwitchPrefIris:Landroid/support/v14/preference/SwitchPreference;
+
+    const-string/jumbo v5, ""
+
+    invoke-virtual {v4, v5}, Landroid/support/v14/preference/SwitchPreference;->setSummary(Ljava/lang/CharSequence;)V
+
+    goto :goto_16a
+
+    :cond_178
+    const/16 v4, 0x2717
+
+    if-ne p1, v4, :cond_1b0
+
+    const-string/jumbo v4, "KnoxChooseLockTwoFactor"
+
+    const-string/jumbo v5, "[Two Factor] finger by switch"
+
+    invoke-static {v4, v5}, Landroid/util/secutil/Log;->d(Ljava/lang/String;Ljava/lang/String;)I
+
+    const-string/jumbo v4, "switch_fingerprint"
+
+    invoke-virtual {p0, v4}, Lcom/samsung/android/settings/KnoxChooseLockTwoFactor$KnoxChooseLockTwoFactorFragment;->findPreference(Ljava/lang/CharSequence;)Landroid/support/v7/preference/Preference;
 
     move-result-object v1
 
     check-cast v1, Landroid/support/v14/preference/SwitchPreference;
 
-    invoke-static {}, Lcom/android/settings/Utils;->isSupportIris()Z
+    iget v4, p0, Lcom/samsung/android/settings/KnoxChooseLockTwoFactor$KnoxChooseLockTwoFactorFragment;->mUserId:I
 
-    move-result v2
+    invoke-direct {p0, v4}, Lcom/samsung/android/settings/KnoxChooseLockTwoFactor$KnoxChooseLockTwoFactorFragment;->hasEnrolledFingerprint(I)Z
 
-    if-eqz v2, :cond_12f
+    move-result v4
 
-    iget v2, p0, Lcom/samsung/android/settings/KnoxChooseLockTwoFactor$KnoxChooseLockTwoFactorFragment;->mUserId:I
+    if-eqz v4, :cond_1a9
 
-    invoke-direct {p0, v2}, Lcom/samsung/android/settings/KnoxChooseLockTwoFactor$KnoxChooseLockTwoFactorFragment;->hasEnrolledIrises(I)Z
-
-    move-result v2
-
-    if-eqz v2, :cond_12f
-
-    invoke-virtual {v1, v7}, Landroid/support/v14/preference/SwitchPreference;->setChecked(Z)V
-
-    iget-object v2, p0, Lcom/samsung/android/settings/KnoxChooseLockTwoFactor$KnoxChooseLockTwoFactorFragment;->mSwitchPrefIris:Landroid/support/v14/preference/SwitchPreference;
+    invoke-virtual {v1, v9}, Landroid/support/v14/preference/SwitchPreference;->setChecked(Z)V
 
     invoke-virtual {p0}, Lcom/samsung/android/settings/KnoxChooseLockTwoFactor$KnoxChooseLockTwoFactorFragment;->getResources()Landroid/content/res/Resources;
 
-    move-result-object v3
+    move-result-object v4
 
-    invoke-virtual {v3, v8}, Landroid/content/res/Resources;->getString(I)Ljava/lang/String;
+    invoke-virtual {v4, v10}, Landroid/content/res/Resources;->getString(I)Ljava/lang/String;
 
-    move-result-object v3
+    move-result-object v4
 
-    invoke-virtual {v2, v3}, Landroid/support/v14/preference/SwitchPreference;->setSummary(Ljava/lang/CharSequence;)V
+    invoke-virtual {v1, v4}, Landroid/support/v14/preference/SwitchPreference;->setSummary(Ljava/lang/CharSequence;)V
 
-    :goto_12b
+    :goto_1a4
     invoke-virtual {p0}, Lcom/samsung/android/settings/KnoxChooseLockTwoFactor$KnoxChooseLockTwoFactorFragment;->setEnableNextButton()V
 
-    goto :goto_c0
+    goto/16 :goto_ca
 
-    :cond_12f
-    iget-object v2, p0, Lcom/samsung/android/settings/KnoxChooseLockTwoFactor$KnoxChooseLockTwoFactorFragment;->mSwitchPrefIris:Landroid/support/v14/preference/SwitchPreference;
+    :cond_1a9
+    const-string/jumbo v4, ""
 
-    const-string/jumbo v3, ""
+    invoke-virtual {v1, v4}, Landroid/support/v14/preference/SwitchPreference;->setSummary(Ljava/lang/CharSequence;)V
 
-    invoke-virtual {v2, v3}, Landroid/support/v14/preference/SwitchPreference;->setSummary(Ljava/lang/CharSequence;)V
+    goto :goto_1a4
 
-    goto :goto_12b
+    :cond_1b0
+    const/16 v4, 0x2719
 
-    :cond_138
-    const/16 v2, 0x2717
+    if-ne p1, v4, :cond_1c2
 
-    if-ne p1, v2, :cond_170
+    if-ne p2, v7, :cond_ca
 
-    const-string/jumbo v2, "KnoxChooseLockTwoFactor"
+    iget-object v4, p0, Lcom/samsung/android/settings/KnoxChooseLockTwoFactor$KnoxChooseLockTwoFactorFragment;->activity:Landroid/app/Activity;
 
-    const-string/jumbo v3, "[Two Factor] finger by switch"
+    invoke-virtual {v4, v7}, Landroid/app/Activity;->setResult(I)V
 
-    invoke-static {v2, v3}, Landroid/util/secutil/Log;->d(Ljava/lang/String;Ljava/lang/String;)I
+    iget-object v4, p0, Lcom/samsung/android/settings/KnoxChooseLockTwoFactor$KnoxChooseLockTwoFactorFragment;->activity:Landroid/app/Activity;
 
-    const-string/jumbo v2, "switch_fingerprint"
+    invoke-virtual {v4}, Landroid/app/Activity;->finish()V
 
-    invoke-virtual {p0, v2}, Lcom/samsung/android/settings/KnoxChooseLockTwoFactor$KnoxChooseLockTwoFactorFragment;->findPreference(Ljava/lang/CharSequence;)Landroid/support/v7/preference/Preference;
+    goto/16 :goto_ca
 
-    move-result-object v0
+    :cond_1c2
+    const/16 v4, 0x271e
 
-    check-cast v0, Landroid/support/v14/preference/SwitchPreference;
+    if-ne p1, v4, :cond_1d4
 
-    iget v2, p0, Lcom/samsung/android/settings/KnoxChooseLockTwoFactor$KnoxChooseLockTwoFactorFragment;->mUserId:I
+    if-ne p2, v7, :cond_ca
 
-    invoke-direct {p0, v2}, Lcom/samsung/android/settings/KnoxChooseLockTwoFactor$KnoxChooseLockTwoFactorFragment;->hasEnrolledFingerprint(I)Z
+    iget-object v4, p0, Lcom/samsung/android/settings/KnoxChooseLockTwoFactor$KnoxChooseLockTwoFactorFragment;->activity:Landroid/app/Activity;
 
-    move-result v2
+    invoke-virtual {v4, v7}, Landroid/app/Activity;->setResult(I)V
 
-    if-eqz v2, :cond_169
+    iget-object v4, p0, Lcom/samsung/android/settings/KnoxChooseLockTwoFactor$KnoxChooseLockTwoFactorFragment;->activity:Landroid/app/Activity;
 
-    invoke-virtual {v0, v7}, Landroid/support/v14/preference/SwitchPreference;->setChecked(Z)V
+    invoke-virtual {v4}, Landroid/app/Activity;->finish()V
 
-    invoke-virtual {p0}, Lcom/samsung/android/settings/KnoxChooseLockTwoFactor$KnoxChooseLockTwoFactorFragment;->getResources()Landroid/content/res/Resources;
+    goto/16 :goto_ca
 
-    move-result-object v2
+    :cond_1d4
+    const-string/jumbo v4, "KnoxChooseLockTwoFactor"
 
-    invoke-virtual {v2, v8}, Landroid/content/res/Resources;->getString(I)Ljava/lang/String;
+    const-string/jumbo v5, "[Two Factor] else"
 
-    move-result-object v2
+    invoke-static {v4, v5}, Landroid/util/secutil/Log;->d(Ljava/lang/String;Ljava/lang/String;)I
 
-    invoke-virtual {v0, v2}, Landroid/support/v14/preference/SwitchPreference;->setSummary(Ljava/lang/CharSequence;)V
+    iget-object v4, p0, Lcom/samsung/android/settings/KnoxChooseLockTwoFactor$KnoxChooseLockTwoFactorFragment;->activity:Landroid/app/Activity;
 
-    :goto_164
-    invoke-virtual {p0}, Lcom/samsung/android/settings/KnoxChooseLockTwoFactor$KnoxChooseLockTwoFactorFragment;->setEnableNextButton()V
+    invoke-virtual {v4, v8}, Landroid/app/Activity;->setResult(I)V
 
-    goto/16 :goto_c0
+    iget-object v4, p0, Lcom/samsung/android/settings/KnoxChooseLockTwoFactor$KnoxChooseLockTwoFactorFragment;->activity:Landroid/app/Activity;
 
-    :cond_169
-    const-string/jumbo v2, ""
+    invoke-virtual {v4}, Landroid/app/Activity;->finish()V
 
-    invoke-virtual {v0, v2}, Landroid/support/v14/preference/SwitchPreference;->setSummary(Ljava/lang/CharSequence;)V
-
-    goto :goto_164
-
-    :cond_170
-    const/16 v2, 0x2719
-
-    if-ne p1, v2, :cond_182
-
-    if-ne p2, v5, :cond_c0
-
-    iget-object v2, p0, Lcom/samsung/android/settings/KnoxChooseLockTwoFactor$KnoxChooseLockTwoFactorFragment;->activity:Landroid/app/Activity;
-
-    invoke-virtual {v2, v5}, Landroid/app/Activity;->setResult(I)V
-
-    iget-object v2, p0, Lcom/samsung/android/settings/KnoxChooseLockTwoFactor$KnoxChooseLockTwoFactorFragment;->activity:Landroid/app/Activity;
-
-    invoke-virtual {v2}, Landroid/app/Activity;->finish()V
-
-    goto/16 :goto_c0
-
-    :cond_182
-    const/16 v2, 0x271e
-
-    if-ne p1, v2, :cond_194
-
-    if-ne p2, v5, :cond_c0
-
-    iget-object v2, p0, Lcom/samsung/android/settings/KnoxChooseLockTwoFactor$KnoxChooseLockTwoFactorFragment;->activity:Landroid/app/Activity;
-
-    invoke-virtual {v2, v5}, Landroid/app/Activity;->setResult(I)V
-
-    iget-object v2, p0, Lcom/samsung/android/settings/KnoxChooseLockTwoFactor$KnoxChooseLockTwoFactorFragment;->activity:Landroid/app/Activity;
-
-    invoke-virtual {v2}, Landroid/app/Activity;->finish()V
-
-    goto/16 :goto_c0
-
-    :cond_194
-    const-string/jumbo v2, "KnoxChooseLockTwoFactor"
-
-    const-string/jumbo v3, "[Two Factor] else"
-
-    invoke-static {v2, v3}, Landroid/util/secutil/Log;->d(Ljava/lang/String;Ljava/lang/String;)I
-
-    iget-object v2, p0, Lcom/samsung/android/settings/KnoxChooseLockTwoFactor$KnoxChooseLockTwoFactorFragment;->activity:Landroid/app/Activity;
-
-    invoke-virtual {v2, v6}, Landroid/app/Activity;->setResult(I)V
-
-    iget-object v2, p0, Lcom/samsung/android/settings/KnoxChooseLockTwoFactor$KnoxChooseLockTwoFactorFragment;->activity:Landroid/app/Activity;
-
-    invoke-virtual {v2}, Landroid/app/Activity;->finish()V
-
-    goto/16 :goto_c0
+    goto/16 :goto_ca
 .end method
 
 .method public onCreate(Landroid/os/Bundle;)V
@@ -2799,13 +3239,13 @@
 
     move-result v1
 
-    if-eqz v1, :cond_127
+    if-eqz v1, :cond_146
 
     invoke-static {}, Lcom/android/settings/Utils;->isSupportIris()Z
 
     move-result v1
 
-    if-eqz v1, :cond_127
+    if-eqz v1, :cond_146
 
     iget-object v1, p0, Lcom/samsung/android/settings/KnoxChooseLockTwoFactor$KnoxChooseLockTwoFactorFragment;->mTwoFactorDescription:Lcom/samsung/android/settings/UnclickablePreference;
 
@@ -2848,7 +3288,7 @@
 
     move-result v1
 
-    if-eqz v1, :cond_13c
+    if-eqz v1, :cond_15b
 
     move v1, v2
 
@@ -2887,11 +3327,41 @@
 
     iput-object v1, p0, Lcom/samsung/android/settings/KnoxChooseLockTwoFactor$KnoxChooseLockTwoFactorFragment;->mTokenIris:[B
 
+    invoke-virtual {p0}, Lcom/samsung/android/settings/KnoxChooseLockTwoFactor$KnoxChooseLockTwoFactorFragment;->getActivity()Landroid/app/Activity;
+
+    move-result-object v1
+
+    iget v2, p0, Lcom/samsung/android/settings/KnoxChooseLockTwoFactor$KnoxChooseLockTwoFactorFragment;->mUserId:I
+
+    invoke-static {v1, v2}, Lcom/android/settings/Utils;->isMultifactorAuthEnforced(Landroid/content/Context;I)Z
+
+    move-result v1
+
+    iput-boolean v1, p0, Lcom/samsung/android/settings/KnoxChooseLockTwoFactor$KnoxChooseLockTwoFactorFragment;->mMultifactorAuthEnforced:Z
+
     invoke-direct {p0}, Lcom/samsung/android/settings/KnoxChooseLockTwoFactor$KnoxChooseLockTwoFactorFragment;->showFirstStep()V
+
+    invoke-virtual {p0}, Lcom/samsung/android/settings/KnoxChooseLockTwoFactor$KnoxChooseLockTwoFactorFragment;->getActivity()Landroid/app/Activity;
+
+    move-result-object v1
+
+    const-string/jumbo v2, "statusbar"
+
+    invoke-virtual {v1, v2}, Landroid/app/Activity;->getSystemService(Ljava/lang/String;)Ljava/lang/Object;
+
+    move-result-object v1
+
+    check-cast v1, Landroid/app/StatusBarManager;
+
+    iput-object v1, p0, Lcom/samsung/android/settings/KnoxChooseLockTwoFactor$KnoxChooseLockTwoFactorFragment;->mStatusBarManager:Landroid/app/StatusBarManager;
+
+    iget v1, p0, Lcom/samsung/android/settings/KnoxChooseLockTwoFactor$KnoxChooseLockTwoFactorFragment;->mUserId:I
+
+    sput v1, Lcom/samsung/android/settings/KnoxChooseLockTwoFactor$KnoxChooseLockTwoFactorFragment;->sUserId:I
 
     return-void
 
-    :cond_127
+    :cond_146
     iget-object v1, p0, Lcom/samsung/android/settings/KnoxChooseLockTwoFactor$KnoxChooseLockTwoFactorFragment;->mTwoFactorDescription:Lcom/samsung/android/settings/UnclickablePreference;
 
     invoke-virtual {p0}, Lcom/samsung/android/settings/KnoxChooseLockTwoFactor$KnoxChooseLockTwoFactorFragment;->getResources()Landroid/content/res/Resources;
@@ -2912,7 +3382,7 @@
 
     goto :goto_e4
 
-    :cond_13c
+    :cond_15b
     move v1, v3
 
     goto :goto_fe
@@ -3006,6 +3476,16 @@
     iget-object v0, p0, Lcom/samsung/android/settings/KnoxChooseLockTwoFactor$KnoxChooseLockTwoFactorFragment;->content:Landroid/widget/LinearLayout;
 
     return-object v0
+.end method
+
+.method public onPause()V
+    .registers 1
+
+    invoke-super {p0}, Lcom/android/settings/SettingsPreferenceFragment;->onPause()V
+
+    invoke-direct {p0}, Lcom/samsung/android/settings/KnoxChooseLockTwoFactor$KnoxChooseLockTwoFactorFragment;->enableStatusBar()V
+
+    return-void
 .end method
 
 .method public onPreferenceChange(Landroid/support/v7/preference/Preference;Ljava/lang/Object;)Z
@@ -3271,6 +3751,44 @@
     iget v0, p0, Lcom/samsung/android/settings/KnoxChooseLockTwoFactor$KnoxChooseLockTwoFactorFragment;->mUserId:I
 
     invoke-direct {p0, v0}, Lcom/samsung/android/settings/KnoxChooseLockTwoFactor$KnoxChooseLockTwoFactorFragment;->setEnterpriseIdentityPolicy(I)V
+
+    iget v0, p0, Lcom/samsung/android/settings/KnoxChooseLockTwoFactor$KnoxChooseLockTwoFactorFragment;->mUserId:I
+
+    invoke-static {v0}, Lcom/samsung/android/knox/SemPersonaManager;->isDoEnabled(I)Z
+
+    move-result v0
+
+    if-nez v0, :cond_37
+
+    invoke-virtual {p0}, Lcom/samsung/android/settings/KnoxChooseLockTwoFactor$KnoxChooseLockTwoFactorFragment;->getContext()Landroid/content/Context;
+
+    move-result-object v0
+
+    invoke-static {v0}, Lcom/samsung/android/knox/SemPersonaManager;->isKioskModeEnabled(Landroid/content/Context;)Z
+
+    move-result v0
+
+    if-eqz v0, :cond_46
+
+    :cond_37
+    invoke-virtual {p0}, Lcom/samsung/android/settings/KnoxChooseLockTwoFactor$KnoxChooseLockTwoFactorFragment;->getContext()Landroid/content/Context;
+
+    move-result-object v0
+
+    iget v1, p0, Lcom/samsung/android/settings/KnoxChooseLockTwoFactor$KnoxChooseLockTwoFactorFragment;->mUserId:I
+
+    invoke-static {v0, v1}, Lcom/android/settings/Utils;->isChangeRequested(Landroid/content/Context;I)I
+
+    move-result v0
+
+    if-lez v0, :cond_46
+
+    invoke-direct {p0}, Lcom/samsung/android/settings/KnoxChooseLockTwoFactor$KnoxChooseLockTwoFactorFragment;->disableStatusBar()V
+
+    :cond_46
+    iget v0, p0, Lcom/samsung/android/settings/KnoxChooseLockTwoFactor$KnoxChooseLockTwoFactorFragment;->mUserId:I
+
+    sput v0, Lcom/samsung/android/settings/KnoxChooseLockTwoFactor$KnoxChooseLockTwoFactorFragment;->sUserId:I
 
     return-void
 .end method
@@ -3565,17 +4083,9 @@
     return-void
 
     :cond_12
-    invoke-virtual {p0}, Lcom/samsung/android/settings/KnoxChooseLockTwoFactor$KnoxChooseLockTwoFactorFragment;->getActivity()Landroid/app/Activity;
+    iget-boolean v0, p0, Lcom/samsung/android/settings/KnoxChooseLockTwoFactor$KnoxChooseLockTwoFactorFragment;->mMultifactorAuthEnforced:Z
 
-    move-result-object v0
-
-    iget v1, p0, Lcom/samsung/android/settings/KnoxChooseLockTwoFactor$KnoxChooseLockTwoFactorFragment;->mUserId:I
-
-    invoke-static {v0, v1}, Lcom/android/settings/Utils;->isMultifactorAuthEnforced(Landroid/content/Context;I)Z
-
-    move-result v0
-
-    if-eqz v0, :cond_3f
+    if-eqz v0, :cond_37
 
     const-string/jumbo v0, "KnoxChooseLockTwoFactor"
 
@@ -3605,10 +4115,10 @@
 
     invoke-virtual {v0, v1}, Landroid/widget/TextView;->setTextColor(Landroid/content/res/ColorStateList;)V
 
-    :goto_3e
+    :goto_36
     return-void
 
-    :cond_3f
+    :cond_37
     iget-object v0, p0, Lcom/samsung/android/settings/KnoxChooseLockTwoFactor$KnoxChooseLockTwoFactorFragment;->layoutBtnLater:Landroid/widget/LinearLayout;
 
     const/4 v1, 0x1
@@ -3631,5 +4141,5 @@
 
     invoke-virtual {v0, v1}, Landroid/widget/TextView;->setTextColor(Landroid/content/res/ColorStateList;)V
 
-    goto :goto_3e
+    goto :goto_36
 .end method

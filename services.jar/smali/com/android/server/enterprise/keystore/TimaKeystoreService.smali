@@ -2629,6 +2629,168 @@
     goto :goto_8c
 .end method
 
+.method public isTimaKeystoreEnabledForUKS(II)Z
+    .registers 11
+
+    const/4 v7, 0x0
+
+    const/4 v6, 0x1
+
+    sget-boolean v3, Lcom/android/server/enterprise/keystore/TimaKeystoreService;->DBG:Z
+
+    if-eqz v3, :cond_e
+
+    sget-object v3, Lcom/android/server/enterprise/keystore/TimaKeystoreService;->TAG:Ljava/lang/String;
+
+    const-string/jumbo v4, "in isTimaKeystoreEnabledForUKS"
+
+    invoke-static {v3, v4}, Landroid/util/Log;->d(Ljava/lang/String;Ljava/lang/String;)I
+
+    :cond_e
+    const/4 v2, 0x1
+
+    iget-boolean v3, p0, Lcom/android/server/enterprise/keystore/TimaKeystoreService;->mIsTimaVersion30:Z
+
+    if-nez v3, :cond_20
+
+    sget-boolean v3, Lcom/android/server/enterprise/keystore/TimaKeystoreService;->DBG:Z
+
+    if-eqz v3, :cond_1f
+
+    sget-object v3, Lcom/android/server/enterprise/keystore/TimaKeystoreService;->TAG:Ljava/lang/String;
+
+    const-string/jumbo v4, "isTimaKeystoreEnabledForUKS - TimaKeystore is available only on TIMA version 3.0"
+
+    invoke-static {v3, v4}, Landroid/util/Log;->d(Ljava/lang/String;Ljava/lang/String;)I
+
+    :cond_1f
+    return v7
+
+    :cond_20
+    invoke-static {}, Landroid/os/Binder;->getCallingUid()I
+
+    move-result v3
+
+    const/16 v4, 0x3e8
+
+    if-ne v3, v4, :cond_29
+
+    return v6
+
+    :cond_29
+    new-instance v0, Landroid/app/enterprise/ContextInfo;
+
+    invoke-static {p2}, Landroid/os/UserHandle;->getUserId(I)I
+
+    move-result v3
+
+    invoke-direct {v0, p2, v3}, Landroid/app/enterprise/ContextInfo;-><init>(II)V
+
+    invoke-virtual {p0, v0}, Lcom/android/server/enterprise/keystore/TimaKeystoreService;->isTimaKeystoreEnabledInDB(Landroid/app/enterprise/ContextInfo;)Z
+
+    move-result v3
+
+    if-eqz v3, :cond_39
+
+    return v6
+
+    :cond_39
+    const/4 v2, 0x0
+
+    sget-object v3, Lcom/android/server/enterprise/keystore/TimaKeystoreService;->TAG:Ljava/lang/String;
+
+    new-instance v4, Ljava/lang/StringBuilder;
+
+    invoke-direct {v4}, Ljava/lang/StringBuilder;-><init>()V
+
+    const-string/jumbo v5, "Binder.getCallingPid() "
+
+    invoke-virtual {v4, v5}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    move-result-object v4
+
+    invoke-static {}, Landroid/os/Binder;->getCallingPid()I
+
+    move-result v5
+
+    invoke-virtual {v4, v5}, Ljava/lang/StringBuilder;->append(I)Ljava/lang/StringBuilder;
+
+    move-result-object v4
+
+    const-string/jumbo v5, " Binder.getCallingUid()"
+
+    invoke-virtual {v4, v5}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    move-result-object v4
+
+    invoke-static {}, Landroid/os/Binder;->getCallingUid()I
+
+    move-result v5
+
+    invoke-virtual {v4, v5}, Ljava/lang/StringBuilder;->append(I)Ljava/lang/StringBuilder;
+
+    move-result-object v4
+
+    invoke-virtual {v4}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;
+
+    move-result-object v4
+
+    invoke-static {v3, v4}, Landroid/util/Log;->d(Ljava/lang/String;Ljava/lang/String;)I
+
+    invoke-static {}, Lcom/android/server/ServiceKeeper;->isTableActive()Z
+
+    move-result v3
+
+    if-nez v3, :cond_6f
+
+    invoke-static {}, Lcom/android/server/ServiceKeeper;->authorizeLoadProcedure()Z
+
+    :cond_6f
+    iget-object v3, p0, Lcom/android/server/enterprise/keystore/TimaKeystoreService;->mContext:Landroid/content/Context;
+
+    const-string/jumbo v4, "knox_timakeystore_policy"
+
+    const-string/jumbo v5, "isTimaKeystoreEnabled"
+
+    invoke-static {v3, p1, p2, v4, v5}, Lcom/android/server/ServiceKeeper;->isAuthorized(Landroid/content/Context;IILjava/lang/String;Ljava/lang/String;)I
+
+    move-result v3
+
+    if-nez v3, :cond_7e
+
+    return v6
+
+    :cond_7e
+    :try_start_7e
+    invoke-direct {p0}, Lcom/android/server/enterprise/keystore/TimaKeystoreService;->enforcePermissionPerAppOnly()V
+
+    sget-boolean v3, Lcom/android/server/enterprise/keystore/TimaKeystoreService;->DBG:Z
+
+    if-eqz v3, :cond_8d
+
+    sget-object v3, Lcom/android/server/enterprise/keystore/TimaKeystoreService;->TAG:Ljava/lang/String;
+
+    const-string/jumbo v4, "isTimaKeystoreEnabledInternal - this ctx is not in TKSperappDB, but has TKSperapp permission"
+
+    invoke-static {v3, v4}, Landroid/util/Log;->d(Ljava/lang/String;Ljava/lang/String;)I
+    :try_end_8d
+    .catch Ljava/lang/SecurityException; {:try_start_7e .. :try_end_8d} :catch_8e
+
+    :cond_8d
+    return v6
+
+    :catch_8e
+    move-exception v1
+
+    sget-object v3, Lcom/android/server/enterprise/keystore/TimaKeystoreService;->TAG:Ljava/lang/String;
+
+    const-string/jumbo v4, "isTimaKeystoreEnabledInDBPerApp() no permission"
+
+    invoke-static {v3, v4}, Landroid/util/Log;->e(Ljava/lang/String;Ljava/lang/String;)I
+
+    return v7
+.end method
+
 .method public isTimaKeystoreEnabledInDB(Landroid/app/enterprise/ContextInfo;)Z
     .registers 13
 

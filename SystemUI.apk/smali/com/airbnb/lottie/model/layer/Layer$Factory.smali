@@ -38,11 +38,11 @@
 
     sget-object v6, Lcom/airbnb/lottie/model/layer/Layer$LayerType;->PreComp:Lcom/airbnb/lottie/model/layer/Layer$LayerType;
 
-    const-wide/16 v7, -0x1
-
     const-wide/16 v4, -0x1
 
     const-string/jumbo v3, "root"
+
+    const-wide/16 v7, -0x1
 
     invoke-static {}, Ljava/util/Collections;->emptyList()Ljava/util/List;
 
@@ -52,11 +52,11 @@
 
     move-result-object v11
 
-    const/4 v12, 0x0
-
     const/4 v13, 0x0
 
     const/4 v14, 0x0
+
+    const/4 v12, 0x0
 
     const/4 v15, 0x0
 

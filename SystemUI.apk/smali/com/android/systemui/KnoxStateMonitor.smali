@@ -1462,21 +1462,7 @@
 
     move-result v0
 
-    if-eqz v0, :cond_f
-
-    invoke-virtual {p0}, Lcom/android/systemui/KnoxStateMonitor;->isPwdChangeRequested()Z
-
-    move-result v0
-
-    xor-int/lit8 v0, v0, 0x1
-
-    :goto_e
     return v0
-
-    :cond_f
-    const/4 v0, 0x0
-
-    goto :goto_e
 .end method
 
 .method public dump(Ljava/io/FileDescriptor;Ljava/io/PrintWriter;[Ljava/lang/String;)V

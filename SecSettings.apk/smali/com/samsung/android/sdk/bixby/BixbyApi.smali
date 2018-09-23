@@ -2229,29 +2229,29 @@
 
     aput-object v3, v2, v4
 
-    const-string/jumbo v3, "\"requestedAppName\":\"%s\",%s,%s,%s"
+    const/4 v3, 0x1
 
-    const/4 v4, 0x1
+    const-string/jumbo v4, "\"requestedAppName\":\"%s\",%s,%s,%s"
 
     invoke-virtual {p1}, Lcom/samsung/android/sdk/bixby/data/NlgRequestInfo;->toString()Ljava/lang/String;
 
     move-result-object v5
 
-    aput-object v5, v2, v4
+    aput-object v5, v2, v3
 
-    const/4 v4, 0x2
+    const/4 v3, 0x2
 
-    aput-object v1, v2, v4
+    aput-object v1, v2, v3
 
     invoke-virtual {p2}, Lcom/samsung/android/sdk/bixby/BixbyApi$NlgParamMode;->toString()Ljava/lang/String;
 
-    move-result-object v4
+    move-result-object v3
 
     const/4 v5, 0x3
 
-    aput-object v4, v2, v5
+    aput-object v3, v2, v5
 
-    invoke-static {v3, v2}, Ljava/lang/String;->format(Ljava/lang/String;[Ljava/lang/Object;)Ljava/lang/String;
+    invoke-static {v4, v2}, Ljava/lang/String;->format(Ljava/lang/String;[Ljava/lang/Object;)Ljava/lang/String;
 
     move-result-object v0
 

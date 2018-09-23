@@ -2035,15 +2035,15 @@
 
     div-float/2addr v2, v3
 
-    const/4 v3, 0x0
+    const/high16 v3, 0x3f800000    # 1.0f
 
-    const/high16 v4, 0x3f800000    # 1.0f
+    const/4 v4, 0x0
 
-    invoke-static {v2, v4}, Ljava/lang/Math;->min(FF)F
+    invoke-static {v2, v3}, Ljava/lang/Math;->min(FF)F
 
     move-result v2
 
-    invoke-static {v3, v2}, Ljava/lang/Math;->max(FF)F
+    invoke-static {v4, v2}, Ljava/lang/Math;->max(FF)F
 
     move-result v8
 
@@ -2134,15 +2134,15 @@
 
     div-float/2addr v2, v3
 
-    const/4 v3, 0x0
+    const/high16 v3, 0x3f800000    # 1.0f
 
-    const/high16 v4, 0x3f800000    # 1.0f
+    const/4 v4, 0x0
 
-    invoke-static {v2, v4}, Ljava/lang/Math;->min(FF)F
+    invoke-static {v2, v3}, Ljava/lang/Math;->min(FF)F
 
     move-result v2
 
-    invoke-static {v3, v2}, Ljava/lang/Math;->max(FF)F
+    invoke-static {v4, v2}, Ljava/lang/Math;->max(FF)F
 
     move-result v8
 

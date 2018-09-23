@@ -16,7 +16,7 @@
 
 .field private static final CACHE_SIZE:I = 0xa
 
-.field private static final DEBUG_FLAG:Z = true
+.field private static final DEBUG_FLAG:Z
 
 .field public static final DEFAULT_MONITOR:Ljava/lang/String; = "5242951"
 
@@ -54,6 +54,26 @@
 
 
 # direct methods
+.method static constructor <clinit>()V
+    .registers 2
+
+    const-string/jumbo v0, "eng"
+
+    const-string/jumbo v1, "ro.build.type"
+
+    invoke-static {v1}, Landroid/os/SystemProperties;->get(Ljava/lang/String;)Ljava/lang/String;
+
+    move-result-object v1
+
+    invoke-virtual {v0, v1}, Ljava/lang/String;->equals(Ljava/lang/Object;)Z
+
+    move-result v0
+
+    sput-boolean v0, Lcom/android/server/PermissionMonitor;->DEBUG_FLAG:Z
+
+    return-void
+.end method
+
 .method public constructor <init>(Landroid/content/Context;)V
     .registers 4
 
@@ -67,12 +87,17 @@
 
     iput-object v0, p0, Lcom/android/server/PermissionMonitor;->monitoredAppList:Landroid/util/LruCache;
 
+    sget-boolean v0, Lcom/android/server/PermissionMonitor;->DEBUG_FLAG:Z
+
+    if-eqz v0, :cond_19
+
     const-string/jumbo v0, "PermissionMonitor"
 
     const-string/jumbo v1, "initialize permission monitor service"
 
     invoke-static {v0, v1}, Landroid/util/Slog;->e(Ljava/lang/String;Ljava/lang/String;)I
 
+    :cond_19
     iput-object p1, p0, Lcom/android/server/PermissionMonitor;->mContext:Landroid/content/Context;
 
     return-void
@@ -167,7 +192,7 @@
 
     move-result v8
 
-    if-eqz v8, :cond_90
+    if-eqz v8, :cond_98
 
     invoke-interface {v6}, Ljava/util/Iterator;->next()Ljava/lang/Object;
 
@@ -178,6 +203,10 @@
     iget v8, v3, Landroid/app/ActivityManager$RunningAppProcessInfo;->uid:I
 
     if-ne v8, p1, :cond_1a
+
+    sget-boolean v8, Lcom/android/server/PermissionMonitor;->DEBUG_FLAG:Z
+
+    if-eqz v8, :cond_60
 
     const-string/jumbo v8, "PermissionMonitor"
 
@@ -223,23 +252,28 @@
 
     invoke-static {v8, v9}, Landroid/util/Slog;->e(Ljava/lang/String;Ljava/lang/String;)I
 
+    :cond_60
     iget v8, v3, Landroid/app/ActivityManager$RunningAppProcessInfo;->importance:I
 
-    if-ge v8, v1, :cond_62
+    if-ge v8, v1, :cond_66
 
     iget v1, v3, Landroid/app/ActivityManager$RunningAppProcessInfo;->importance:I
 
-    :cond_62
+    :cond_66
     const/16 v8, 0x64
 
-    if-eq v1, v8, :cond_6a
+    if-eq v1, v8, :cond_6e
 
     const/16 v8, 0x96
 
-    if-ne v1, v8, :cond_94
+    if-ne v1, v8, :cond_9c
 
-    :cond_6a
-    :goto_6a
+    :cond_6e
+    :goto_6e
+    sget-boolean v8, Lcom/android/server/PermissionMonitor;->DEBUG_FLAG:Z
+
+    if-eqz v8, :cond_97
+
     const-string/jumbo v8, "PermissionMonitor"
 
     new-instance v9, Ljava/lang/StringBuilder;
@@ -271,29 +305,30 @@
     move-result-object v9
 
     invoke-static {v8, v9}, Landroid/util/Slog;->e(Ljava/lang/String;Ljava/lang/String;)I
-    :try_end_8f
-    .catch Ljava/lang/Exception; {:try_start_7 .. :try_end_8f} :catch_99
-    .catchall {:try_start_7 .. :try_end_8f} :catchall_bc
+    :try_end_97
+    .catch Ljava/lang/Exception; {:try_start_7 .. :try_end_97} :catch_a1
+    .catchall {:try_start_7 .. :try_end_97} :catchall_c4
 
+    :cond_97
     const/4 v7, 0x1
 
-    :cond_90
+    :cond_98
     invoke-static {v4, v5}, Landroid/os/Binder;->restoreCallingIdentity(J)V
 
-    :goto_93
+    :goto_9b
     return v7
 
-    :cond_94
+    :cond_9c
     const/16 v8, 0x7d
 
     if-ne v1, v8, :cond_1a
 
-    goto :goto_6a
+    goto :goto_6e
 
-    :catch_99
+    :catch_a1
     move-exception v2
 
-    :try_start_9a
+    :try_start_a2
     const-string/jumbo v8, "PermissionMonitor"
 
     new-instance v9, Ljava/lang/StringBuilder;
@@ -319,14 +354,14 @@
     move-result-object v9
 
     invoke-static {v8, v9}, Landroid/util/Slog;->e(Ljava/lang/String;Ljava/lang/String;)I
-    :try_end_b8
-    .catchall {:try_start_9a .. :try_end_b8} :catchall_bc
+    :try_end_c0
+    .catchall {:try_start_a2 .. :try_end_c0} :catchall_c4
 
     invoke-static {v4, v5}, Landroid/os/Binder;->restoreCallingIdentity(J)V
 
-    goto :goto_93
+    goto :goto_9b
 
-    :catchall_bc
+    :catchall_c4
     move-exception v8
 
     invoke-static {v4, v5}, Landroid/os/Binder;->restoreCallingIdentity(J)V
@@ -380,6 +415,10 @@
 
     check-cast v0, Ljava/lang/Long;
 
+    sget-boolean v2, Lcom/android/server/PermissionMonitor;->DEBUG_FLAG:Z
+
+    if-eqz v2, :cond_40
+
     const-string/jumbo v2, "PermissionMonitor"
 
     new-instance v3, Ljava/lang/StringBuilder;
@@ -422,7 +461,8 @@
 
     invoke-static {v2, v3}, Landroid/util/Slog;->e(Ljava/lang/String;Ljava/lang/String;)I
 
-    if-eqz v0, :cond_48
+    :cond_40
+    if-eqz v0, :cond_4c
 
     invoke-virtual {v0}, Ljava/lang/Long;->longValue()J
 
@@ -432,13 +472,13 @@
 
     cmp-long v2, v2, v6
 
-    if-ltz v2, :cond_49
+    if-ltz v2, :cond_4d
 
-    :cond_48
-    :goto_48
+    :cond_4c
+    :goto_4c
     return v1
 
-    :cond_49
+    :cond_4d
     invoke-virtual {v0}, Ljava/lang/Long;->longValue()J
 
     move-result-wide v2
@@ -447,11 +487,11 @@
 
     cmp-long v2, v2, v6
 
-    if-gez v2, :cond_48
+    if-gez v2, :cond_4c
 
     const/4 v1, 0x0
 
-    goto :goto_48
+    goto :goto_4c
 .end method
 
 .method private isHiddenApp(IILjava/lang/String;)Z
@@ -503,7 +543,7 @@
 
     move-result-object v0
 
-    if-eqz v0, :cond_d8
+    if-eqz v0, :cond_e4
 
     iget-object v6, v0, Landroid/content/pm/ApplicationInfo;->seInfo:Ljava/lang/String;
 
@@ -519,9 +559,13 @@
 
     and-int/lit16 v6, v6, 0x81
 
-    if-eqz v6, :cond_85
+    if-eqz v6, :cond_8d
 
     :cond_37
+    sget-boolean v6, Lcom/android/server/PermissionMonitor;->DEBUG_FLAG:Z
+
+    if-eqz v6, :cond_60
+
     const-string/jumbo v6, "PermissionMonitor"
 
     new-instance v7, Ljava/lang/StringBuilder;
@@ -554,10 +598,12 @@
 
     invoke-static {v6, v7}, Landroid/util/Slog;->d(Ljava/lang/String;Ljava/lang/String;)I
 
+    :cond_60
     const/4 v4, 0x1
 
-    :goto_5d
-    if-nez v4, :cond_81
+    :cond_61
+    :goto_61
+    if-nez v4, :cond_89
 
     invoke-virtual {v5, p1}, Lcom/android/server/SEAMService;->isAPMWhiteListAPP(Ljava/lang/String;)I
 
@@ -565,7 +611,11 @@
 
     const/4 v7, 0x1
 
-    if-ne v6, v7, :cond_81
+    if-ne v6, v7, :cond_89
+
+    sget-boolean v6, Lcom/android/server/PermissionMonitor;->DEBUG_FLAG:Z
+
+    if-eqz v6, :cond_88
 
     const-string/jumbo v6, "PermissionMonitor"
 
@@ -588,21 +638,26 @@
     move-result-object v7
 
     invoke-static {v6, v7}, Landroid/util/Slog;->e(Ljava/lang/String;Ljava/lang/String;)I
-    :try_end_80
-    .catch Landroid/content/pm/PackageManager$NameNotFoundException; {:try_start_19 .. :try_end_80} :catch_ab
-    .catchall {:try_start_19 .. :try_end_80} :catchall_fe
+    :try_end_88
+    .catch Landroid/content/pm/PackageManager$NameNotFoundException; {:try_start_19 .. :try_end_88} :catch_b7
+    .catchall {:try_start_19 .. :try_end_88} :catchall_10f
 
+    :cond_88
     const/4 v4, 0x1
 
-    :cond_81
-    :goto_81
+    :cond_89
+    :goto_89
     invoke-static {v2, v3}, Landroid/os/Binder;->restoreCallingIdentity(J)V
 
-    :goto_84
+    :goto_8c
     return v4
 
-    :cond_85
-    :try_start_85
+    :cond_8d
+    :try_start_8d
+    sget-boolean v6, Lcom/android/server/PermissionMonitor;->DEBUG_FLAG:Z
+
+    if-eqz v6, :cond_61
+
     const-string/jumbo v6, "PermissionMonitor"
 
     new-instance v7, Ljava/lang/StringBuilder;
@@ -634,16 +689,16 @@
     move-result-object v7
 
     invoke-static {v6, v7}, Landroid/util/Slog;->e(Ljava/lang/String;Ljava/lang/String;)I
-    :try_end_aa
-    .catch Landroid/content/pm/PackageManager$NameNotFoundException; {:try_start_85 .. :try_end_aa} :catch_ab
-    .catchall {:try_start_85 .. :try_end_aa} :catchall_fe
+    :try_end_b6
+    .catch Landroid/content/pm/PackageManager$NameNotFoundException; {:try_start_8d .. :try_end_b6} :catch_b7
+    .catchall {:try_start_8d .. :try_end_b6} :catchall_10f
 
-    goto :goto_5d
+    goto :goto_61
 
-    :catch_ab
+    :catch_b7
     move-exception v1
 
-    :try_start_ac
+    :try_start_b8
     const-string/jumbo v6, "PermissionMonitor"
 
     new-instance v7, Ljava/lang/StringBuilder;
@@ -677,15 +732,19 @@
     invoke-static {v6, v7}, Landroid/util/Slog;->e(Ljava/lang/String;Ljava/lang/String;)I
 
     invoke-static {v2, v3}, Landroid/os/Binder;->restoreCallingIdentity(J)V
-    :try_end_d4
-    .catchall {:try_start_ac .. :try_end_d4} :catchall_fe
+    :try_end_e0
+    .catchall {:try_start_b8 .. :try_end_e0} :catchall_10f
 
     invoke-static {v2, v3}, Landroid/os/Binder;->restoreCallingIdentity(J)V
 
-    goto :goto_84
+    goto :goto_8c
 
-    :cond_d8
-    :try_start_d8
+    :cond_e4
+    :try_start_e4
+    sget-boolean v6, Lcom/android/server/PermissionMonitor;->DEBUG_FLAG:Z
+
+    if-eqz v6, :cond_89
+
     const-string/jumbo v6, "PermissionMonitor"
 
     new-instance v7, Ljava/lang/StringBuilder;
@@ -717,13 +776,13 @@
     move-result-object v7
 
     invoke-static {v6, v7}, Landroid/util/Slog;->e(Ljava/lang/String;Ljava/lang/String;)I
-    :try_end_fd
-    .catch Landroid/content/pm/PackageManager$NameNotFoundException; {:try_start_d8 .. :try_end_fd} :catch_ab
-    .catchall {:try_start_d8 .. :try_end_fd} :catchall_fe
+    :try_end_10d
+    .catch Landroid/content/pm/PackageManager$NameNotFoundException; {:try_start_e4 .. :try_end_10d} :catch_b7
+    .catchall {:try_start_e4 .. :try_end_10d} :catchall_10f
 
-    goto :goto_81
+    goto/16 :goto_89
 
-    :catchall_fe
+    :catchall_10f
     move-exception v6
 
     invoke-static {v2, v3}, Landroid/os/Binder;->restoreCallingIdentity(J)V
@@ -735,6 +794,10 @@
 # virtual methods
 .method public sendAPMNotification(III)V
     .registers 28
+
+    sget-boolean v21, Lcom/android/server/PermissionMonitor;->DEBUG_FLAG:Z
+
+    if-eqz v21, :cond_40
 
     const-string/jumbo v21, "PermissionMonitor"
 
@@ -790,6 +853,7 @@
 
     invoke-static/range {v21 .. v22}, Landroid/util/Slog;->d(Ljava/lang/String;Ljava/lang/String;)I
 
+    :cond_40
     const/4 v14, 0x0
 
     const/4 v5, 0x0
@@ -812,7 +876,7 @@
 
     move/from16 v1, v21
 
-    if-ge v0, v1, :cond_8e
+    if-ge v0, v1, :cond_92
 
     const-string/jumbo v21, "PermissionMonitor"
 
@@ -870,7 +934,7 @@
 
     return-void
 
-    :cond_8e
+    :cond_92
     invoke-static {}, Landroid/os/Binder;->getCallingUid()I
 
     move-result v6
@@ -882,6 +946,10 @@
     move/from16 v21, v0
 
     div-int/lit8 v20, v21, 0xa
+
+    sget-boolean v21, Lcom/android/server/PermissionMonitor;->DEBUG_FLAG:Z
+
+    if-eqz v21, :cond_be
 
     const-string/jumbo v21, "PermissionMonitor"
 
@@ -907,6 +975,7 @@
 
     invoke-static/range {v21 .. v22}, Landroid/util/Slog;->i(Ljava/lang/String;Ljava/lang/String;)I
 
+    :cond_be
     invoke-direct/range {p0 .. p1}, Lcom/android/server/PermissionMonitor;->getPackageNameByUid(I)Ljava/lang/String;
 
     move-result-object v14
@@ -945,6 +1014,10 @@
 
     move-result-object v5
 
+    sget-boolean v21, Lcom/android/server/PermissionMonitor;->DEBUG_FLAG:Z
+
+    if-eqz v21, :cond_106
+
     const-string/jumbo v21, "PermissionMonitor"
 
     new-instance v22, Ljava/lang/StringBuilder;
@@ -969,6 +1042,7 @@
 
     invoke-static/range {v21 .. v22}, Landroid/util/Slog;->i(Ljava/lang/String;Ljava/lang/String;)I
 
+    :cond_106
     move-object/from16 v0, p0
 
     move/from16 v1, v20
@@ -977,7 +1051,7 @@
 
     move-result v21
 
-    if-eqz v21, :cond_10e
+    if-eqz v21, :cond_11a
 
     const-string/jumbo v21, "PermissionMonitor"
 
@@ -987,7 +1061,7 @@
 
     return-void
 
-    :cond_10e
+    :cond_11a
     move-object/from16 v0, p0
 
     move/from16 v1, p1
@@ -998,7 +1072,7 @@
 
     move-result v21
 
-    if-eqz v21, :cond_124
+    if-eqz v21, :cond_130
 
     const-string/jumbo v21, "PermissionMonitor"
 
@@ -1008,14 +1082,14 @@
 
     return-void
 
-    :cond_124
+    :cond_130
     move-object/from16 v0, p0
 
     invoke-direct {v0, v5}, Lcom/android/server/PermissionMonitor;->isCalledPackage(Ljava/lang/String;)Z
 
     move-result v21
 
-    if-eqz v21, :cond_136
+    if-eqz v21, :cond_142
 
     const-string/jumbo v21, "PermissionMonitor"
 
@@ -1025,16 +1099,10 @@
 
     return-void
 
-    :cond_136
-    const-string/jumbo v21, "PermissionMonitor"
-
-    const-string/jumbo v22, "All conditions are satisfied, report app access now."
-
-    invoke-static/range {v21 .. v22}, Landroid/util/Slog;->d(Ljava/lang/String;Ljava/lang/String;)I
-
+    :cond_142
     and-int/lit8 v21, p3, 0x8
 
-    if-lez v21, :cond_175
+    if-lez v21, :cond_178
 
     const-string/jumbo v21, "persist.app.permission.monitor"
 
@@ -1044,20 +1112,20 @@
 
     move-result-object v4
 
-    :try_start_14d
+    :try_start_150
     invoke-static {v4}, Ljava/lang/Integer;->parseInt(Ljava/lang/String;)I
-    :try_end_150
-    .catch Ljava/lang/NumberFormatException; {:try_start_14d .. :try_end_150} :catch_156
+    :try_end_153
+    .catch Ljava/lang/NumberFormatException; {:try_start_150 .. :try_end_153} :catch_159
 
     move-result v21
 
     and-int/lit8 v21, v21, 0x8
 
-    if-gtz v21, :cond_175
+    if-gtz v21, :cond_178
 
     return-void
 
-    :catch_156
+    :catch_159
     move-exception v13
 
     const-string/jumbo v21, "PermissionMonitor"
@@ -1086,14 +1154,12 @@
 
     invoke-static/range {v21 .. v22}, Landroid/util/Slog;->e(Ljava/lang/String;Ljava/lang/String;)I
 
-    :cond_175
+    :cond_178
     const-string/jumbo v21, "5242951"
 
     invoke-static/range {v21 .. v21}, Ljava/lang/Integer;->parseInt(Ljava/lang/String;)I
 
     move-result v16
-
-    if-eqz v20, :cond_1b5
 
     const-string/jumbo v21, "SEAMService"
 
@@ -1103,9 +1169,9 @@
 
     check-cast v15, Lcom/android/server/SEAMService;
 
-    if-eqz v15, :cond_226
+    if-eqz v15, :cond_21c
 
-    :try_start_189
+    :try_start_18a
     move/from16 v0, v20
 
     invoke-virtual {v15, v0}, Lcom/android/server/SEAMService;->getAPMStatusAsUser(I)I
@@ -1145,12 +1211,17 @@
     move-result-object v22
 
     invoke-static/range {v21 .. v22}, Landroid/util/Slog;->e(Ljava/lang/String;Ljava/lang/String;)I
-    :try_end_1b5
-    .catch Ljava/lang/Exception; {:try_start_189 .. :try_end_1b5} :catch_21b
+    :try_end_1b6
+    .catch Ljava/lang/Exception; {:try_start_18a .. :try_end_1b6} :catch_211
 
-    :cond_1b5
-    :goto_1b5
-    if-eqz v16, :cond_21a
+    :goto_1b6
+    if-lez v16, :cond_210
+
+    const/high16 v21, 0x40000000    # 2.0f
+
+    and-int v21, v21, v16
+
+    if-nez v21, :cond_210
 
     new-instance v12, Landroid/content/Intent;
 
@@ -1184,33 +1255,18 @@
 
     move-result-wide v18
 
-    :try_start_1de
+    :try_start_1e5
+    sget-boolean v21, Lcom/android/server/PermissionMonitor;->DEBUG_FLAG:Z
+
+    if-eqz v21, :cond_1f2
+
     const-string/jumbo v21, "PermissionMonitor"
 
-    new-instance v22, Ljava/lang/StringBuilder;
-
-    invoke-direct/range {v22 .. v22}, Ljava/lang/StringBuilder;-><init>()V
-
-    const-string/jumbo v23, "uid. "
-
-    invoke-virtual/range {v22 .. v23}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
-
-    move-result-object v22
-
-    move-object/from16 v0, v22
-
-    move/from16 v1, v20
-
-    invoke-virtual {v0, v1}, Ljava/lang/StringBuilder;->append(I)Ljava/lang/StringBuilder;
-
-    move-result-object v22
-
-    invoke-virtual/range {v22 .. v22}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;
-
-    move-result-object v22
+    const-string/jumbo v22, "All conditions are satisfied, report app access now."
 
     invoke-static/range {v21 .. v22}, Landroid/util/Slog;->d(Ljava/lang/String;Ljava/lang/String;)I
 
+    :cond_1f2
     move-object/from16 v0, p0
 
     iget-object v0, v0, Lcom/android/server/PermissionMonitor;->mContext:Landroid/content/Context;
@@ -1234,15 +1290,15 @@
     move-object/from16 v2, v23
 
     invoke-virtual {v0, v12, v1, v2}, Landroid/content/Context;->sendBroadcastAsUser(Landroid/content/Intent;Landroid/os/UserHandle;Ljava/lang/String;)V
-    :try_end_217
-    .catchall {:try_start_1de .. :try_end_217} :catchall_246
+    :try_end_20d
+    .catchall {:try_start_1e5 .. :try_end_20d} :catchall_23c
 
     invoke-static/range {v18 .. v19}, Landroid/os/Binder;->restoreCallingIdentity(J)V
 
-    :cond_21a
+    :cond_210
     return-void
 
-    :catch_21b
+    :catch_211
     move-exception v7
 
     const-string/jumbo v21, "PermissionMonitor"
@@ -1251,9 +1307,9 @@
 
     invoke-static/range {v21 .. v22}, Landroid/util/Slog;->w(Ljava/lang/String;Ljava/lang/String;)I
 
-    goto :goto_1b5
+    goto :goto_1b6
 
-    :cond_226
+    :cond_21c
     const-string/jumbo v21, "PermissionMonitor"
 
     new-instance v22, Ljava/lang/StringBuilder;
@@ -1280,9 +1336,9 @@
 
     invoke-static/range {v21 .. v22}, Landroid/util/Slog;->w(Ljava/lang/String;Ljava/lang/String;)I
 
-    goto/16 :goto_1b5
+    goto/16 :goto_1b6
 
-    :catchall_246
+    :catchall_23c
     move-exception v21
 
     invoke-static/range {v18 .. v19}, Landroid/os/Binder;->restoreCallingIdentity(J)V

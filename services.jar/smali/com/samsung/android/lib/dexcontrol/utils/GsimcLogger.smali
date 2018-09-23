@@ -72,11 +72,11 @@
 
     move-result-object v3
 
-    const/16 v4, 0x80
+    const-string/jumbo v4, "com.samsung.android.providers.context"
 
-    const-string/jumbo v5, "com.samsung.android.providers.context"
+    const/16 v5, 0x80
 
-    invoke-virtual {v3, v5, v4}, Landroid/content/pm/PackageManager;->getPackageInfo(Ljava/lang/String;I)Landroid/content/pm/PackageInfo;
+    invoke-virtual {v3, v4, v5}, Landroid/content/pm/PackageManager;->getPackageInfo(Ljava/lang/String;I)Landroid/content/pm/PackageInfo;
 
     move-result-object v1
 

@@ -27,7 +27,7 @@
 
     iget v2, p0, Lcom/android/server/pm/-$Lambda$kozCdtU4hxwnpbopzC6ZLMsBV5E$2;->-$f0:I
 
-    invoke-virtual {v0, v1, v2}, Lcom/android/server/pm/PackageManagerService;->lambda$-com_android_server_pm_PackageManagerService_195315(Ljava/util/List;I)V
+    invoke-virtual {v0, v1, v2}, Lcom/android/server/pm/PackageManagerService;->lambda$-com_android_server_pm_PackageManagerService_195402(Ljava/util/List;I)V
 
     return-void
 .end method

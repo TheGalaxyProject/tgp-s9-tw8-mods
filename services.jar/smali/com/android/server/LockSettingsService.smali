@@ -4325,7 +4325,7 @@
     return-object v0
 .end method
 
-.method static synthetic lambda$-com_android_server_LockSettingsService_148295(ILcom/android/server/SdpManagerService;)[B
+.method static synthetic lambda$-com_android_server_LockSettingsService_148367(ILcom/android/server/SdpManagerService;)[B
     .registers 3
 
     invoke-virtual {p1, p0}, Lcom/android/server/SdpManagerService;->getResetTokenSafe(I)[B
@@ -4335,7 +4335,7 @@
     return-object v0
 .end method
 
-.method static synthetic lambda$-com_android_server_LockSettingsService_148608([BILcom/android/server/SdpManagerService;)[B
+.method static synthetic lambda$-com_android_server_LockSettingsService_148680([BILcom/android/server/SdpManagerService;)[B
     .registers 4
 
     const/4 v0, 0x2
@@ -4347,7 +4347,7 @@
     return-object v0
 .end method
 
-.method static synthetic lambda$-com_android_server_LockSettingsService_148945([BILcom/android/server/SdpManagerService;)Ljava/lang/Boolean;
+.method static synthetic lambda$-com_android_server_LockSettingsService_149017([BILcom/android/server/SdpManagerService;)Ljava/lang/Boolean;
     .registers 4
 
     invoke-virtual {p2, p0, p1}, Lcom/android/server/SdpManagerService;->setResetToken([BI)Z
@@ -4361,7 +4361,7 @@
     return-object v0
 .end method
 
-.method static synthetic lambda$-com_android_server_LockSettingsService_149206(ILcom/android/server/SdpManagerService;)Ljava/lang/Long;
+.method static synthetic lambda$-com_android_server_LockSettingsService_149278(ILcom/android/server/SdpManagerService;)Ljava/lang/Long;
     .registers 4
 
     invoke-virtual {p1, p0}, Lcom/android/server/SdpManagerService;->getTokenHandle(I)J
@@ -4375,7 +4375,7 @@
     return-object v0
 .end method
 
-.method static synthetic lambda$-com_android_server_LockSettingsService_149849([B[BILcom/android/server/SdpManagerService;)Ljava/lang/Boolean;
+.method static synthetic lambda$-com_android_server_LockSettingsService_149921([B[BILcom/android/server/SdpManagerService;)Ljava/lang/Boolean;
     .registers 5
 
     invoke-virtual {p3, p0, p1, p2}, Lcom/android/server/SdpManagerService;->generationalShift([B[BI)Z
@@ -4389,7 +4389,7 @@
     return-object v0
 .end method
 
-.method static synthetic lambda$-com_android_server_LockSettingsService_150092([BILcom/android/server/SdpManagerService;)V
+.method static synthetic lambda$-com_android_server_LockSettingsService_150164([BILcom/android/server/SdpManagerService;)V
     .registers 3
 
     invoke-virtual {p2, p0, p1}, Lcom/android/server/SdpManagerService;->saveResetTokenSafe([BI)V
@@ -4397,7 +4397,7 @@
     return-void
 .end method
 
-.method static synthetic lambda$-com_android_server_LockSettingsService_150496(ILcom/android/server/SdpManagerService;)Ljava/lang/Long;
+.method static synthetic lambda$-com_android_server_LockSettingsService_150568(ILcom/android/server/SdpManagerService;)Ljava/lang/Long;
     .registers 4
 
     invoke-virtual {p1, p0}, Lcom/android/server/SdpManagerService;->getTokenHandle(I)J
@@ -4411,7 +4411,7 @@
     return-object v0
 .end method
 
-.method static synthetic lambda$-com_android_server_LockSettingsService_150766(ILcom/android/server/SdpManagerService;)[B
+.method static synthetic lambda$-com_android_server_LockSettingsService_150838(ILcom/android/server/SdpManagerService;)[B
     .registers 3
 
     invoke-virtual {p1, p0}, Lcom/android/server/SdpManagerService;->getResetTokenSafe(I)[B
@@ -8929,7 +8929,7 @@
 
     invoke-direct {v0, v1}, Lcom/android/server/LockSettingsService;->isSyntheticPasswordBasedCredentialLocked(I)Z
     :try_end_57
-    .catchall {:try_start_50 .. :try_end_57} :catchall_17e
+    .catchall {:try_start_50 .. :try_end_57} :catchall_183
 
     move-result v4
 
@@ -8975,7 +8975,7 @@
 
     sget-object v4, Lcom/android/internal/widget/VerifyCredentialResponse;->ERROR:Lcom/android/internal/widget/VerifyCredentialResponse;
     :try_end_7d
-    .catchall {:try_start_5d .. :try_end_7d} :catchall_17e
+    .catchall {:try_start_5d .. :try_end_7d} :catchall_183
 
     monitor-exit v19
 
@@ -9017,7 +9017,7 @@
 
     sget-object v4, Lcom/android/internal/widget/VerifyCredentialResponse;->ERROR:Lcom/android/internal/widget/VerifyCredentialResponse;
     :try_end_a4
-    .catchall {:try_start_7f .. :try_end_a4} :catchall_17e
+    .catchall {:try_start_7f .. :try_end_a4} :catchall_183
 
     monitor-exit v19
 
@@ -9039,7 +9039,7 @@
 
     sget-object v4, Lcom/android/internal/widget/VerifyCredentialResponse;->ERROR:Lcom/android/internal/widget/VerifyCredentialResponse;
     :try_end_b7
-    .catchall {:try_start_a6 .. :try_end_b7} :catchall_17e
+    .catchall {:try_start_a6 .. :try_end_b7} :catchall_183
 
     monitor-exit v19
 
@@ -9052,7 +9052,7 @@
 
     move-result v4
 
-    if-nez v4, :cond_181
+    if-nez v4, :cond_186
 
     if-eqz p7, :cond_c5
 
@@ -9186,7 +9186,7 @@
 
     move-result v4
 
-    if-eqz v4, :cond_157
+    if-eqz v4, :cond_15c
 
     iget-object v4, v15, Lcom/android/server/SyntheticPasswordManager$AuthenticationResult;->authToken:Lcom/android/server/SyntheticPasswordManager$AuthenticationToken;
 
@@ -9198,7 +9198,11 @@
 
     invoke-virtual {v0, v4}, Lcom/android/internal/widget/VerifyCredentialResponse;->setSecret([B)V
 
-    :cond_157
+    iget-object v4, v15, Lcom/android/server/SyntheticPasswordManager$AuthenticationResult;->authToken:Lcom/android/server/SyntheticPasswordManager$AuthenticationToken;
+
+    invoke-virtual {v4}, Lcom/android/server/SyntheticPasswordManager$AuthenticationToken;->destroy()V
+
+    :cond_15c
     const-string/jumbo v4, "Result of verification for user %d : %s"
 
     const/4 v5, 0x2
@@ -9239,14 +9243,14 @@
 
     return-object v16
 
-    :catchall_17e
+    :catchall_183
     move-exception v4
 
     monitor-exit v19
 
     throw v4
 
-    :cond_181
+    :cond_186
     invoke-virtual/range {v16 .. v16}, Lcom/android/internal/widget/VerifyCredentialResponse;->getResponseCode()I
 
     move-result v4
@@ -9375,17 +9379,17 @@
     :try_start_50
     invoke-virtual {p0, p4}, Lcom/android/server/LockSettingsService;->getDecryptedPasswordForTiedProfile(I)Ljava/lang/String;
     :try_end_53
-    .catch Ljava/io/FileNotFoundException; {:try_start_50 .. :try_end_53} :catch_8f
-    .catch Ljava/security/UnrecoverableKeyException; {:try_start_50 .. :try_end_53} :catch_7e
-    .catch Ljava/security/InvalidKeyException; {:try_start_50 .. :try_end_53} :catch_7e
-    .catch Ljava/security/KeyStoreException; {:try_start_50 .. :try_end_53} :catch_7e
-    .catch Ljava/security/NoSuchAlgorithmException; {:try_start_50 .. :try_end_53} :catch_7e
-    .catch Ljavax/crypto/NoSuchPaddingException; {:try_start_50 .. :try_end_53} :catch_7e
-    .catch Ljava/security/InvalidAlgorithmParameterException; {:try_start_50 .. :try_end_53} :catch_7e
-    .catch Ljavax/crypto/IllegalBlockSizeException; {:try_start_50 .. :try_end_53} :catch_7e
-    .catch Ljavax/crypto/BadPaddingException; {:try_start_50 .. :try_end_53} :catch_7e
-    .catch Ljava/security/cert/CertificateException; {:try_start_50 .. :try_end_53} :catch_7e
-    .catch Ljava/io/IOException; {:try_start_50 .. :try_end_53} :catch_7e
+    .catch Ljava/io/FileNotFoundException; {:try_start_50 .. :try_end_53} :catch_92
+    .catch Ljava/security/UnrecoverableKeyException; {:try_start_50 .. :try_end_53} :catch_81
+    .catch Ljava/security/InvalidKeyException; {:try_start_50 .. :try_end_53} :catch_81
+    .catch Ljava/security/KeyStoreException; {:try_start_50 .. :try_end_53} :catch_81
+    .catch Ljava/security/NoSuchAlgorithmException; {:try_start_50 .. :try_end_53} :catch_81
+    .catch Ljavax/crypto/NoSuchPaddingException; {:try_start_50 .. :try_end_53} :catch_81
+    .catch Ljava/security/InvalidAlgorithmParameterException; {:try_start_50 .. :try_end_53} :catch_81
+    .catch Ljavax/crypto/IllegalBlockSizeException; {:try_start_50 .. :try_end_53} :catch_81
+    .catch Ljavax/crypto/BadPaddingException; {:try_start_50 .. :try_end_53} :catch_81
+    .catch Ljava/security/cert/CertificateException; {:try_start_50 .. :try_end_53} :catch_81
+    .catch Ljava/io/IOException; {:try_start_50 .. :try_end_53} :catch_81
 
     move-result-object p3
 
@@ -9413,7 +9417,7 @@
 
     iget-object v6, v7, Lcom/android/server/SyntheticPasswordManager$AuthenticationResult;->authToken:Lcom/android/server/SyntheticPasswordManager$AuthenticationToken;
 
-    if-eqz v6, :cond_a0
+    if-eqz v6, :cond_a3
 
     invoke-direct {p0, p1, p2, v6, p4}, Lcom/android/server/LockSettingsService;->setLockCredentialWithAuthTokenLocked(Ljava/lang/String;ILcom/android/server/SyntheticPasswordManager$AuthenticationToken;I)J
 
@@ -9431,12 +9435,14 @@
     invoke-direct {p0, v6, p4}, Lcom/android/server/LockSettingsService;->onSyntheticPasswordDeserted(Lcom/android/server/SyntheticPasswordManager$AuthenticationToken;I)V
 
     :cond_7a
-    :goto_7a
+    invoke-virtual {v6}, Lcom/android/server/SyntheticPasswordManager$AuthenticationToken;->destroy()V
+
+    :goto_7d
     invoke-direct {p0, p1, p4}, Lcom/android/server/LockSettingsService;->notifyActivePasswordMetricsAvailable(Ljava/lang/String;I)V
 
     return-void
 
-    :catch_7e
+    :catch_81
     move-exception v9
 
     const-string/jumbo v0, "LockSettingsService"
@@ -9451,7 +9457,7 @@
 
     goto :goto_54
 
-    :catch_8f
+    :catch_92
     move-exception v8
 
     const-string/jumbo v0, "LockSettingsService"
@@ -9466,8 +9472,8 @@
 
     goto :goto_54
 
-    :cond_a0
-    if-eqz v10, :cond_c0
+    :cond_a3
+    if-eqz v10, :cond_c3
 
     invoke-virtual {v10}, Lcom/android/internal/widget/VerifyCredentialResponse;->getResponseCode()I
 
@@ -9475,7 +9481,7 @@
 
     const/4 v1, -0x1
 
-    if-ne v0, v1, :cond_c0
+    if-ne v0, v1, :cond_c3
 
     const-string/jumbo v0, "LockSettingsService"
 
@@ -9495,9 +9501,9 @@
 
     invoke-virtual {v0, v2, v3, p4}, Lcom/android/server/SyntheticPasswordManager;->destroyPasswordBasedSyntheticPassword(JI)V
 
-    goto :goto_7a
+    goto :goto_7d
 
-    :cond_c0
+    :cond_c3
     const-string/jumbo v1, "LockSettingsService"
 
     new-instance v0, Ljava/lang/StringBuilder;
@@ -9510,11 +9516,11 @@
 
     move-result-object v4
 
-    if-eqz v10, :cond_e0
+    if-eqz v10, :cond_e3
 
     const-string/jumbo v0, "rate limit exceeded"
 
-    :goto_d4
+    :goto_d7
     invoke-virtual {v4, v0}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
 
     move-result-object v0
@@ -9527,10 +9533,10 @@
 
     return-void
 
-    :cond_e0
+    :cond_e3
     const-string/jumbo v0, "failed"
 
-    goto :goto_d4
+    goto :goto_d7
 .end method
 
 .method private synchronizeUnifiedWorkChallengeForProfiles(ILjava/util/Map;)V

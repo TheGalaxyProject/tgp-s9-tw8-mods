@@ -41,6 +41,10 @@
 # static fields
 .field private static final synthetic -com-android-settings-ConfirmLockPattern$StageSwitchesValues:[I
 
+.field private static mConfirmLockPatternFragment:Lcom/android/settings/ConfirmLockPattern$ConfirmLockPatternFragment;
+
+.field private static sUserId:I
+
 
 # instance fields
 .field private final TAG:Ljava/lang/String;
@@ -76,6 +80,8 @@
 .field private mDetailsText:Ljava/lang/CharSequence;
 
 .field private mDetailsTextView:Lcom/samsung/android/settings/lockscreen/LockCustomTextView;
+
+.field private mDisableStatusBarCount:I
 
 .field private mDisappearAnimationUtils:Lcom/android/settingslib/animation/DisappearAnimationUtils;
 
@@ -124,6 +130,8 @@
 
 .field mScreenOffReceiver:Landroid/content/BroadcastReceiver;
 
+.field private mStatusBarManager:Landroid/app/StatusBarManager;
+
 .field private mUserId:I
 
 .field private mUsingFingerprint:Z
@@ -150,7 +158,15 @@
     return-wide v0
 .end method
 
-.method static synthetic -get10(Lcom/android/settings/ConfirmLockPattern$ConfirmLockPatternFragment;)I
+.method static synthetic -get10(Lcom/android/settings/ConfirmLockPattern$ConfirmLockPatternFragment;)Lcom/android/internal/widget/LockPatternView;
+    .registers 2
+
+    iget-object v0, p0, Lcom/android/settings/ConfirmLockPattern$ConfirmLockPatternFragment;->mLockPatternView:Lcom/android/internal/widget/LockPatternView;
+
+    return-object v0
+.end method
+
+.method static synthetic -get11(Lcom/android/settings/ConfirmLockPattern$ConfirmLockPatternFragment;)I
     .registers 2
 
     iget v0, p0, Lcom/android/settings/ConfirmLockPattern$ConfirmLockPatternFragment;->mNumWrongConfirmAttempts:I
@@ -158,7 +174,7 @@
     return v0
 .end method
 
-.method static synthetic -get11(Lcom/android/settings/ConfirmLockPattern$ConfirmLockPatternFragment;)Landroid/os/AsyncTask;
+.method static synthetic -get12(Lcom/android/settings/ConfirmLockPattern$ConfirmLockPatternFragment;)Landroid/os/AsyncTask;
     .registers 2
 
     iget-object v0, p0, Lcom/android/settings/ConfirmLockPattern$ConfirmLockPatternFragment;->mPendingLockCheck:Landroid/os/AsyncTask;
@@ -166,10 +182,18 @@
     return-object v0
 .end method
 
-.method static synthetic -get12(Lcom/android/settings/ConfirmLockPattern$ConfirmLockPatternFragment;)I
+.method static synthetic -get13(Lcom/android/settings/ConfirmLockPattern$ConfirmLockPatternFragment;)I
     .registers 2
 
     iget v0, p0, Lcom/android/settings/ConfirmLockPattern$ConfirmLockPatternFragment;->mUserId:I
+
+    return v0
+.end method
+
+.method static synthetic -get14()I
+    .registers 1
+
+    sget v0, Lcom/android/settings/ConfirmLockPattern$ConfirmLockPatternFragment;->sUserId:I
 
     return v0
 .end method
@@ -198,7 +222,15 @@
     return-object v0
 .end method
 
-.method static synthetic -get5(Lcom/android/settings/ConfirmLockPattern$ConfirmLockPatternFragment;)Lcom/android/settings/CredentialCheckResultTracker;
+.method static synthetic -get5()Lcom/android/settings/ConfirmLockPattern$ConfirmLockPatternFragment;
+    .registers 1
+
+    sget-object v0, Lcom/android/settings/ConfirmLockPattern$ConfirmLockPatternFragment;->mConfirmLockPatternFragment:Lcom/android/settings/ConfirmLockPattern$ConfirmLockPatternFragment;
+
+    return-object v0
+.end method
+
+.method static synthetic -get6(Lcom/android/settings/ConfirmLockPattern$ConfirmLockPatternFragment;)Lcom/android/settings/CredentialCheckResultTracker;
     .registers 2
 
     iget-object v0, p0, Lcom/android/settings/ConfirmLockPattern$ConfirmLockPatternFragment;->mCredentialCheckResultTracker:Lcom/android/settings/CredentialCheckResultTracker;
@@ -206,7 +238,7 @@
     return-object v0
 .end method
 
-.method static synthetic -get6(Lcom/android/settings/ConfirmLockPattern$ConfirmLockPatternFragment;)Lcom/samsung/android/settings/lockscreen/LockCustomTextView;
+.method static synthetic -get7(Lcom/android/settings/ConfirmLockPattern$ConfirmLockPatternFragment;)Lcom/samsung/android/settings/lockscreen/LockCustomTextView;
     .registers 2
 
     iget-object v0, p0, Lcom/android/settings/ConfirmLockPattern$ConfirmLockPatternFragment;->mDetailsTextView:Lcom/samsung/android/settings/lockscreen/LockCustomTextView;
@@ -214,7 +246,7 @@
     return-object v0
 .end method
 
-.method static synthetic -get7(Lcom/android/settings/ConfirmLockPattern$ConfirmLockPatternFragment;)Z
+.method static synthetic -get8(Lcom/android/settings/ConfirmLockPattern$ConfirmLockPatternFragment;)Z
     .registers 2
 
     iget-boolean v0, p0, Lcom/android/settings/ConfirmLockPattern$ConfirmLockPatternFragment;->mDisappearing:Z
@@ -222,18 +254,10 @@
     return v0
 .end method
 
-.method static synthetic -get8(Lcom/android/settings/ConfirmLockPattern$ConfirmLockPatternFragment;)Ljava/lang/Boolean;
+.method static synthetic -get9(Lcom/android/settings/ConfirmLockPattern$ConfirmLockPatternFragment;)Ljava/lang/Boolean;
     .registers 2
 
     iget-object v0, p0, Lcom/android/settings/ConfirmLockPattern$ConfirmLockPatternFragment;->mIsFromKnoxSetDigitalLock:Ljava/lang/Boolean;
-
-    return-object v0
-.end method
-
-.method static synthetic -get9(Lcom/android/settings/ConfirmLockPattern$ConfirmLockPatternFragment;)Lcom/android/internal/widget/LockPatternView;
-    .registers 2
-
-    iget-object v0, p0, Lcom/android/settings/ConfirmLockPattern$ConfirmLockPatternFragment;->mLockPatternView:Lcom/android/internal/widget/LockPatternView;
 
     return-object v0
 .end method
@@ -415,6 +439,8 @@
 
     iput-boolean v1, p0, Lcom/android/settings/ConfirmLockPattern$ConfirmLockPatternFragment;->mDisappearing:Z
 
+    iput v1, p0, Lcom/android/settings/ConfirmLockPattern$ConfirmLockPatternFragment;->mDisableStatusBarCount:I
+
     invoke-static {v1}, Ljava/lang/Boolean;->valueOf(Z)Ljava/lang/Boolean;
 
     move-result-object v0
@@ -465,7 +491,83 @@
 
     iput-object v0, p0, Lcom/android/settings/ConfirmLockPattern$ConfirmLockPatternFragment;->mConfirmExistingLockPatternListener:Lcom/android/internal/widget/LockPatternView$OnPatternListener;
 
+    sput-object p0, Lcom/android/settings/ConfirmLockPattern$ConfirmLockPatternFragment;->mConfirmLockPatternFragment:Lcom/android/settings/ConfirmLockPattern$ConfirmLockPatternFragment;
+
     return-void
+.end method
+
+.method private disableStatusBar()V
+    .registers 3
+
+    monitor-enter p0
+
+    :try_start_1
+    iget v0, p0, Lcom/android/settings/ConfirmLockPattern$ConfirmLockPatternFragment;->mDisableStatusBarCount:I
+
+    add-int/lit8 v1, v0, 0x1
+
+    iput v1, p0, Lcom/android/settings/ConfirmLockPattern$ConfirmLockPatternFragment;->mDisableStatusBarCount:I
+
+    if-nez v0, :cond_10
+
+    iget-object v0, p0, Lcom/android/settings/ConfirmLockPattern$ConfirmLockPatternFragment;->mStatusBarManager:Landroid/app/StatusBarManager;
+
+    const/high16 v1, 0x10000
+
+    invoke-virtual {v0, v1}, Landroid/app/StatusBarManager;->disable(I)V
+    :try_end_10
+    .catchall {:try_start_1 .. :try_end_10} :catchall_12
+
+    :cond_10
+    monitor-exit p0
+
+    return-void
+
+    :catchall_12
+    move-exception v0
+
+    monitor-exit p0
+
+    throw v0
+.end method
+
+.method private enableStatusBar()V
+    .registers 3
+
+    monitor-enter p0
+
+    :try_start_1
+    iget v0, p0, Lcom/android/settings/ConfirmLockPattern$ConfirmLockPatternFragment;->mDisableStatusBarCount:I
+
+    if-lez v0, :cond_13
+
+    iget v0, p0, Lcom/android/settings/ConfirmLockPattern$ConfirmLockPatternFragment;->mDisableStatusBarCount:I
+
+    add-int/lit8 v0, v0, -0x1
+
+    iput v0, p0, Lcom/android/settings/ConfirmLockPattern$ConfirmLockPatternFragment;->mDisableStatusBarCount:I
+
+    if-nez v0, :cond_13
+
+    iget-object v0, p0, Lcom/android/settings/ConfirmLockPattern$ConfirmLockPatternFragment;->mStatusBarManager:Landroid/app/StatusBarManager;
+
+    const/4 v1, 0x0
+
+    invoke-virtual {v0, v1}, Landroid/app/StatusBarManager;->disable(I)V
+    :try_end_13
+    .catchall {:try_start_1 .. :try_end_13} :catchall_15
+
+    :cond_13
+    monitor-exit p0
+
+    return-void
+
+    :catchall_15
+    move-exception v0
+
+    monitor-exit p0
+
+    throw v0
 .end method
 
 .method private getActiveViews()[[Ljava/lang/Object;
@@ -760,7 +862,7 @@
     return-void
 .end method
 
-.method static synthetic lambda$-com_android_settings_ConfirmLockPattern$ConfirmLockPatternFragment_27649(Lcom/android/settings/ConfirmLockPattern;Landroid/content/Intent;)V
+.method static synthetic lambda$-com_android_settings_ConfirmLockPattern$ConfirmLockPatternFragment_30134(Lcom/android/settings/ConfirmLockPattern;Landroid/content/Intent;)V
     .registers 4
 
     const/4 v0, -0x1
@@ -2040,6 +2142,24 @@
 
     move-result-object v0
 
+    const-string/jumbo v1, "statusbar"
+
+    invoke-virtual {v0, v1}, Landroid/app/Activity;->getSystemService(Ljava/lang/String;)Ljava/lang/Object;
+
+    move-result-object v0
+
+    check-cast v0, Landroid/app/StatusBarManager;
+
+    iput-object v0, p0, Lcom/android/settings/ConfirmLockPattern$ConfirmLockPatternFragment;->mStatusBarManager:Landroid/app/StatusBarManager;
+
+    iget v0, p0, Lcom/android/settings/ConfirmLockPattern$ConfirmLockPatternFragment;->mUserId:I
+
+    sput v0, Lcom/android/settings/ConfirmLockPattern$ConfirmLockPatternFragment;->sUserId:I
+
+    invoke-virtual {p0}, Lcom/android/settings/ConfirmLockPattern$ConfirmLockPatternFragment;->getActivity()Landroid/app/Activity;
+
+    move-result-object v0
+
     invoke-virtual {v0}, Landroid/app/Activity;->getIntent()Landroid/content/Intent;
 
     move-result-object v0
@@ -2856,6 +2976,8 @@
 
     invoke-virtual {v0}, Lcom/android/settings/CredentialCheckResultTracker;->clearResult()V
 
+    invoke-direct {p0}, Lcom/android/settings/ConfirmLockPattern$ConfirmLockPatternFragment;->enableStatusBar()V
+
     return-void
 .end method
 
@@ -2933,7 +3055,7 @@
 
     cmp-long v2, v0, v2
 
-    if-eqz v2, :cond_58
+    if-eqz v2, :cond_7d
 
     iget-object v2, p0, Lcom/android/settings/ConfirmLockPattern$ConfirmLockPatternFragment;->mCredentialCheckResultTracker:Lcom/android/settings/CredentialCheckResultTracker;
 
@@ -2947,9 +3069,47 @@
 
     invoke-virtual {v2, p0}, Lcom/android/settings/CredentialCheckResultTracker;->setListener(Lcom/android/settings/CredentialCheckResultTracker$Listener;)V
 
+    iget v2, p0, Lcom/android/settings/ConfirmLockPattern$ConfirmLockPatternFragment;->mUserId:I
+
+    invoke-static {v2}, Lcom/samsung/android/knox/SemPersonaManager;->isDoEnabled(I)Z
+
+    move-result v2
+
+    if-nez v2, :cond_69
+
+    invoke-virtual {p0}, Lcom/android/settings/ConfirmLockPattern$ConfirmLockPatternFragment;->getContext()Landroid/content/Context;
+
+    move-result-object v2
+
+    invoke-static {v2}, Lcom/samsung/android/knox/SemPersonaManager;->isKioskModeEnabled(Landroid/content/Context;)Z
+
+    move-result v2
+
+    if-eqz v2, :cond_78
+
+    :cond_69
+    invoke-virtual {p0}, Lcom/android/settings/ConfirmLockPattern$ConfirmLockPatternFragment;->getContext()Landroid/content/Context;
+
+    move-result-object v2
+
+    iget v3, p0, Lcom/android/settings/ConfirmLockPattern$ConfirmLockPatternFragment;->mUserId:I
+
+    invoke-static {v2, v3}, Lcom/android/settings/Utils;->isChangeRequested(Landroid/content/Context;I)I
+
+    move-result v2
+
+    if-lez v2, :cond_78
+
+    invoke-direct {p0}, Lcom/android/settings/ConfirmLockPattern$ConfirmLockPatternFragment;->disableStatusBar()V
+
+    :cond_78
+    iget v2, p0, Lcom/android/settings/ConfirmLockPattern$ConfirmLockPatternFragment;->mUserId:I
+
+    sput v2, Lcom/android/settings/ConfirmLockPattern$ConfirmLockPatternFragment;->sUserId:I
+
     return-void
 
-    :cond_58
+    :cond_7d
     iget-object v2, p0, Lcom/android/settings/ConfirmLockPattern$ConfirmLockPatternFragment;->mLockPatternView:Lcom/android/internal/widget/LockPatternView;
 
     invoke-virtual {v2}, Lcom/android/internal/widget/LockPatternView;->isEnabled()Z

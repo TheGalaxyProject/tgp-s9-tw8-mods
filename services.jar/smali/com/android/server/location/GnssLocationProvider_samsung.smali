@@ -9180,7 +9180,7 @@
 
     const/16 v2, 0xd
 
-    if-ne v1, v2, :cond_127
+    if-ne v1, v2, :cond_12c
 
     const/4 p1, 0x1
 
@@ -9217,7 +9217,7 @@
 
     sget-object v2, Lcom/android/server/location/GnssLocationProvider_samsung$Vendor;->CHN_CHC:Lcom/android/server/location/GnssLocationProvider_samsung$Vendor;
 
-    if-ne v1, v2, :cond_133
+    if-ne v1, v2, :cond_138
 
     :cond_57
     :goto_57
@@ -9312,16 +9312,23 @@
 
     sget-object v2, Lcom/android/server/location/GnssLocationProvider_samsung$Vendor;->JPN_KDI:Lcom/android/server/location/GnssLocationProvider_samsung$Vendor;
 
-    if-ne v1, v2, :cond_110
+    if-ne v1, v2, :cond_115
 
     :cond_bb
+    iget-boolean v1, p0, Lcom/android/server/location/GnssLocationProvider_samsung;->mIzatServiceEnabled:Z
+
+    if-nez v1, :cond_c0
+
+    const/4 p1, 0x1
+
+    :cond_c0
     invoke-static {}, Lcom/android/server/location/GnssLocationProvider_samsung;->getVendor()Lcom/android/server/location/GnssLocationProvider_samsung$Vendor;
 
     move-result-object v1
 
     sget-object v2, Lcom/android/server/location/GnssLocationProvider_samsung$Vendor;->JPN_DCM:Lcom/android/server/location/GnssLocationProvider_samsung$Vendor;
 
-    if-ne v1, v2, :cond_f3
+    if-ne v1, v2, :cond_f8
 
     const/4 v0, 0x0
 
@@ -9337,11 +9344,11 @@
 
     move-result v1
 
-    if-eqz v1, :cond_145
+    if-eqz v1, :cond_14a
 
     const/4 v0, 0x1
 
-    :goto_d4
+    :goto_d9
     const-string/jumbo v1, "GnssLocationProvider_ex"
 
     new-instance v2, Ljava/lang/StringBuilder;
@@ -9364,12 +9371,12 @@
 
     invoke-static {v1, v2}, Landroid/util/Log;->d(Ljava/lang/String;Ljava/lang/String;)I
 
-    if-eqz v0, :cond_f3
+    if-eqz v0, :cond_f8
 
     invoke-direct {p0}, Lcom/android/server/location/GnssLocationProvider_samsung;->generateBeep()V
 
-    :cond_f3
-    if-eqz p3, :cond_110
+    :cond_f8
+    if-eqz p3, :cond_115
 
     const/4 p1, 0x2
 
@@ -9395,7 +9402,7 @@
 
     invoke-static {v1, v2}, Landroid/util/Log;->d(Ljava/lang/String;Ljava/lang/String;)I
 
-    :cond_110
+    :cond_115
     iget-object v1, p0, Lcom/android/server/location/GnssLocationProvider_samsung;->mTelephonyManager:Landroid/telephony/TelephonyManager;
 
     invoke-virtual {v1}, Landroid/telephony/TelephonyManager;->getSimOperator()Ljava/lang/String;
@@ -9406,7 +9413,7 @@
 
     move-result v1
 
-    if-nez v1, :cond_126
+    if-nez v1, :cond_12b
 
     const/4 p1, 0x0
 
@@ -9416,10 +9423,10 @@
 
     invoke-static {v1, v2}, Landroid/util/Log;->d(Ljava/lang/String;Ljava/lang/String;)I
 
-    :cond_126
+    :cond_12b
     return p1
 
-    :cond_127
+    :cond_12c
     const/4 p1, 0x0
 
     const-string/jumbo v1, "GnssLocationProvider_ex"
@@ -9430,7 +9437,7 @@
 
     goto/16 :goto_3d
 
-    :cond_133
+    :cond_138
     invoke-static {}, Lcom/android/server/location/GnssLocationProvider_samsung;->getVendor()Lcom/android/server/location/GnssLocationProvider_samsung$Vendor;
 
     move-result-object v1
@@ -9449,10 +9456,10 @@
 
     goto/16 :goto_57
 
-    :cond_145
+    :cond_14a
     const/4 v0, 0x0
 
-    goto :goto_d4
+    goto :goto_d9
 .end method
 
 .method extension_set_supl_server()V

@@ -37,7 +37,7 @@
 
     check-cast v5, Landroid/content/pm/IPackageDataObserver;
 
-    invoke-virtual/range {v0 .. v5}, Lcom/android/server/pm/PackageManagerService;->lambda$-com_android_server_pm_PackageManagerService_271389(Ljava/lang/String;JILandroid/content/pm/IPackageDataObserver;)V
+    invoke-virtual/range {v0 .. v5}, Lcom/android/server/pm/PackageManagerService;->lambda$-com_android_server_pm_PackageManagerService_271476(Ljava/lang/String;JILandroid/content/pm/IPackageDataObserver;)V
 
     return-void
 .end method

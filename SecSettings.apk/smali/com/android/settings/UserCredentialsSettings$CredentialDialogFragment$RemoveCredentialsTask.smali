@@ -127,32 +127,33 @@
 .end method
 
 .method private removeGrantsAndDelete(Lcom/android/settings/UserCredentialsSettings$Credential;)V
-    .registers 8
+    .registers 9
 
     :try_start_0
-    iget-object v4, p0, Lcom/android/settings/UserCredentialsSettings$CredentialDialogFragment$RemoveCredentialsTask;->this$1:Lcom/android/settings/UserCredentialsSettings$CredentialDialogFragment;
+    iget-object v5, p0, Lcom/android/settings/UserCredentialsSettings$CredentialDialogFragment$RemoveCredentialsTask;->this$1:Lcom/android/settings/UserCredentialsSettings$CredentialDialogFragment;
 
-    invoke-virtual {v4}, Lcom/android/settings/UserCredentialsSettings$CredentialDialogFragment;->getContext()Landroid/content/Context;
+    invoke-virtual {v5}, Lcom/android/settings/UserCredentialsSettings$CredentialDialogFragment;->getContext()Landroid/content/Context;
 
-    move-result-object v4
+    move-result-object v5
 
-    invoke-static {v4}, Landroid/security/KeyChain;->bind(Landroid/content/Context;)Landroid/security/KeyChain$KeyChainConnection;
+    invoke-static {v5}, Landroid/security/KeyChain;->bind(Landroid/content/Context;)Landroid/security/KeyChain$KeyChainConnection;
     :try_end_9
-    .catch Ljava/lang/InterruptedException; {:try_start_0 .. :try_end_9} :catch_17
+    .catch Ljava/lang/InterruptedException; {:try_start_0 .. :try_end_9} :catch_22
+    .catch Ljava/lang/NullPointerException; {:try_start_0 .. :try_end_9} :catch_17
 
     move-result-object v0
 
     :try_start_a
     invoke-virtual {v0}, Landroid/security/KeyChain$KeyChainConnection;->getService()Landroid/security/IKeyChainService;
 
-    move-result-object v3
+    move-result-object v4
 
-    iget-object v4, p1, Lcom/android/settings/UserCredentialsSettings$Credential;->alias:Ljava/lang/String;
+    iget-object v5, p1, Lcom/android/settings/UserCredentialsSettings$Credential;->alias:Ljava/lang/String;
 
-    invoke-interface {v3, v4}, Landroid/security/IKeyChainService;->removeKeyPair(Ljava/lang/String;)Z
+    invoke-interface {v4, v5}, Landroid/security/IKeyChainService;->removeKeyPair(Ljava/lang/String;)Z
     :try_end_13
-    .catch Landroid/os/RemoteException; {:try_start_a .. :try_end_13} :catch_22
-    .catchall {:try_start_a .. :try_end_13} :catchall_30
+    .catch Landroid/os/RemoteException; {:try_start_a .. :try_end_13} :catch_2d
+    .catchall {:try_start_a .. :try_end_13} :catchall_3b
 
     invoke-virtual {v0}, Landroid/security/KeyChain$KeyChainConnection;->close()V
 
@@ -160,38 +161,49 @@
     return-void
 
     :catch_17
-    move-exception v2
+    move-exception v3
 
-    const-string/jumbo v4, "CredentialDialogFragment"
+    const-string/jumbo v5, "CredentialDialogFragment"
 
-    const-string/jumbo v5, "Connecting to KeyChain"
+    const-string/jumbo v6, "context == null"
 
-    invoke-static {v4, v5, v2}, Landroid/util/Log;->w(Ljava/lang/String;Ljava/lang/String;Ljava/lang/Throwable;)I
+    invoke-static {v5, v6, v3}, Landroid/util/Log;->w(Ljava/lang/String;Ljava/lang/String;Ljava/lang/Throwable;)I
 
     return-void
 
     :catch_22
+    move-exception v2
+
+    const-string/jumbo v5, "CredentialDialogFragment"
+
+    const-string/jumbo v6, "Connecting to KeyChain"
+
+    invoke-static {v5, v6, v2}, Landroid/util/Log;->w(Ljava/lang/String;Ljava/lang/String;Ljava/lang/Throwable;)I
+
+    return-void
+
+    :catch_2d
     move-exception v1
 
-    :try_start_23
-    const-string/jumbo v4, "CredentialDialogFragment"
+    :try_start_2e
+    const-string/jumbo v5, "CredentialDialogFragment"
 
-    const-string/jumbo v5, "Removing credentials"
+    const-string/jumbo v6, "Removing credentials"
 
-    invoke-static {v4, v5, v1}, Landroid/util/Log;->w(Ljava/lang/String;Ljava/lang/String;Ljava/lang/Throwable;)I
-    :try_end_2c
-    .catchall {:try_start_23 .. :try_end_2c} :catchall_30
+    invoke-static {v5, v6, v1}, Landroid/util/Log;->w(Ljava/lang/String;Ljava/lang/String;Ljava/lang/Throwable;)I
+    :try_end_37
+    .catchall {:try_start_2e .. :try_end_37} :catchall_3b
 
     invoke-virtual {v0}, Landroid/security/KeyChain$KeyChainConnection;->close()V
 
     goto :goto_16
 
-    :catchall_30
-    move-exception v4
+    :catchall_3b
+    move-exception v5
 
     invoke-virtual {v0}, Landroid/security/KeyChain$KeyChainConnection;->close()V
 
-    throw v4
+    throw v5
 .end method
 
 

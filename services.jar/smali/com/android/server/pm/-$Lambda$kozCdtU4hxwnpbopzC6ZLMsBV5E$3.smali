@@ -37,7 +37,7 @@
 
     check-cast v5, Landroid/content/IntentSender;
 
-    invoke-virtual/range {v0 .. v5}, Lcom/android/server/pm/PackageManagerService;->lambda$-com_android_server_pm_PackageManagerService_272328(Ljava/lang/String;JILandroid/content/IntentSender;)V
+    invoke-virtual/range {v0 .. v5}, Lcom/android/server/pm/PackageManagerService;->lambda$-com_android_server_pm_PackageManagerService_272415(Ljava/lang/String;JILandroid/content/IntentSender;)V
 
     return-void
 .end method

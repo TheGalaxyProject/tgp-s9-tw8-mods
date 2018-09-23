@@ -15,7 +15,7 @@
 
     iget v0, p0, Lcom/android/server/pm/-$Lambda$kozCdtU4hxwnpbopzC6ZLMsBV5E$1;->-$f0:I
 
-    invoke-static {v0}, Lcom/android/server/pm/PackageManagerService;->lambda$-com_android_server_pm_PackageManagerService_1227664(I)V
+    invoke-static {v0}, Lcom/android/server/pm/PackageManagerService;->lambda$-com_android_server_pm_PackageManagerService_1228576(I)V
 
     return-void
 .end method

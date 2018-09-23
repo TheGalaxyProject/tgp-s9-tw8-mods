@@ -8277,7 +8277,7 @@
     return-object v1
 .end method
 
-.method static synthetic lambda$-com_android_server_SdpManagerService_254152(ILandroid/os/UserManagerInternal;)Ljava/lang/Boolean;
+.method static synthetic lambda$-com_android_server_SdpManagerService_254632(ILandroid/os/UserManagerInternal;)Ljava/lang/Boolean;
     .registers 3
 
     const/4 v0, 0x1
@@ -8293,7 +8293,7 @@
     return-object v0
 .end method
 
-.method static synthetic lambda$-com_android_server_SdpManagerService_255265(ILandroid/os/UserManagerInternal;)Ljava/lang/Boolean;
+.method static synthetic lambda$-com_android_server_SdpManagerService_255745(ILandroid/os/UserManagerInternal;)Ljava/lang/Boolean;
     .registers 3
 
     const/4 v0, 0x1

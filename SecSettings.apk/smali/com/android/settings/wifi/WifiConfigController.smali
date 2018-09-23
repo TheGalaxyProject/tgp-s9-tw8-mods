@@ -10665,7 +10665,7 @@
 
     move/from16 v18, v0
 
-    packed-switch v18, :pswitch_data_90a
+    packed-switch v18, :pswitch_data_912
 
     const/16 v18, 0x0
 
@@ -10815,7 +10815,7 @@
 
     move-result v18
 
-    if-eqz v18, :cond_906
+    if-eqz v18, :cond_90e
 
     const/16 v18, 0x1
 
@@ -11332,7 +11332,7 @@
 
     invoke-virtual/range {v18 .. v19}, Landroid/net/wifi/WifiEnterpriseConfig;->setEapMethod(I)V
 
-    packed-switch v12, :pswitch_data_91a
+    packed-switch v12, :pswitch_data_922
 
     const-string/jumbo v18, "WifiConfigController"
 
@@ -11762,7 +11762,7 @@
 
     invoke-virtual/range {v18 .. v19}, Landroid/net/wifi/WifiEnterpriseConfig;->setPacFile(Ljava/lang/String;)V
 
-    packed-switch v12, :pswitch_data_92a
+    packed-switch v12, :pswitch_data_932
 
     const-string/jumbo v18, "WifiConfigController"
 
@@ -12139,7 +12139,7 @@
 
     move-result v18
 
-    if-nez v18, :cond_6c0
+    if-nez v18, :cond_6c8
 
     const/16 v18, 0x4
 
@@ -12151,7 +12151,7 @@
 
     move/from16 v0, v18
 
-    if-ne v5, v0, :cond_6ba
+    if-ne v5, v0, :cond_6c2
 
     :cond_648
     iget-object v0, v4, Landroid/net/wifi/WifiConfiguration;->enterpriseConfig:Landroid/net/wifi/WifiEnterpriseConfig;
@@ -12181,7 +12181,7 @@
 
     move-result v18
 
-    if-eqz v18, :cond_713
+    if-eqz v18, :cond_71b
 
     move-object/from16 v0, p0
 
@@ -12252,6 +12252,14 @@
 
     move-result-object v3
 
+    const/16 v18, 0x1
+
+    move/from16 v0, v18
+
+    invoke-static {v3, v0}, Lcom/sec/tima_keychain/TimaKeychain;->display2KeyChainAlias(Ljava/lang/String;Z)Ljava/lang/String;
+
+    move-result-object v3
+
     iget-object v0, v4, Landroid/net/wifi/WifiConfiguration;->enterpriseConfig:Landroid/net/wifi/WifiEnterpriseConfig;
 
     move-object/from16 v18, v0
@@ -12262,19 +12270,19 @@
 
     goto/16 :goto_627
 
-    :cond_6ba
+    :cond_6c2
     const/16 v18, 0x6
 
     move/from16 v0, v18
 
     if-eq v5, v0, :cond_648
 
-    :cond_6c0
+    :cond_6c8
     const/16 v18, 0x3
 
     move/from16 v0, v18
 
-    if-ne v5, v0, :cond_6e7
+    if-ne v5, v0, :cond_6ef
 
     iget-object v0, v4, Landroid/net/wifi/WifiConfiguration;->enterpriseConfig:Landroid/net/wifi/WifiEnterpriseConfig;
 
@@ -12306,7 +12314,7 @@
 
     goto/16 :goto_65c
 
-    :cond_6e7
+    :cond_6ef
     iget-object v0, v4, Landroid/net/wifi/WifiConfiguration;->enterpriseConfig:Landroid/net/wifi/WifiEnterpriseConfig;
 
     move-object/from16 v18, v0
@@ -12349,7 +12357,7 @@
 
     goto/16 :goto_65c
 
-    :cond_713
+    :cond_71b
     iget-object v0, v4, Landroid/net/wifi/WifiConfiguration;->enterpriseConfig:Landroid/net/wifi/WifiEnterpriseConfig;
 
     move-object/from16 v18, v0
@@ -12372,7 +12380,7 @@
 
     goto/16 :goto_a7
 
-    :pswitch_72a
+    :pswitch_732
     iget-object v0, v4, Landroid/net/wifi/WifiConfiguration;->allowedKeyManagement:Ljava/util/BitSet;
 
     move-object/from16 v18, v0
@@ -12387,7 +12395,7 @@
 
     move-object/from16 v18, v0
 
-    if-eqz v18, :cond_762
+    if-eqz v18, :cond_76a
 
     move-object/from16 v0, p0
 
@@ -12399,7 +12407,7 @@
 
     move-result v18
 
-    if-eqz v18, :cond_762
+    if-eqz v18, :cond_76a
 
     move-object/from16 v0, p0
 
@@ -12423,12 +12431,12 @@
 
     move-result v18
 
-    if-eqz v18, :cond_7a0
+    if-eqz v18, :cond_7a8
 
     iput-object v10, v4, Landroid/net/wifi/WifiConfiguration;->preSharedKey:Ljava/lang/String;
 
-    :cond_762
-    :goto_762
+    :cond_76a
+    :goto_76a
     move-object/from16 v0, p0
 
     iget-object v0, v0, Lcom/android/settings/wifi/WifiConfigController;->mWapiPskType:Landroid/widget/Spinner;
@@ -12487,7 +12495,7 @@
 
     goto/16 :goto_a7
 
-    :cond_7a0
+    :cond_7a8
     new-instance v18, Ljava/lang/StringBuilder;
 
     invoke-direct/range {v18 .. v18}, Ljava/lang/StringBuilder;-><init>()V
@@ -12534,9 +12542,9 @@
 
     iput-object v15, v4, Landroid/net/wifi/WifiConfiguration;->preSharedKey:Ljava/lang/String;
 
-    goto :goto_762
+    goto :goto_76a
 
-    :pswitch_7d3
+    :pswitch_7db
     iget-object v0, v4, Landroid/net/wifi/WifiConfiguration;->allowedKeyManagement:Ljava/util/BitSet;
 
     move-object/from16 v18, v0
@@ -12677,11 +12685,11 @@
 
     move-result v18
 
-    if-eqz v18, :cond_8d4
+    if-eqz v18, :cond_8dc
 
     const-string/jumbo v16, ""
 
-    :goto_86e
+    :goto_876
     iget-object v0, v4, Landroid/net/wifi/WifiConfiguration;->enterpriseConfig:Landroid/net/wifi/WifiEnterpriseConfig;
 
     move-object/from16 v18, v0
@@ -12704,11 +12712,11 @@
 
     move-result v18
 
-    if-nez v18, :cond_889
+    if-nez v18, :cond_891
 
     const-string/jumbo v16, ""
 
-    :cond_889
+    :cond_891
     move-object/from16 v0, v16
 
     iput-object v0, v4, Landroid/net/wifi/WifiConfiguration;->wapiAsCert:Ljava/lang/String;
@@ -12735,11 +12743,11 @@
 
     move-result v18
 
-    if-eqz v18, :cond_8ed
+    if-eqz v18, :cond_8f5
 
     const-string/jumbo v17, ""
 
-    :goto_8a8
+    :goto_8b0
     iget-object v0, v4, Landroid/net/wifi/WifiConfiguration;->enterpriseConfig:Landroid/net/wifi/WifiEnterpriseConfig;
 
     move-object/from16 v18, v0
@@ -12772,18 +12780,18 @@
 
     move-result v18
 
-    if-nez v18, :cond_8ce
+    if-nez v18, :cond_8d6
 
     const-string/jumbo v17, ""
 
-    :cond_8ce
+    :cond_8d6
     move-object/from16 v0, v17
 
     iput-object v0, v4, Landroid/net/wifi/WifiConfiguration;->wapiUserCert:Ljava/lang/String;
 
     goto/16 :goto_a7
 
-    :cond_8d4
+    :cond_8dc
     new-instance v18, Ljava/lang/StringBuilder;
 
     invoke-direct/range {v18 .. v18}, Ljava/lang/StringBuilder;-><init>()V
@@ -12806,9 +12814,9 @@
 
     move-result-object v16
 
-    goto :goto_86e
+    goto :goto_876
 
-    :cond_8ed
+    :cond_8f5
     new-instance v18, Ljava/lang/StringBuilder;
 
     invoke-direct/range {v18 .. v18}, Ljava/lang/StringBuilder;-><init>()V
@@ -12831,24 +12839,24 @@
 
     move-result-object v17
 
-    goto :goto_8a8
+    goto :goto_8b0
 
-    :cond_906
+    :cond_90e
     const/16 v18, 0x0
 
     goto/16 :goto_f7
 
-    :pswitch_data_90a
+    :pswitch_data_912
     .packed-switch 0x0
         :pswitch_9e
         :pswitch_11e
         :pswitch_1b1
         :pswitch_26c
-        :pswitch_72a
-        :pswitch_7d3
+        :pswitch_732
+        :pswitch_7db
     .end packed-switch
 
-    :pswitch_data_91a
+    :pswitch_data_922
     .packed-switch 0x0
         :pswitch_450
         :pswitch_45b
@@ -12858,7 +12866,7 @@
         :pswitch_487
     .end packed-switch
 
-    :pswitch_data_92a
+    :pswitch_data_932
     .packed-switch 0x0
         :pswitch_4da
         :pswitch_4e5

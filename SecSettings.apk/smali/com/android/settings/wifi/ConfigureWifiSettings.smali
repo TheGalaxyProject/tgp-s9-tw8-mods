@@ -401,7 +401,7 @@
 
     new-instance v2, Lcom/samsung/android/settings/wifi/SmartNetworkSwitchPrefController;
 
-    invoke-direct {v2, p1, p2, p0}, Lcom/samsung/android/settings/wifi/SmartNetworkSwitchPrefController;-><init>(Landroid/app/Activity;Landroid/app/Fragment;Landroid/content/Context;)V
+    invoke-direct {v2, p1, p2, p0, p3}, Lcom/samsung/android/settings/wifi/SmartNetworkSwitchPrefController;-><init>(Landroid/app/Activity;Landroid/app/Fragment;Landroid/content/Context;Lcom/android/settings/core/lifecycle/Lifecycle;)V
 
     invoke-interface {v1, v2}, Ljava/util/List;->add(Ljava/lang/Object;)Z
 

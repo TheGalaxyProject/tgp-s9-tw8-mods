@@ -23,7 +23,7 @@
 
     check-cast v1, Landroid/content/Intent;
 
-    invoke-static {v0, v1}, Lcom/android/settings/ConfirmLockPattern$ConfirmLockPatternFragment;->lambda$-com_android_settings_ConfirmLockPattern$ConfirmLockPatternFragment_27649(Lcom/android/settings/ConfirmLockPattern;Landroid/content/Intent;)V
+    invoke-static {v0, v1}, Lcom/android/settings/ConfirmLockPattern$ConfirmLockPatternFragment;->lambda$-com_android_settings_ConfirmLockPattern$ConfirmLockPatternFragment_30134(Lcom/android/settings/ConfirmLockPattern;Landroid/content/Intent;)V
 
     return-void
 .end method

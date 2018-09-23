@@ -101,7 +101,7 @@
 
     cmp-long v5, v6, v10
 
-    if-eqz v5, :cond_88
+    if-eqz v5, :cond_b5
 
     iget-object v5, p0, Lcom/android/settings/ChooseLockPassword$SaveAndFinishWorker;->mUtils:Lcom/android/internal/widget/LockPatternUtils;
 
@@ -120,7 +120,7 @@
 
     cmp-long v5, v6, v10
 
-    if-eqz v5, :cond_9c
+    if-eqz v5, :cond_ca
 
     iget-object v5, p0, Lcom/android/settings/ChooseLockPassword$SaveAndFinishWorker;->mUtils:Lcom/android/internal/widget/LockPatternUtils;
 
@@ -139,7 +139,7 @@
 
     cmp-long v5, v6, v10
 
-    if-eqz v5, :cond_ad
+    if-eqz v5, :cond_dc
 
     iget-object v5, p0, Lcom/android/settings/ChooseLockPassword$SaveAndFinishWorker;->mUtils:Lcom/android/internal/widget/LockPatternUtils;
 
@@ -151,7 +151,7 @@
 
     invoke-virtual {v5, v6, v8, v9, v7}, Lcom/android/internal/widget/LockPatternUtils;->verifyPassword(Ljava/lang/String;JI)[B
     :try_end_64
-    .catch Lcom/android/internal/widget/LockPatternUtils$RequestThrottledException; {:try_start_2f .. :try_end_64} :catch_99
+    .catch Lcom/android/internal/widget/LockPatternUtils$RequestThrottledException; {:try_start_2f .. :try_end_64} :catch_c7
 
     move-result-object v3
 
@@ -182,12 +182,55 @@
     invoke-virtual {v1, v5, v3}, Landroid/content/Intent;->putExtra(Ljava/lang/String;[B)Landroid/content/Intent;
 
     :cond_87
+    invoke-static {}, Lcom/android/settings/ChooseLockPassword;->-get17()Z
+
+    move-result v5
+
+    if-eqz v5, :cond_b4
+
+    iget v5, p0, Lcom/android/settings/ChooseLockPassword$SaveAndFinishWorker;->mUserId:I
+
+    invoke-static {v5}, Lcom/samsung/android/knox/SemPersonaManager;->isDoEnabled(I)Z
+
+    move-result v5
+
+    xor-int/lit8 v5, v5, 0x1
+
+    if-eqz v5, :cond_b4
+
+    invoke-virtual {p0}, Lcom/android/settings/ChooseLockPassword$SaveAndFinishWorker;->getActivity()Landroid/app/Activity;
+
+    move-result-object v5
+
+    invoke-virtual {v5}, Landroid/app/Activity;->getApplicationContext()Landroid/content/Context;
+
+    move-result-object v5
+
+    iget v6, p0, Lcom/android/settings/ChooseLockPassword$SaveAndFinishWorker;->mUserId:I
+
+    invoke-static {v5, v6}, Lcom/android/settings/Utils;->isChangeRequested(Landroid/content/Context;I)I
+
+    move-result v5
+
+    if-lez v5, :cond_b4
+
+    const-string/jumbo v5, "password"
+
+    iget-object v6, p0, Lcom/android/settings/ChooseLockPassword$SaveAndFinishWorker;->mChosenPassword:Ljava/lang/String;
+
+    invoke-virtual {v1, v5, v6}, Landroid/content/Intent;->putExtra(Ljava/lang/String;Ljava/lang/String;)Landroid/content/Intent;
+
+    iget v5, p0, Lcom/android/settings/ChooseLockPassword$SaveAndFinishWorker;->mUserId:I
+
+    invoke-static {v5}, Lcom/android/settings/Utils;->lockProfile(I)V
+
+    :cond_b4
     return-object v1
 
-    :cond_88
+    :cond_b5
     const/4 v5, 0x1
 
-    :try_start_89
+    :try_start_b6
     new-array v2, v5, [B
 
     const/4 v5, -0x1
@@ -202,16 +245,16 @@
 
     invoke-static {v5, v6}, Landroid/util/Log;->e(Ljava/lang/String;Ljava/lang/String;)I
 
-    goto :goto_41
+    goto/16 :goto_41
 
-    :catch_99
+    :catch_c7
     move-exception v0
 
     const/4 v2, 0x0
 
     goto :goto_65
 
-    :cond_9c
+    :cond_ca
     const/4 v5, 0x1
 
     new-array v4, v5, [B
@@ -228,9 +271,9 @@
 
     invoke-static {v5, v6}, Landroid/util/Log;->e(Ljava/lang/String;Ljava/lang/String;)I
 
-    goto :goto_53
+    goto/16 :goto_53
 
-    :cond_ad
+    :cond_dc
     const/4 v5, 0x1
 
     new-array v3, v5, [B
@@ -246,10 +289,10 @@
     const-string/jumbo v6, "critical: mChallengeFace returned zero."
 
     invoke-static {v5, v6}, Landroid/util/Log;->e(Ljava/lang/String;Ljava/lang/String;)I
-    :try_end_bd
-    .catch Lcom/android/internal/widget/LockPatternUtils$RequestThrottledException; {:try_start_89 .. :try_end_bd} :catch_99
+    :try_end_ec
+    .catch Lcom/android/internal/widget/LockPatternUtils$RequestThrottledException; {:try_start_b6 .. :try_end_ec} :catch_c7
 
-    goto :goto_65
+    goto/16 :goto_65
 .end method
 
 .method public bridge synthetic setBlocking(Z)V

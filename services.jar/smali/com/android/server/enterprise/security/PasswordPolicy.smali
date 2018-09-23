@@ -1730,7 +1730,35 @@
 .end method
 
 .method private enforcePwdChangeForUser(II)Z
-    .registers 12
+    .registers 14
+
+    const/4 v10, 0x1
+
+    const/4 v9, 0x0
+
+    const-string/jumbo v6, "Enforce password change policy applied for user %d by %d"
+
+    const/4 v7, 0x2
+
+    new-array v7, v7, [Ljava/lang/Object;
+
+    invoke-static {p1}, Ljava/lang/Integer;->valueOf(I)Ljava/lang/Integer;
+
+    move-result-object v8
+
+    aput-object v8, v7, v9
+
+    invoke-static {p2}, Ljava/lang/Integer;->valueOf(I)Ljava/lang/Integer;
+
+    move-result-object v8
+
+    aput-object v8, v7, v10
+
+    invoke-static {v6, v7}, Ljava/lang/String;->format(Ljava/lang/String;[Ljava/lang/Object;)Ljava/lang/String;
+
+    move-result-object v6
+
+    invoke-static {v6}, Lcom/sec/sdp/internal/SDPLog;->d(Ljava/lang/String;)V
 
     const/4 v3, 0x1
 
@@ -1738,12 +1766,12 @@
 
     move-result-wide v4
 
-    :try_start_5
+    :try_start_20
     invoke-direct {p0, p2}, Lcom/android/server/enterprise/security/PasswordPolicy;->isPersona(I)Z
 
     move-result v6
 
-    if-eqz v6, :cond_16
+    if-eqz v6, :cond_31
 
     const/4 v6, 0x1
 
@@ -1755,7 +1783,7 @@
 
     return v3
 
-    :cond_16
+    :cond_31
     const/4 v6, 0x1
 
     invoke-virtual {p0, p1, v6, p2}, Lcom/android/server/enterprise/security/PasswordPolicy;->setPwdChangeRequestedForUser(III)Z
@@ -1768,7 +1796,7 @@
 
     move-result v0
 
-    if-nez v2, :cond_62
+    if-nez v2, :cond_7d
 
     const/4 v6, 0x3
 
@@ -1780,31 +1808,31 @@
 
     move-result v6
 
-    if-eqz v6, :cond_32
+    if-eqz v6, :cond_4d
 
-    if-eq p2, v0, :cond_39
+    if-eq p2, v0, :cond_54
 
-    :cond_32
+    :cond_4d
     invoke-direct {p0, p2}, Lcom/android/server/enterprise/security/PasswordPolicy;->changePasswordAsUser(I)V
-    :try_end_35
-    .catch Ljava/lang/Exception; {:try_start_5 .. :try_end_35} :catch_3e
+    :try_end_50
+    .catch Ljava/lang/Exception; {:try_start_20 .. :try_end_50} :catch_59
 
-    :goto_35
+    :goto_50
     invoke-static {v4, v5}, Landroid/os/Binder;->restoreCallingIdentity(J)V
 
     return v3
 
-    :cond_39
+    :cond_54
     const/4 v6, -0x4
 
-    :try_start_3a
+    :try_start_55
     invoke-virtual {p0, p1, v6, p2}, Lcom/android/server/enterprise/security/PasswordPolicy;->setPwdChangeRequestedForUser(III)Z
-    :try_end_3d
-    .catch Ljava/lang/Exception; {:try_start_3a .. :try_end_3d} :catch_3e
+    :try_end_58
+    .catch Ljava/lang/Exception; {:try_start_55 .. :try_end_58} :catch_59
 
-    goto :goto_35
+    goto :goto_50
 
-    :catch_3e
+    :catch_59
     move-exception v1
 
     const/4 v3, 0x0
@@ -1837,33 +1865,33 @@
 
     invoke-virtual {v1}, Ljava/lang/Exception;->printStackTrace()V
 
-    goto :goto_35
+    goto :goto_50
 
-    :cond_62
-    :try_start_62
+    :cond_7d
+    :try_start_7d
     iget-object v6, p0, Lcom/android/server/enterprise/security/PasswordPolicy;->mTelManager:Landroid/telephony/TelephonyManager;
 
     invoke-virtual {v6}, Landroid/telephony/TelephonyManager;->getCallState()I
 
     move-result v6
 
-    if-eqz v6, :cond_6c
+    if-eqz v6, :cond_87
 
-    if-eq p2, v0, :cond_70
+    if-eq p2, v0, :cond_8b
 
-    :cond_6c
+    :cond_87
     invoke-direct {p0, p2}, Lcom/android/server/enterprise/security/PasswordPolicy;->changePasswordAsUser(I)V
 
-    goto :goto_35
+    goto :goto_50
 
-    :cond_70
+    :cond_8b
     const/4 v6, -0x2
 
     invoke-virtual {p0, p1, v6, p2}, Lcom/android/server/enterprise/security/PasswordPolicy;->setPwdChangeRequestedForUser(III)Z
-    :try_end_74
-    .catch Ljava/lang/Exception; {:try_start_62 .. :try_end_74} :catch_3e
+    :try_end_8f
+    .catch Ljava/lang/Exception; {:try_start_7d .. :try_end_8f} :catch_59
 
-    goto :goto_35
+    goto :goto_50
 .end method
 
 .method private enforcePwdChangeIfNeededAfterCall(I)V
@@ -3124,7 +3152,7 @@
     return v2
 .end method
 
-.method static synthetic lambda$-com_android_server_enterprise_security_PasswordPolicy_42716(ILcom/android/server/SdpManagerService;)Ljava/lang/Boolean;
+.method static synthetic lambda$-com_android_server_enterprise_security_PasswordPolicy_42847(ILcom/android/server/SdpManagerService;)Ljava/lang/Boolean;
     .registers 3
 
     invoke-virtual {p1, p0}, Lcom/android/server/SdpManagerService;->isEnterpriseUser(I)Z

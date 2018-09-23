@@ -18960,19 +18960,11 @@
 
     iput v1, p0, Lcom/android/server/power/PowerManagerService;->mMinimumScreenOffTimeoutConfig:I
 
-    const v1, 0x10e007d
-
-    invoke-virtual {v0, v1}, Landroid/content/res/Resources;->getInteger(I)I
-
-    move-result v1
+    const/16 v1, 0x4e20
 
     iput v1, p0, Lcom/android/server/power/PowerManagerService;->mMaximumScreenDimDurationConfig:I
 
-    const v1, 0x1130002
-
-    invoke-virtual {v0, v1, v2, v2}, Landroid/content/res/Resources;->getFraction(III)F
-
-    move-result v1
+    const v1, 0x3eaa7efa    # 0.333f
 
     iput v1, p0, Lcom/android/server/power/PowerManagerService;->mMaximumScreenDimRatioConfig:F
 

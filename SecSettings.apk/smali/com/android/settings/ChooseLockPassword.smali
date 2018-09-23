@@ -678,39 +678,8 @@
 .end method
 
 .method public onBackPressed()V
-    .registers 4
+    .registers 1
 
-    sget v1, Lcom/android/settings/ChooseLockPassword;->mKnoxUserId:I
-
-    invoke-static {v1}, Lcom/samsung/android/knox/SemPersonaManager;->isKnoxId(I)Z
-
-    move-result v1
-
-    if-eqz v1, :cond_1e
-
-    invoke-static {}, Lcom/android/settings/ChooseLockPassword$ChooseLockPasswordFragment;->-get1()Lcom/android/settings/ChooseLockPassword$ChooseLockPasswordFragment;
-
-    move-result-object v0
-
-    if-eqz v0, :cond_1e
-
-    invoke-static {v0}, Lcom/android/settings/ChooseLockPassword$ChooseLockPasswordFragment;->-get9(Lcom/android/settings/ChooseLockPassword$ChooseLockPasswordFragment;)I
-
-    move-result v1
-
-    const/4 v2, 0x1
-
-    if-lt v1, v2, :cond_1e
-
-    sget v1, Lcom/android/settings/ChooseLockPassword;->mKnoxUserId:I
-
-    invoke-static {v0}, Lcom/android/settings/ChooseLockPassword$ChooseLockPasswordFragment;->-get10(Lcom/android/settings/ChooseLockPassword$ChooseLockPasswordFragment;)I
-
-    move-result v2
-
-    invoke-static {v0, v1, v2}, Lcom/android/settings/ChooseLockPassword$ChooseLockPasswordFragment;->-wrap1(Lcom/android/settings/ChooseLockPassword$ChooseLockPasswordFragment;II)V
-
-    :cond_1e
     invoke-super {p0}, Lcom/android/settings/SettingsActivity;->onBackPressed()V
 
     return-void
@@ -1204,7 +1173,7 @@
 
     if-eqz v1, :cond_45
 
-    invoke-static {v0}, Lcom/android/settings/ChooseLockPassword$ChooseLockPasswordFragment;->-get11(Lcom/android/settings/ChooseLockPassword$ChooseLockPasswordFragment;)Lcom/android/settings/ChooseLockPassword$ChooseLockPasswordFragment$Stage;
+    invoke-static {v0}, Lcom/android/settings/ChooseLockPassword$ChooseLockPasswordFragment;->-get9(Lcom/android/settings/ChooseLockPassword$ChooseLockPasswordFragment;)Lcom/android/settings/ChooseLockPassword$ChooseLockPasswordFragment$Stage;
 
     move-result-object v1
 
@@ -1212,7 +1181,7 @@
 
     if-eq v1, v2, :cond_36
 
-    invoke-static {v0}, Lcom/android/settings/ChooseLockPassword$ChooseLockPasswordFragment;->-get11(Lcom/android/settings/ChooseLockPassword$ChooseLockPasswordFragment;)Lcom/android/settings/ChooseLockPassword$ChooseLockPasswordFragment$Stage;
+    invoke-static {v0}, Lcom/android/settings/ChooseLockPassword$ChooseLockPasswordFragment;->-get9(Lcom/android/settings/ChooseLockPassword$ChooseLockPasswordFragment;)Lcom/android/settings/ChooseLockPassword$ChooseLockPasswordFragment$Stage;
 
     move-result-object v1
 

@@ -29,7 +29,7 @@
 
     check-cast v2, Ljava/lang/String;
 
-    invoke-virtual {v0, v1, v2}, Lcom/android/server/pm/PackageManagerService;->lambda$-com_android_server_pm_PackageManagerService_867996([ILjava/lang/String;)V
+    invoke-virtual {v0, v1, v2}, Lcom/android/server/pm/PackageManagerService;->lambda$-com_android_server_pm_PackageManagerService_868083([ILjava/lang/String;)V
 
     return-void
 .end method

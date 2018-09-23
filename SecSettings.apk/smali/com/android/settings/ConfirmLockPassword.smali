@@ -233,6 +233,134 @@
     return-void
 .end method
 
+.method public onKeyDown(ILandroid/view/KeyEvent;)Z
+    .registers 6
+
+    const/4 v1, 0x4
+
+    if-ne p1, v1, :cond_2d
+
+    invoke-static {}, Lcom/android/settings/ConfirmLockPassword$ConfirmLockPasswordFragment;->-get3()Lcom/android/settings/ConfirmLockPassword$ConfirmLockPasswordFragment;
+
+    move-result-object v0
+
+    if-eqz v0, :cond_2d
+
+    invoke-static {}, Lcom/android/settings/ConfirmLockPassword$ConfirmLockPasswordFragment;->-get12()I
+
+    move-result v1
+
+    invoke-static {v1}, Lcom/samsung/android/knox/SemPersonaManager;->isDoEnabled(I)Z
+
+    move-result v1
+
+    if-nez v1, :cond_1d
+
+    invoke-virtual {v0}, Lcom/android/settings/ConfirmLockPassword$ConfirmLockPasswordFragment;->getContext()Landroid/content/Context;
+
+    move-result-object v1
+
+    invoke-static {v1}, Lcom/samsung/android/knox/SemPersonaManager;->isKioskModeEnabled(Landroid/content/Context;)Z
+
+    move-result v1
+
+    if-eqz v1, :cond_2d
+
+    :cond_1d
+    invoke-virtual {v0}, Lcom/android/settings/ConfirmLockPassword$ConfirmLockPasswordFragment;->getContext()Landroid/content/Context;
+
+    move-result-object v1
+
+    invoke-static {}, Lcom/android/settings/ConfirmLockPassword$ConfirmLockPasswordFragment;->-get12()I
+
+    move-result v2
+
+    invoke-static {v1, v2}, Lcom/android/settings/Utils;->isChangeRequested(Landroid/content/Context;I)I
+
+    move-result v1
+
+    if-lez v1, :cond_2d
+
+    const/4 v1, 0x1
+
+    return v1
+
+    :cond_2d
+    invoke-super {p0, p1, p2}, Lcom/android/settings/ConfirmDeviceCredentialBaseActivity;->onKeyDown(ILandroid/view/KeyEvent;)Z
+
+    move-result v1
+
+    return v1
+.end method
+
+.method public onOptionsItemSelected(Landroid/view/MenuItem;)Z
+    .registers 5
+
+    invoke-interface {p1}, Landroid/view/MenuItem;->getItemId()I
+
+    move-result v1
+
+    packed-switch v1, :pswitch_data_36
+
+    :cond_7
+    invoke-super {p0, p1}, Lcom/android/settings/ConfirmDeviceCredentialBaseActivity;->onOptionsItemSelected(Landroid/view/MenuItem;)Z
+
+    move-result v1
+
+    return v1
+
+    :pswitch_c
+    invoke-static {}, Lcom/android/settings/ConfirmLockPassword$ConfirmLockPasswordFragment;->-get3()Lcom/android/settings/ConfirmLockPassword$ConfirmLockPasswordFragment;
+
+    move-result-object v0
+
+    if-eqz v0, :cond_7
+
+    invoke-static {}, Lcom/android/settings/ConfirmLockPassword$ConfirmLockPasswordFragment;->-get12()I
+
+    move-result v1
+
+    invoke-static {v1}, Lcom/samsung/android/knox/SemPersonaManager;->isDoEnabled(I)Z
+
+    move-result v1
+
+    if-nez v1, :cond_26
+
+    invoke-virtual {v0}, Lcom/android/settings/ConfirmLockPassword$ConfirmLockPasswordFragment;->getContext()Landroid/content/Context;
+
+    move-result-object v1
+
+    invoke-static {v1}, Lcom/samsung/android/knox/SemPersonaManager;->isKioskModeEnabled(Landroid/content/Context;)Z
+
+    move-result v1
+
+    if-eqz v1, :cond_7
+
+    :cond_26
+    invoke-virtual {v0}, Lcom/android/settings/ConfirmLockPassword$ConfirmLockPasswordFragment;->getContext()Landroid/content/Context;
+
+    move-result-object v1
+
+    invoke-static {}, Lcom/android/settings/ConfirmLockPassword$ConfirmLockPasswordFragment;->-get12()I
+
+    move-result v2
+
+    invoke-static {v1, v2}, Lcom/android/settings/Utils;->isChangeRequested(Landroid/content/Context;I)I
+
+    move-result v1
+
+    if-lez v1, :cond_7
+
+    const/4 v1, 0x1
+
+    return v1
+
+    :pswitch_data_36
+    .packed-switch 0x102002c
+        :pswitch_c
+    .end packed-switch
+.end method
+
 .method public onWindowFocusChanged(Z)V
     .registers 5
 

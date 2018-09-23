@@ -11826,349 +11826,535 @@
 .end method
 
 .method public setAPMStatusAsUser(II)V
-    .registers 16
+    .registers 24
 
-    sget-boolean v10, Lcom/samsung/android/knox/devicesecurity/APMPolicy;->APM_DBG:Z
+    sget-boolean v18, Lcom/samsung/android/knox/devicesecurity/APMPolicy;->APM_DBG:Z
 
-    if-eqz v10, :cond_29
+    if-eqz v18, :cond_31
 
-    const-string/jumbo v10, "SEAMService"
+    const-string/jumbo v18, "SEAMService"
 
-    new-instance v11, Ljava/lang/StringBuilder;
+    new-instance v19, Ljava/lang/StringBuilder;
 
-    invoke-direct {v11}, Ljava/lang/StringBuilder;-><init>()V
+    invoke-direct/range {v19 .. v19}, Ljava/lang/StringBuilder;-><init>()V
 
-    const-string/jumbo v12, "setAPMStatusAsUser userId: "
+    const-string/jumbo v20, "setAPMStatusAsUser userId: "
 
-    invoke-virtual {v11, v12}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+    invoke-virtual/range {v19 .. v20}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
 
-    move-result-object v11
+    move-result-object v19
 
-    invoke-virtual {v11, p1}, Ljava/lang/StringBuilder;->append(I)Ljava/lang/StringBuilder;
+    move-object/from16 v0, v19
 
-    move-result-object v11
+    move/from16 v1, p1
 
-    const-string/jumbo v12, ", status: "
+    invoke-virtual {v0, v1}, Ljava/lang/StringBuilder;->append(I)Ljava/lang/StringBuilder;
 
-    invoke-virtual {v11, v12}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+    move-result-object v19
 
-    move-result-object v11
+    const-string/jumbo v20, ", status: "
 
-    invoke-virtual {v11, p2}, Ljava/lang/StringBuilder;->append(I)Ljava/lang/StringBuilder;
+    invoke-virtual/range {v19 .. v20}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
 
-    move-result-object v11
+    move-result-object v19
 
-    invoke-virtual {v11}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;
+    move-object/from16 v0, v19
 
-    move-result-object v11
+    move/from16 v1, p2
 
-    invoke-static {v10, v11}, Landroid/util/Log;->d(Ljava/lang/String;Ljava/lang/String;)I
+    invoke-virtual {v0, v1}, Ljava/lang/StringBuilder;->append(I)Ljava/lang/StringBuilder;
 
-    :cond_29
-    new-instance v5, Landroid/content/ContentValues;
+    move-result-object v19
 
-    invoke-direct {v5}, Landroid/content/ContentValues;-><init>()V
+    invoke-virtual/range {v19 .. v19}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;
 
-    const-string/jumbo v10, "apm_userId"
+    move-result-object v19
 
-    invoke-static {p1}, Ljava/lang/Integer;->valueOf(I)Ljava/lang/Integer;
+    invoke-static/range {v18 .. v19}, Landroid/util/Log;->d(Ljava/lang/String;Ljava/lang/String;)I
 
-    move-result-object v11
+    :cond_31
+    new-instance v8, Landroid/content/ContentValues;
 
-    invoke-virtual {v5, v10, v11}, Landroid/content/ContentValues;->put(Ljava/lang/String;Ljava/lang/Integer;)V
+    invoke-direct {v8}, Landroid/content/ContentValues;-><init>()V
 
-    new-instance v4, Landroid/content/ContentValues;
+    const-string/jumbo v18, "apm_userId"
 
-    invoke-direct {v4}, Landroid/content/ContentValues;-><init>()V
+    invoke-static/range {p1 .. p1}, Ljava/lang/Integer;->valueOf(I)Ljava/lang/Integer;
 
-    const-string/jumbo v10, "apm_userId"
+    move-result-object v19
 
-    invoke-static {p1}, Ljava/lang/Integer;->valueOf(I)Ljava/lang/Integer;
+    move-object/from16 v0, v18
 
-    move-result-object v11
+    move-object/from16 v1, v19
 
-    invoke-virtual {v4, v10, v11}, Landroid/content/ContentValues;->put(Ljava/lang/String;Ljava/lang/Integer;)V
+    invoke-virtual {v8, v0, v1}, Landroid/content/ContentValues;->put(Ljava/lang/String;Ljava/lang/Integer;)V
 
-    const-string/jumbo v10, "apm_status"
+    new-instance v7, Landroid/content/ContentValues;
 
-    invoke-static {p2}, Ljava/lang/Integer;->valueOf(I)Ljava/lang/Integer;
+    invoke-direct {v7}, Landroid/content/ContentValues;-><init>()V
 
-    move-result-object v11
+    const-string/jumbo v18, "apm_userId"
 
-    invoke-virtual {v4, v10, v11}, Landroid/content/ContentValues;->put(Ljava/lang/String;Ljava/lang/Integer;)V
+    invoke-static/range {p1 .. p1}, Ljava/lang/Integer;->valueOf(I)Ljava/lang/Integer;
 
-    iget-object v10, p0, Lcom/android/server/SEAMService;->mEdmStorageProvider:Lcom/android/server/enterprise/storage/EdmStorageProvider;
+    move-result-object v19
 
-    const-string/jumbo v11, "APM_StatusTable"
+    move-object/from16 v0, v18
 
-    invoke-virtual {v10, v11, v4, v5}, Lcom/android/server/enterprise/storage/EdmStorageProvider;->putValues(Ljava/lang/String;Landroid/content/ContentValues;Landroid/content/ContentValues;)Z
+    move-object/from16 v1, v19
 
-    move-result v8
+    invoke-virtual {v7, v0, v1}, Landroid/content/ContentValues;->put(Ljava/lang/String;Ljava/lang/Integer;)V
 
-    const/4 v3, 0x0
+    const-string/jumbo v18, "apm_status"
 
-    const/4 v10, 0x2
+    invoke-static/range {p2 .. p2}, Ljava/lang/Integer;->valueOf(I)Ljava/lang/Integer;
 
-    new-array v0, v10, [Ljava/lang/String;
+    move-result-object v19
 
-    const-string/jumbo v10, "apm_userId"
+    move-object/from16 v0, v18
 
-    const/4 v11, 0x0
+    move-object/from16 v1, v19
 
-    aput-object v10, v0, v11
+    invoke-virtual {v7, v0, v1}, Landroid/content/ContentValues;->put(Ljava/lang/String;Ljava/lang/Integer;)V
 
-    const-string/jumbo v10, "apm_status"
+    move-object/from16 v0, p0
 
-    const/4 v11, 0x1
+    iget-object v0, v0, Lcom/android/server/SEAMService;->mEdmStorageProvider:Lcom/android/server/enterprise/storage/EdmStorageProvider;
 
-    aput-object v10, v0, v11
+    move-object/from16 v18, v0
 
-    iget-object v10, p0, Lcom/android/server/SEAMService;->mEdmStorageProvider:Lcom/android/server/enterprise/storage/EdmStorageProvider;
+    const-string/jumbo v19, "APM_StatusTable"
 
-    const-string/jumbo v11, "APM_StatusTable"
+    move-object/from16 v0, v18
 
-    const/4 v12, 0x0
+    move-object/from16 v1, v19
 
-    invoke-virtual {v10, v11, v0, v12}, Lcom/android/server/enterprise/storage/EdmStorageProvider;->getValuesList(Ljava/lang/String;[Ljava/lang/String;Landroid/content/ContentValues;)Ljava/util/List;
+    invoke-virtual {v0, v1, v7, v8}, Lcom/android/server/enterprise/storage/EdmStorageProvider;->putValues(Ljava/lang/String;Landroid/content/ContentValues;Landroid/content/ContentValues;)Z
 
-    move-result-object v3
+    move-result v16
 
-    const/4 v7, 0x0
+    const/4 v6, 0x0
 
-    if-eqz v3, :cond_7b
+    const/16 v18, 0x2
 
-    xor-int/lit8 v10, v8, 0x1
+    move/from16 v0, v18
 
-    if-eqz v10, :cond_fe
+    new-array v3, v0, [Ljava/lang/String;
 
-    :cond_7b
-    sget-boolean v10, Lcom/samsung/android/knox/devicesecurity/APMPolicy;->APM_DBG:Z
+    const-string/jumbo v18, "apm_userId"
 
-    if-eqz v10, :cond_88
+    const/16 v19, 0x0
 
-    const-string/jumbo v10, "SEAMService"
+    aput-object v18, v3, v19
 
-    const-string/jumbo v11, "Can not set APM status, cvList is null"
+    const-string/jumbo v18, "apm_status"
 
-    invoke-static {v10, v11}, Landroid/util/Log;->e(Ljava/lang/String;Ljava/lang/String;)I
+    const/16 v19, 0x1
 
-    :cond_88
-    iget-object v10, p0, Lcom/android/server/SEAMService;->mEdmStorageProvider:Lcom/android/server/enterprise/storage/EdmStorageProvider;
+    aput-object v18, v3, v19
 
-    const-string/jumbo v11, "APM_StatusTable"
+    move-object/from16 v0, p0
 
-    invoke-virtual {v10, v11, v4, v5}, Lcom/android/server/enterprise/storage/EdmStorageProvider;->putValues(Ljava/lang/String;Landroid/content/ContentValues;Landroid/content/ContentValues;)Z
+    iget-object v0, v0, Lcom/android/server/SEAMService;->mEdmStorageProvider:Lcom/android/server/enterprise/storage/EdmStorageProvider;
 
-    move-result v8
+    move-object/from16 v18, v0
 
-    sget-boolean v10, Lcom/samsung/android/knox/devicesecurity/APMPolicy;->APM_DBG:Z
+    const-string/jumbo v19, "APM_StatusTable"
 
-    if-eqz v10, :cond_af
+    const/16 v20, 0x0
 
-    const-string/jumbo v10, "SEAMService"
+    move-object/from16 v0, v18
 
-    new-instance v11, Ljava/lang/StringBuilder;
+    move-object/from16 v1, v19
 
-    invoke-direct {v11}, Ljava/lang/StringBuilder;-><init>()V
+    move-object/from16 v2, v20
 
-    const-string/jumbo v12, "setAPMStatusAsUser APM Status is set default, putValues: "
+    invoke-virtual {v0, v1, v3, v2}, Lcom/android/server/enterprise/storage/EdmStorageProvider;->getValuesList(Ljava/lang/String;[Ljava/lang/String;Landroid/content/ContentValues;)Ljava/util/List;
 
-    invoke-virtual {v11, v12}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+    move-result-object v6
 
-    move-result-object v11
+    const/4 v14, 0x0
 
-    invoke-virtual {v11, v8}, Ljava/lang/StringBuilder;->append(Z)Ljava/lang/StringBuilder;
+    :try_start_a1
+    move-object/from16 v0, p0
 
-    move-result-object v11
+    iget-object v0, v0, Lcom/android/server/SEAMService;->mPersona:Lcom/samsung/android/knox/SemPersonaManager;
 
-    invoke-virtual {v11}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;
+    move-object/from16 v18, v0
 
-    move-result-object v11
+    if-nez v18, :cond_16c
 
-    invoke-static {v10, v11}, Landroid/util/Log;->d(Ljava/lang/String;Ljava/lang/String;)I
+    move-object/from16 v0, p0
 
-    :cond_af
-    sget-boolean v10, Lcom/samsung/android/knox/devicesecurity/APMPolicy;->APM_DBG:Z
+    iget-object v0, v0, Lcom/android/server/SEAMService;->mContext:Landroid/content/Context;
 
-    if-eqz v10, :cond_e7
+    move-object/from16 v18, v0
 
-    const-string/jumbo v10, "SEAMService"
+    const-string/jumbo v19, "persona"
 
-    new-instance v11, Ljava/lang/StringBuilder;
+    invoke-virtual/range {v18 .. v19}, Landroid/content/Context;->getSystemService(Ljava/lang/String;)Ljava/lang/Object;
 
-    invoke-direct {v11}, Ljava/lang/StringBuilder;-><init>()V
+    move-result-object v18
 
-    const-string/jumbo v12, "SystemProperties.set: "
+    check-cast v18, Lcom/samsung/android/knox/SemPersonaManager;
 
-    invoke-virtual {v11, v12}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+    move-object/from16 v0, v18
 
-    move-result-object v11
+    move-object/from16 v1, p0
 
-    invoke-virtual {v11, p2}, Ljava/lang/StringBuilder;->append(I)Ljava/lang/StringBuilder;
+    iput-object v0, v1, Lcom/android/server/SEAMService;->mPersona:Lcom/samsung/android/knox/SemPersonaManager;
+    :try_end_be
+    .catch Ljava/lang/Exception; {:try_start_a1 .. :try_end_be} :catch_1a3
 
-    move-result-object v11
+    :cond_be
+    :goto_be
+    const/4 v15, 0x0
 
-    const-string/jumbo v12, ", off count: "
-
-    invoke-virtual {v11, v12}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
-
-    move-result-object v11
-
-    invoke-virtual {v11, v7}, Ljava/lang/StringBuilder;->append(I)Ljava/lang/StringBuilder;
-
-    move-result-object v11
-
-    const-string/jumbo v12, "/"
-
-    invoke-virtual {v11, v12}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
-
-    move-result-object v11
-
-    invoke-interface {v3}, Ljava/util/List;->size()I
-
-    move-result v12
-
-    invoke-virtual {v11, v12}, Ljava/lang/StringBuilder;->append(I)Ljava/lang/StringBuilder;
-
-    move-result-object v11
-
-    invoke-virtual {v11}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;
-
-    move-result-object v11
-
-    invoke-static {v10, v11}, Landroid/util/Log;->d(Ljava/lang/String;Ljava/lang/String;)I
-
-    :cond_e7
-    if-eqz v3, :cond_142
-
-    invoke-interface {v3}, Ljava/util/List;->size()I
-
-    move-result v10
-
-    if-ne v10, v7, :cond_142
-
-    const/high16 v10, 0x40000000    # 2.0f
-
-    and-int/2addr v10, p2
-
-    if-eqz v10, :cond_142
-
-    const-string/jumbo v10, "persist.app.permission.monitor"
-
-    const-string/jumbo v11, "0"
-
-    invoke-static {v10, v11}, Landroid/os/SystemProperties;->set(Ljava/lang/String;Ljava/lang/String;)V
-
-    :goto_fd
-    return-void
-
-    :cond_fe
-    invoke-interface {v3}, Ljava/lang/Iterable;->iterator()Ljava/util/Iterator;
-
-    move-result-object v2
-
-    :cond_102
-    :goto_102
-    invoke-interface {v2}, Ljava/util/Iterator;->hasNext()Z
-
-    move-result v10
-
-    if-eqz v10, :cond_af
-
-    invoke-interface {v2}, Ljava/util/Iterator;->next()Ljava/lang/Object;
-
-    move-result-object v1
-
-    check-cast v1, Landroid/content/ContentValues;
-
-    :try_start_10e
-    const-string/jumbo v10, "apm_status"
-
-    invoke-virtual {v1, v10}, Landroid/content/ContentValues;->getAsInteger(Ljava/lang/String;)Ljava/lang/Integer;
-
-    move-result-object v10
-
-    invoke-virtual {v10}, Ljava/lang/Integer;->intValue()I
-    :try_end_118
-    .catch Ljava/lang/Exception; {:try_start_10e .. :try_end_118} :catch_122
+    invoke-interface {v6}, Ljava/util/List;->size()I
 
     move-result v9
 
-    or-int/2addr p2, v9
+    if-eqz v6, :cond_c9
 
-    const/high16 v10, 0x40000000    # 2.0f
+    xor-int/lit8 v18, v16, 0x1
 
-    and-int/2addr v10, v9
+    if-eqz v18, :cond_1a9
 
-    if-eqz v10, :cond_102
+    :cond_c9
+    sget-boolean v18, Lcom/samsung/android/knox/devicesecurity/APMPolicy;->APM_DBG:Z
 
-    add-int/lit8 v7, v7, 0x1
+    if-eqz v18, :cond_d6
 
-    goto :goto_102
+    const-string/jumbo v18, "SEAMService"
 
-    :catch_122
-    move-exception v6
+    const-string/jumbo v19, "Can not set APM status, cvList is null"
 
-    sget-boolean v10, Lcom/samsung/android/knox/devicesecurity/APMPolicy;->APM_DBG:Z
+    invoke-static/range {v18 .. v19}, Landroid/util/Log;->e(Ljava/lang/String;Ljava/lang/String;)I
 
-    if-eqz v10, :cond_102
+    :cond_d6
+    move-object/from16 v0, p0
 
-    const-string/jumbo v10, "SEAMService"
+    iget-object v0, v0, Lcom/android/server/SEAMService;->mEdmStorageProvider:Lcom/android/server/enterprise/storage/EdmStorageProvider;
 
-    new-instance v11, Ljava/lang/StringBuilder;
+    move-object/from16 v18, v0
 
-    invoke-direct {v11}, Ljava/lang/StringBuilder;-><init>()V
+    const-string/jumbo v19, "APM_StatusTable"
 
-    const-string/jumbo v12, "setAPMStatusAsUser, Can not get apm_status user Id : "
+    move-object/from16 v0, v18
 
-    invoke-virtual {v11, v12}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+    move-object/from16 v1, v19
 
-    move-result-object v11
+    invoke-virtual {v0, v1, v7, v8}, Lcom/android/server/enterprise/storage/EdmStorageProvider;->putValues(Ljava/lang/String;Landroid/content/ContentValues;Landroid/content/ContentValues;)Z
 
-    invoke-virtual {v11, p1}, Ljava/lang/StringBuilder;->append(I)Ljava/lang/StringBuilder;
+    move-result v16
 
-    move-result-object v11
+    sget-boolean v18, Lcom/samsung/android/knox/devicesecurity/APMPolicy;->APM_DBG:Z
 
-    invoke-virtual {v11}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;
+    if-eqz v18, :cond_109
 
-    move-result-object v11
+    const-string/jumbo v18, "SEAMService"
 
-    invoke-static {v10, v11}, Landroid/util/Log;->e(Ljava/lang/String;Ljava/lang/String;)I
+    new-instance v19, Ljava/lang/StringBuilder;
 
-    goto :goto_102
+    invoke-direct/range {v19 .. v19}, Ljava/lang/StringBuilder;-><init>()V
 
-    :cond_142
-    const/high16 v10, 0x4000000
+    const-string/jumbo v20, "setAPMStatusAsUser APM Status is set default, putValues: "
 
-    and-int/2addr v10, p2
+    invoke-virtual/range {v19 .. v20}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
 
-    if-eqz v10, :cond_14a
+    move-result-object v19
 
-    const/high16 v10, 0x4000000
+    move-object/from16 v0, v19
 
-    sub-int/2addr p2, v10
+    move/from16 v1, v16
 
-    :cond_14a
-    const/high16 v10, 0x40000000    # 2.0f
+    invoke-virtual {v0, v1}, Ljava/lang/StringBuilder;->append(Z)Ljava/lang/StringBuilder;
 
-    and-int/2addr v10, p2
+    move-result-object v19
 
-    if-eqz v10, :cond_152
+    invoke-virtual/range {v19 .. v19}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;
 
-    const/high16 v10, 0x40000000    # 2.0f
+    move-result-object v19
 
-    sub-int/2addr p2, v10
+    invoke-static/range {v18 .. v19}, Landroid/util/Log;->d(Ljava/lang/String;Ljava/lang/String;)I
+
+    :cond_109
+    sget-boolean v18, Lcom/samsung/android/knox/devicesecurity/APMPolicy;->APM_DBG:Z
+
+    if-eqz v18, :cond_152
+
+    const-string/jumbo v18, "SEAMService"
+
+    new-instance v19, Ljava/lang/StringBuilder;
+
+    invoke-direct/range {v19 .. v19}, Ljava/lang/StringBuilder;-><init>()V
+
+    const-string/jumbo v20, "SystemProperties.set: "
+
+    invoke-virtual/range {v19 .. v20}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    move-result-object v19
+
+    move-object/from16 v0, v19
+
+    move/from16 v1, p2
+
+    invoke-virtual {v0, v1}, Ljava/lang/StringBuilder;->append(I)Ljava/lang/StringBuilder;
+
+    move-result-object v19
+
+    const-string/jumbo v20, ", off count: "
+
+    invoke-virtual/range {v19 .. v20}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    move-result-object v19
+
+    move-object/from16 v0, v19
+
+    invoke-virtual {v0, v15}, Ljava/lang/StringBuilder;->append(I)Ljava/lang/StringBuilder;
+
+    move-result-object v19
+
+    const-string/jumbo v20, "/"
+
+    invoke-virtual/range {v19 .. v20}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    move-result-object v19
+
+    move-object/from16 v0, v19
+
+    invoke-virtual {v0, v9}, Ljava/lang/StringBuilder;->append(I)Ljava/lang/StringBuilder;
+
+    move-result-object v19
+
+    const-string/jumbo v20, "/"
+
+    invoke-virtual/range {v19 .. v20}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    move-result-object v19
+
+    move-object/from16 v0, v19
+
+    invoke-virtual {v0, v14}, Ljava/lang/StringBuilder;->append(I)Ljava/lang/StringBuilder;
+
+    move-result-object v19
+
+    invoke-virtual/range {v19 .. v19}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;
+
+    move-result-object v19
+
+    invoke-static/range {v18 .. v19}, Landroid/util/Log;->d(Ljava/lang/String;Ljava/lang/String;)I
 
     :cond_152
-    const-string/jumbo v10, "persist.app.permission.monitor"
+    if-eqz v6, :cond_1f7
 
-    invoke-static {p2}, Ljava/lang/String;->valueOf(I)Ljava/lang/String;
+    add-int/lit8 v18, v14, 0x1
+
+    move/from16 v0, v18
+
+    if-ne v9, v0, :cond_1f7
+
+    if-ne v9, v15, :cond_1f7
+
+    const/high16 v18, 0x40000000    # 2.0f
+
+    and-int v18, v18, p2
+
+    if-eqz v18, :cond_1f7
+
+    const-string/jumbo v18, "persist.app.permission.monitor"
+
+    const-string/jumbo v19, "0"
+
+    invoke-static/range {v18 .. v19}, Landroid/os/SystemProperties;->set(Ljava/lang/String;Ljava/lang/String;)V
+
+    :goto_16b
+    return-void
+
+    :cond_16c
+    :try_start_16c
+    move-object/from16 v0, p0
+
+    iget-object v0, v0, Lcom/android/server/SEAMService;->mPersona:Lcom/samsung/android/knox/SemPersonaManager;
+
+    move-object/from16 v18, v0
+
+    const/16 v19, 0x1
+
+    invoke-virtual/range {v18 .. v19}, Lcom/samsung/android/knox/SemPersonaManager;->getKnoxIds(Z)Ljava/util/List;
+
+    move-result-object v13
+
+    if-eqz v13, :cond_be
+
+    invoke-interface {v13}, Ljava/util/List;->size()I
+
+    move-result v18
+
+    if-lez v18, :cond_be
+
+    invoke-interface {v13}, Ljava/util/List;->iterator()Ljava/util/Iterator;
 
     move-result-object v11
 
-    invoke-static {v10, v11}, Landroid/os/SystemProperties;->set(Ljava/lang/String;Ljava/lang/String;)V
+    :cond_184
+    :goto_184
+    invoke-interface {v11}, Ljava/util/Iterator;->hasNext()Z
 
-    goto :goto_fd
+    move-result v18
+
+    if-eqz v18, :cond_be
+
+    invoke-interface {v11}, Ljava/util/Iterator;->next()Ljava/lang/Object;
+
+    move-result-object v18
+
+    check-cast v18, Ljava/lang/Integer;
+
+    invoke-virtual/range {v18 .. v18}, Ljava/lang/Integer;->intValue()I
+
+    move-result v12
+
+    move-object/from16 v0, p0
+
+    iget-object v0, v0, Lcom/android/server/SEAMService;->mPersona:Lcom/samsung/android/knox/SemPersonaManager;
+
+    move-object/from16 v18, v0
+
+    invoke-static {v12}, Lcom/samsung/android/knox/SemPersonaManager;->isBBCContainer(I)Z
+    :try_end_19d
+    .catch Ljava/lang/Exception; {:try_start_16c .. :try_end_19d} :catch_1a3
+
+    move-result v18
+
+    if-nez v18, :cond_184
+
+    add-int/lit8 v14, v14, 0x1
+
+    goto :goto_184
+
+    :catch_1a3
+    move-exception v10
+
+    invoke-virtual {v10}, Ljava/lang/Exception;->printStackTrace()V
+
+    goto/16 :goto_be
+
+    :cond_1a9
+    if-lez v9, :cond_109
+
+    invoke-interface {v6}, Ljava/lang/Iterable;->iterator()Ljava/util/Iterator;
+
+    move-result-object v5
+
+    :cond_1af
+    :goto_1af
+    invoke-interface {v5}, Ljava/util/Iterator;->hasNext()Z
+
+    move-result v18
+
+    if-eqz v18, :cond_109
+
+    invoke-interface {v5}, Ljava/util/Iterator;->next()Ljava/lang/Object;
+
+    move-result-object v4
+
+    check-cast v4, Landroid/content/ContentValues;
+
+    :try_start_1bb
+    const-string/jumbo v18, "apm_status"
+
+    move-object/from16 v0, v18
+
+    invoke-virtual {v4, v0}, Landroid/content/ContentValues;->getAsInteger(Ljava/lang/String;)Ljava/lang/Integer;
+
+    move-result-object v18
+
+    invoke-virtual/range {v18 .. v18}, Ljava/lang/Integer;->intValue()I
+    :try_end_1c7
+    .catch Ljava/lang/Exception; {:try_start_1bb .. :try_end_1c7} :catch_1d3
+
+    move-result v17
+
+    or-int p2, p2, v17
+
+    const/high16 v18, 0x40000000    # 2.0f
+
+    and-int v18, v18, v17
+
+    if-eqz v18, :cond_1af
+
+    add-int/lit8 v15, v15, 0x1
+
+    goto :goto_1af
+
+    :catch_1d3
+    move-exception v10
+
+    sget-boolean v18, Lcom/samsung/android/knox/devicesecurity/APMPolicy;->APM_DBG:Z
+
+    if-eqz v18, :cond_1af
+
+    const-string/jumbo v18, "SEAMService"
+
+    new-instance v19, Ljava/lang/StringBuilder;
+
+    invoke-direct/range {v19 .. v19}, Ljava/lang/StringBuilder;-><init>()V
+
+    const-string/jumbo v20, "setAPMStatusAsUser, Can not get apm_status user Id : "
+
+    invoke-virtual/range {v19 .. v20}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    move-result-object v19
+
+    move-object/from16 v0, v19
+
+    move/from16 v1, p1
+
+    invoke-virtual {v0, v1}, Ljava/lang/StringBuilder;->append(I)Ljava/lang/StringBuilder;
+
+    move-result-object v19
+
+    invoke-virtual/range {v19 .. v19}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;
+
+    move-result-object v19
+
+    invoke-static/range {v18 .. v19}, Landroid/util/Log;->e(Ljava/lang/String;Ljava/lang/String;)I
+
+    goto :goto_1af
+
+    :cond_1f7
+    const/high16 v18, 0x4000000
+
+    and-int v18, v18, p2
+
+    if-eqz v18, :cond_201
+
+    const/high16 v18, 0x4000000
+
+    sub-int p2, p2, v18
+
+    :cond_201
+    const/high16 v18, 0x40000000    # 2.0f
+
+    and-int v18, v18, p2
+
+    if-eqz v18, :cond_20b
+
+    const/high16 v18, 0x40000000    # 2.0f
+
+    sub-int p2, p2, v18
+
+    :cond_20b
+    const-string/jumbo v18, "persist.app.permission.monitor"
+
+    invoke-static/range {p2 .. p2}, Ljava/lang/String;->valueOf(I)Ljava/lang/String;
+
+    move-result-object v19
+
+    invoke-static/range {v18 .. v19}, Landroid/os/SystemProperties;->set(Ljava/lang/String;Ljava/lang/String;)V
+
+    goto/16 :goto_16b
 .end method
 
 .method public setBBCFlag(Z)I

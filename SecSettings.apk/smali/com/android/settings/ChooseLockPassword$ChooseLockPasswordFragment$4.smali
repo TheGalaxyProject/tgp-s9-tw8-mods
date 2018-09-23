@@ -52,7 +52,7 @@
 
     iget-object v0, p0, Lcom/android/settings/ChooseLockPassword$ChooseLockPasswordFragment$4;->this$1:Lcom/android/settings/ChooseLockPassword$ChooseLockPasswordFragment;
 
-    invoke-static {v0}, Lcom/android/settings/ChooseLockPassword$ChooseLockPasswordFragment;->-wrap2(Lcom/android/settings/ChooseLockPassword$ChooseLockPasswordFragment;)V
+    invoke-static {v0}, Lcom/android/settings/ChooseLockPassword$ChooseLockPasswordFragment;->-wrap1(Lcom/android/settings/ChooseLockPassword$ChooseLockPasswordFragment;)V
 
     goto :goto_5
 

@@ -115,7 +115,7 @@
 
     const-string/jumbo v2, "confirm_credentials"
 
-    const/4 v3, 0x0
+    const/4 v3, 0x1
 
     invoke-virtual {v0, v2, v3}, Landroid/content/Intent;->putExtra(Ljava/lang/String;Z)Landroid/content/Intent;
 

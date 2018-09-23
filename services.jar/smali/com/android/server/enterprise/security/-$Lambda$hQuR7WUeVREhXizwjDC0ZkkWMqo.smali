@@ -17,7 +17,7 @@
 
     check-cast p1, Lcom/android/server/SdpManagerService;
 
-    invoke-static {v0, p1}, Lcom/android/server/enterprise/security/PasswordPolicy;->lambda$-com_android_server_enterprise_security_PasswordPolicy_42716(ILcom/android/server/SdpManagerService;)Ljava/lang/Boolean;
+    invoke-static {v0, p1}, Lcom/android/server/enterprise/security/PasswordPolicy;->lambda$-com_android_server_enterprise_security_PasswordPolicy_42847(ILcom/android/server/SdpManagerService;)Ljava/lang/Boolean;
 
     move-result-object v0
 

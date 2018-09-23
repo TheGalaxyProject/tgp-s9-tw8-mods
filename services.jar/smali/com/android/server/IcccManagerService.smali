@@ -28,6 +28,8 @@
 
 .field private static final ICCC_DRK_KEY_FILENAME:Ljava/lang/String; = "key.dat"
 
+.field private static final ICCC_DRK_KEY_FILENAME_BKP:Ljava/lang/String; = "key.dat.bkp"
+
 .field private static final ICCC_DRK_SERVICE_NAME:Ljava/lang/String; = "ICCC"
 
 .field private static final NOK:I = 0x2
@@ -446,32 +448,49 @@
 .end method
 
 .method private deleteIcccKey()Z
-    .registers 4
+    .registers 5
 
     new-instance v0, Ljava/io/File;
 
-    const-string/jumbo v1, "/data/misc/tz_iccc/"
+    const-string/jumbo v2, "/data/misc/tz_iccc/"
 
-    const-string/jumbo v2, "key.dat"
+    const-string/jumbo v3, "key.dat"
 
-    invoke-direct {v0, v1, v2}, Ljava/io/File;-><init>(Ljava/lang/String;Ljava/lang/String;)V
+    invoke-direct {v0, v2, v3}, Ljava/io/File;-><init>(Ljava/lang/String;Ljava/lang/String;)V
 
+    new-instance v1, Ljava/io/File;
+
+    const-string/jumbo v2, "/data/misc/tz_iccc/"
+
+    const-string/jumbo v3, "key.dat.bkp"
+
+    invoke-direct {v1, v2, v3}, Ljava/io/File;-><init>(Ljava/lang/String;Ljava/lang/String;)V
+
+    invoke-virtual {v1}, Ljava/io/File;->exists()Z
+
+    move-result v2
+
+    if-eqz v2, :cond_1f
+
+    invoke-virtual {v1}, Ljava/io/File;->delete()Z
+
+    :cond_1f
     invoke-virtual {v0}, Ljava/io/File;->exists()Z
 
-    move-result v1
+    move-result v2
 
-    if-eqz v1, :cond_16
+    if-eqz v2, :cond_2a
 
     invoke-virtual {v0}, Ljava/io/File;->delete()Z
 
-    const/4 v1, 0x1
+    const/4 v2, 0x1
 
-    return v1
+    return v2
 
-    :cond_16
-    const/4 v1, 0x0
+    :cond_2a
+    const/4 v2, 0x0
 
-    return v1
+    return v2
 .end method
 
 .method private enforcePermission()Z
@@ -496,137 +515,258 @@
 .end method
 
 .method private generateIcccKey()[B
-    .registers 15
+    .registers 19
 
-    const/4 v13, 0x0
+    const/4 v9, 0x0
 
-    const/4 v5, 0x0
+    const/4 v11, 0x0
 
-    :try_start_2
-    new-instance v0, Ljava/io/File;
+    const/4 v6, 0x0
 
-    const-string/jumbo v10, "/data/misc/tz_iccc/"
+    :try_start_3
+    new-instance v2, Ljava/io/File;
 
-    invoke-direct {v0, v10}, Ljava/io/File;-><init>(Ljava/lang/String;)V
+    const-string/jumbo v13, "/data/misc/tz_iccc/"
 
-    invoke-virtual {v0}, Ljava/io/File;->exists()Z
+    invoke-direct {v2, v13}, Ljava/io/File;-><init>(Ljava/lang/String;)V
 
-    move-result v10
+    invoke-virtual {v2}, Ljava/io/File;->exists()Z
 
-    if-nez v10, :cond_13
+    move-result v13
 
-    invoke-virtual {v0}, Ljava/io/File;->mkdirs()Z
+    if-nez v13, :cond_14
 
-    :cond_13
-    new-instance v1, Lcom/samsung/android/service/DeviceRootKeyService/DeviceRootKeyServiceManager;
+    invoke-virtual {v2}, Ljava/io/File;->mkdirs()Z
 
-    sget-object v10, Lcom/android/server/IcccManagerService;->mContext:Landroid/content/Context;
+    :cond_14
+    new-instance v3, Lcom/samsung/android/service/DeviceRootKeyService/DeviceRootKeyServiceManager;
 
-    invoke-direct {v1, v10}, Lcom/samsung/android/service/DeviceRootKeyService/DeviceRootKeyServiceManager;-><init>(Landroid/content/Context;)V
+    sget-object v13, Lcom/android/server/IcccManagerService;->mContext:Landroid/content/Context;
+
+    invoke-direct {v3, v13}, Lcom/samsung/android/service/DeviceRootKeyService/DeviceRootKeyServiceManager;-><init>(Landroid/content/Context;)V
 
     invoke-static {}, Landroid/os/Binder;->clearCallingIdentity()J
 
-    move-result-wide v8
+    move-result-wide v14
 
-    const-string/jumbo v10, "ICCC"
+    const-string/jumbo v13, "ICCC"
 
-    const/4 v11, 0x1
+    const/16 v16, 0x1
 
-    const/4 v12, 0x0
+    const/16 v17, 0x0
 
-    invoke-virtual {v1, v10, v11, v12}, Lcom/samsung/android/service/DeviceRootKeyService/DeviceRootKeyServiceManager;->createServiceKeySession(Ljava/lang/String;ILcom/samsung/android/service/DeviceRootKeyService/Tlv;)[B
+    move/from16 v0, v16
 
-    move-result-object v7
+    move-object/from16 v1, v17
 
-    invoke-static {v8, v9}, Landroid/os/Binder;->restoreCallingIdentity(J)V
+    invoke-virtual {v3, v13, v0, v1}, Lcom/samsung/android/service/DeviceRootKeyService/DeviceRootKeyServiceManager;->createServiceKeySession(Ljava/lang/String;ILcom/samsung/android/service/DeviceRootKeyService/Tlv;)[B
 
-    if-eqz v7, :cond_40
+    move-result-object v6
 
-    new-instance v4, Ljava/io/File;
+    invoke-static {v14, v15}, Landroid/os/Binder;->restoreCallingIdentity(J)V
 
-    const-string/jumbo v10, "key.dat"
+    if-eqz v6, :cond_7d
 
-    invoke-direct {v4, v0, v10}, Ljava/io/File;-><init>(Ljava/io/File;Ljava/lang/String;)V
+    array-length v13, v6
 
-    new-instance v6, Ljava/io/FileOutputStream;
+    if-eqz v13, :cond_71
 
-    invoke-direct {v6, v4}, Ljava/io/FileOutputStream;-><init>(Ljava/io/File;)V
-    :try_end_39
-    .catch Ljava/io/FileNotFoundException; {:try_start_2 .. :try_end_39} :catch_4c
-    .catch Ljava/io/IOException; {:try_start_2 .. :try_end_39} :catch_44
-    .catchall {:try_start_2 .. :try_end_39} :catchall_54
+    new-instance v7, Ljava/io/File;
 
-    :try_start_39
-    invoke-virtual {v6, v7}, Ljava/io/FileOutputStream;->write([B)V
-    :try_end_3c
-    .catch Ljava/io/FileNotFoundException; {:try_start_39 .. :try_end_3c} :catch_5c
-    .catch Ljava/io/IOException; {:try_start_39 .. :try_end_3c} :catch_5f
-    .catchall {:try_start_39 .. :try_end_3c} :catchall_59
+    const-string/jumbo v13, "key.dat"
 
-    invoke-virtual {p0, v6}, Lcom/android/server/IcccManagerService;->closeQuietly(Ljava/io/Closeable;)V
+    invoke-direct {v7, v2, v13}, Ljava/io/File;-><init>(Ljava/io/File;Ljava/lang/String;)V
 
-    return-object v7
+    new-instance v10, Ljava/io/FileOutputStream;
 
-    :cond_40
-    invoke-virtual {p0, v5}, Lcom/android/server/IcccManagerService;->closeQuietly(Ljava/io/Closeable;)V
+    invoke-direct {v10, v7}, Ljava/io/FileOutputStream;-><init>(Ljava/io/File;)V
+    :try_end_43
+    .catch Ljava/io/FileNotFoundException; {:try_start_3 .. :try_end_43} :catch_98
+    .catch Ljava/io/IOException; {:try_start_3 .. :try_end_43} :catch_89
+    .catchall {:try_start_3 .. :try_end_43} :catchall_a7
 
-    :goto_43
-    return-object v13
+    :try_start_43
+    invoke-virtual {v10, v6}, Ljava/io/FileOutputStream;->write([B)V
 
-    :catch_44
-    move-exception v3
+    invoke-virtual {v10}, Ljava/io/FileOutputStream;->getFD()Ljava/io/FileDescriptor;
 
-    :goto_45
-    :try_start_45
-    invoke-virtual {v3}, Ljava/io/IOException;->printStackTrace()V
-    :try_end_48
-    .catchall {:try_start_45 .. :try_end_48} :catchall_54
+    move-result-object v13
 
-    invoke-virtual {p0, v5}, Lcom/android/server/IcccManagerService;->closeQuietly(Ljava/io/Closeable;)V
+    invoke-virtual {v13}, Ljava/io/FileDescriptor;->sync()V
 
-    goto :goto_43
+    new-instance v8, Ljava/io/File;
 
-    :catch_4c
-    move-exception v2
+    const-string/jumbo v13, "key.dat.bkp"
 
-    :goto_4d
-    :try_start_4d
-    invoke-virtual {v2}, Ljava/io/FileNotFoundException;->printStackTrace()V
-    :try_end_50
-    .catchall {:try_start_4d .. :try_end_50} :catchall_54
+    invoke-direct {v8, v2, v13}, Ljava/io/File;-><init>(Ljava/io/File;Ljava/lang/String;)V
 
-    invoke-virtual {p0, v5}, Lcom/android/server/IcccManagerService;->closeQuietly(Ljava/io/Closeable;)V
+    new-instance v12, Ljava/io/FileOutputStream;
 
-    goto :goto_43
+    invoke-direct {v12, v8}, Ljava/io/FileOutputStream;-><init>(Ljava/io/File;)V
+    :try_end_5a
+    .catch Ljava/io/FileNotFoundException; {:try_start_43 .. :try_end_5a} :catch_ba
+    .catch Ljava/io/IOException; {:try_start_43 .. :try_end_5a} :catch_c1
+    .catchall {:try_start_43 .. :try_end_5a} :catchall_b3
 
-    :catchall_54
-    move-exception v10
+    :try_start_5a
+    invoke-virtual {v12, v6}, Ljava/io/FileOutputStream;->write([B)V
 
-    :goto_55
-    invoke-virtual {p0, v5}, Lcom/android/server/IcccManagerService;->closeQuietly(Ljava/io/Closeable;)V
+    invoke-virtual {v12}, Ljava/io/FileOutputStream;->getFD()Ljava/io/FileDescriptor;
 
-    throw v10
+    move-result-object v13
 
-    :catchall_59
-    move-exception v10
+    invoke-virtual {v13}, Ljava/io/FileDescriptor;->sync()V
+    :try_end_64
+    .catch Ljava/io/FileNotFoundException; {:try_start_5a .. :try_end_64} :catch_bd
+    .catch Ljava/io/IOException; {:try_start_5a .. :try_end_64} :catch_c4
+    .catchall {:try_start_5a .. :try_end_64} :catchall_b6
 
-    move-object v5, v6
+    move-object v11, v12
 
-    goto :goto_55
+    move-object v9, v10
 
-    :catch_5c
-    move-exception v2
+    :goto_66
+    move-object/from16 v0, p0
 
-    move-object v5, v6
+    invoke-virtual {v0, v9}, Lcom/android/server/IcccManagerService;->closeQuietly(Ljava/io/Closeable;)V
 
-    goto :goto_4d
+    move-object/from16 v0, p0
 
-    :catch_5f
-    move-exception v3
+    invoke-virtual {v0, v11}, Lcom/android/server/IcccManagerService;->closeQuietly(Ljava/io/Closeable;)V
 
-    move-object v5, v6
+    :goto_70
+    return-object v6
 
-    goto :goto_45
+    :cond_71
+    :try_start_71
+    sget-object v13, Lcom/android/server/IcccManagerService;->TAG:Ljava/lang/String;
+
+    const-string/jumbo v16, "Invalid encapsulated/wrapped ICCC key length from DRK"
+
+    move-object/from16 v0, v16
+
+    invoke-static {v13, v0}, Landroid/util/Log;->e(Ljava/lang/String;Ljava/lang/String;)I
+
+    const/4 v6, 0x0
+
+    goto :goto_66
+
+    :cond_7d
+    sget-object v13, Lcom/android/server/IcccManagerService;->TAG:Ljava/lang/String;
+
+    const-string/jumbo v16, "drkService.createServiceKeySession returned NULL"
+
+    move-object/from16 v0, v16
+
+    invoke-static {v13, v0}, Landroid/util/Log;->e(Ljava/lang/String;Ljava/lang/String;)I
+    :try_end_87
+    .catch Ljava/io/FileNotFoundException; {:try_start_71 .. :try_end_87} :catch_98
+    .catch Ljava/io/IOException; {:try_start_71 .. :try_end_87} :catch_89
+    .catchall {:try_start_71 .. :try_end_87} :catchall_a7
+
+    const/4 v6, 0x0
+
+    goto :goto_66
+
+    :catch_89
+    move-exception v5
+
+    :goto_8a
+    :try_start_8a
+    invoke-virtual {v5}, Ljava/io/IOException;->printStackTrace()V
+    :try_end_8d
+    .catchall {:try_start_8a .. :try_end_8d} :catchall_a7
+
+    move-object/from16 v0, p0
+
+    invoke-virtual {v0, v9}, Lcom/android/server/IcccManagerService;->closeQuietly(Ljava/io/Closeable;)V
+
+    move-object/from16 v0, p0
+
+    invoke-virtual {v0, v11}, Lcom/android/server/IcccManagerService;->closeQuietly(Ljava/io/Closeable;)V
+
+    goto :goto_70
+
+    :catch_98
+    move-exception v4
+
+    :goto_99
+    :try_start_99
+    invoke-virtual {v4}, Ljava/io/FileNotFoundException;->printStackTrace()V
+    :try_end_9c
+    .catchall {:try_start_99 .. :try_end_9c} :catchall_a7
+
+    move-object/from16 v0, p0
+
+    invoke-virtual {v0, v9}, Lcom/android/server/IcccManagerService;->closeQuietly(Ljava/io/Closeable;)V
+
+    move-object/from16 v0, p0
+
+    invoke-virtual {v0, v11}, Lcom/android/server/IcccManagerService;->closeQuietly(Ljava/io/Closeable;)V
+
+    goto :goto_70
+
+    :catchall_a7
+    move-exception v13
+
+    :goto_a8
+    move-object/from16 v0, p0
+
+    invoke-virtual {v0, v9}, Lcom/android/server/IcccManagerService;->closeQuietly(Ljava/io/Closeable;)V
+
+    move-object/from16 v0, p0
+
+    invoke-virtual {v0, v11}, Lcom/android/server/IcccManagerService;->closeQuietly(Ljava/io/Closeable;)V
+
+    throw v13
+
+    :catchall_b3
+    move-exception v13
+
+    move-object v9, v10
+
+    goto :goto_a8
+
+    :catchall_b6
+    move-exception v13
+
+    move-object v11, v12
+
+    move-object v9, v10
+
+    goto :goto_a8
+
+    :catch_ba
+    move-exception v4
+
+    move-object v9, v10
+
+    goto :goto_99
+
+    :catch_bd
+    move-exception v4
+
+    move-object v11, v12
+
+    move-object v9, v10
+
+    goto :goto_99
+
+    :catch_c1
+    move-exception v5
+
+    move-object v9, v10
+
+    goto :goto_8a
+
+    :catch_c4
+    move-exception v5
+
+    move-object v11, v12
+
+    move-object v9, v10
+
+    goto :goto_8a
 .end method
 
 .method static native get_Trusted_Boot_Data()I
@@ -760,11 +900,13 @@
 .end method
 
 .method private readIcccKey()[B
-    .registers 10
+    .registers 11
 
     const/4 v2, 0x0
 
-    :try_start_1
+    const/4 v6, 0x0
+
+    :try_start_2
     new-instance v4, Ljava/io/File;
 
     const-string/jumbo v7, "/data/misc/tz_iccc/"
@@ -777,95 +919,111 @@
 
     move-result v7
 
-    if-eqz v7, :cond_24
+    if-eqz v7, :cond_2f
 
     new-instance v3, Ljava/io/FileInputStream;
 
     invoke-direct {v3, v4}, Ljava/io/FileInputStream;-><init>(Ljava/io/File;)V
-    :try_end_17
-    .catch Ljava/io/FileNotFoundException; {:try_start_1 .. :try_end_17} :catch_31
-    .catch Ljava/io/IOException; {:try_start_1 .. :try_end_17} :catch_29
-    .catchall {:try_start_1 .. :try_end_17} :catchall_39
+    :try_end_18
+    .catch Ljava/io/FileNotFoundException; {:try_start_2 .. :try_end_18} :catch_3b
+    .catch Ljava/io/IOException; {:try_start_2 .. :try_end_18} :catch_33
+    .catchall {:try_start_2 .. :try_end_18} :catchall_43
 
-    :try_start_17
-    invoke-virtual {v3}, Ljava/io/FileInputStream;->available()I
+    :try_start_18
+    invoke-virtual {v4}, Ljava/io/File;->length()J
 
-    move-result v5
+    move-result-wide v8
+
+    long-to-int v5, v8
 
     new-array v6, v5, [B
 
     invoke-virtual {v3, v6}, Ljava/io/FileInputStream;->read([B)I
-    :try_end_20
-    .catch Ljava/io/FileNotFoundException; {:try_start_17 .. :try_end_20} :catch_41
-    .catch Ljava/io/IOException; {:try_start_17 .. :try_end_20} :catch_44
-    .catchall {:try_start_17 .. :try_end_20} :catchall_3e
 
-    invoke-virtual {p0, v3}, Lcom/android/server/IcccManagerService;->closeQuietly(Ljava/io/Closeable;)V
+    array-length v7, v6
 
-    return-object v6
+    if-nez v7, :cond_51
 
-    :cond_24
-    invoke-virtual {p0, v2}, Lcom/android/server/IcccManagerService;->closeQuietly(Ljava/io/Closeable;)V
+    sget-object v7, Lcom/android/server/IcccManagerService;->TAG:Ljava/lang/String;
 
-    :goto_27
-    const/4 v7, 0x0
+    const-string/jumbo v8, "Key file is empty. wrappedKey.length = 0"
 
-    return-object v7
-
-    :catch_29
-    move-exception v1
-
-    :goto_2a
-    :try_start_2a
-    invoke-virtual {v1}, Ljava/io/IOException;->printStackTrace()V
+    invoke-static {v7, v8}, Landroid/util/Log;->e(Ljava/lang/String;Ljava/lang/String;)I
     :try_end_2d
-    .catchall {:try_start_2a .. :try_end_2d} :catchall_39
+    .catch Ljava/io/FileNotFoundException; {:try_start_18 .. :try_end_2d} :catch_4b
+    .catch Ljava/io/IOException; {:try_start_18 .. :try_end_2d} :catch_4e
+    .catchall {:try_start_18 .. :try_end_2d} :catchall_48
 
+    const/4 v6, 0x0
+
+    move-object v2, v3
+
+    :cond_2f
+    :goto_2f
     invoke-virtual {p0, v2}, Lcom/android/server/IcccManagerService;->closeQuietly(Ljava/io/Closeable;)V
-
-    goto :goto_27
-
-    :catch_31
-    move-exception v0
 
     :goto_32
-    :try_start_32
-    invoke-virtual {v0}, Ljava/io/FileNotFoundException;->printStackTrace()V
-    :try_end_35
-    .catchall {:try_start_32 .. :try_end_35} :catchall_39
+    return-object v6
+
+    :catch_33
+    move-exception v1
+
+    :goto_34
+    :try_start_34
+    invoke-virtual {v1}, Ljava/io/IOException;->printStackTrace()V
+    :try_end_37
+    .catchall {:try_start_34 .. :try_end_37} :catchall_43
 
     invoke-virtual {p0, v2}, Lcom/android/server/IcccManagerService;->closeQuietly(Ljava/io/Closeable;)V
 
-    goto :goto_27
+    goto :goto_32
 
-    :catchall_39
+    :catch_3b
+    move-exception v0
+
+    :goto_3c
+    :try_start_3c
+    invoke-virtual {v0}, Ljava/io/FileNotFoundException;->printStackTrace()V
+    :try_end_3f
+    .catchall {:try_start_3c .. :try_end_3f} :catchall_43
+
+    invoke-virtual {p0, v2}, Lcom/android/server/IcccManagerService;->closeQuietly(Ljava/io/Closeable;)V
+
+    goto :goto_32
+
+    :catchall_43
     move-exception v7
 
-    :goto_3a
+    :goto_44
     invoke-virtual {p0, v2}, Lcom/android/server/IcccManagerService;->closeQuietly(Ljava/io/Closeable;)V
 
     throw v7
 
-    :catchall_3e
+    :catchall_48
     move-exception v7
 
     move-object v2, v3
 
-    goto :goto_3a
+    goto :goto_44
 
-    :catch_41
+    :catch_4b
     move-exception v0
 
     move-object v2, v3
 
-    goto :goto_32
+    goto :goto_3c
 
-    :catch_44
+    :catch_4e
     move-exception v1
 
     move-object v2, v3
 
-    goto :goto_2a
+    goto :goto_34
+
+    :cond_51
+    move-object v2, v3
+
+    goto :goto_2f
 .end method
 
 .method private releaseDrk()Z
@@ -922,6 +1080,199 @@
     invoke-static {v3, v6}, Landroid/util/Log;->d(Ljava/lang/String;Ljava/lang/String;)I
 
     goto :goto_16
+.end method
+
+.method private restoreBackup(Ljava/io/File;Ljava/io/File;)[B
+    .registers 13
+
+    sget-object v8, Lcom/android/server/IcccManagerService;->TAG:Ljava/lang/String;
+
+    const-string/jumbo v9, "Restoring backup"
+
+    invoke-static {v8, v9}, Landroid/util/Log;->d(Ljava/lang/String;Ljava/lang/String;)I
+
+    const/4 v2, 0x0
+
+    const/4 v4, 0x0
+
+    const/4 v7, 0x0
+
+    :try_start_b
+    invoke-virtual {p1}, Ljava/io/File;->exists()Z
+
+    move-result v8
+
+    if-eqz v8, :cond_43
+
+    new-instance v3, Ljava/io/FileInputStream;
+
+    invoke-direct {v3, p1}, Ljava/io/FileInputStream;-><init>(Ljava/io/File;)V
+    :try_end_16
+    .catch Ljava/io/FileNotFoundException; {:try_start_b .. :try_end_16} :catch_4c
+    .catch Ljava/io/IOException; {:try_start_b .. :try_end_16} :catch_57
+    .catchall {:try_start_b .. :try_end_16} :catchall_62
+
+    :try_start_16
+    invoke-virtual {v3}, Ljava/io/FileInputStream;->available()I
+
+    move-result v6
+
+    if-eqz v6, :cond_39
+
+    new-array v7, v6, [B
+
+    invoke-virtual {v3, v7}, Ljava/io/FileInputStream;->read([B)I
+
+    new-instance v5, Ljava/io/FileOutputStream;
+
+    invoke-direct {v5, p2}, Ljava/io/FileOutputStream;-><init>(Ljava/io/File;)V
+    :try_end_26
+    .catch Ljava/io/FileNotFoundException; {:try_start_16 .. :try_end_26} :catch_71
+    .catch Ljava/io/IOException; {:try_start_16 .. :try_end_26} :catch_78
+    .catchall {:try_start_16 .. :try_end_26} :catchall_6a
+
+    :try_start_26
+    invoke-virtual {v5, v7}, Ljava/io/FileOutputStream;->write([B)V
+
+    invoke-virtual {v5}, Ljava/io/FileOutputStream;->getFD()Ljava/io/FileDescriptor;
+
+    move-result-object v8
+
+    invoke-virtual {v8}, Ljava/io/FileDescriptor;->sync()V
+    :try_end_30
+    .catch Ljava/io/FileNotFoundException; {:try_start_26 .. :try_end_30} :catch_74
+    .catch Ljava/io/IOException; {:try_start_26 .. :try_end_30} :catch_7b
+    .catchall {:try_start_26 .. :try_end_30} :catchall_6d
+
+    move-object v4, v5
+
+    move-object v2, v3
+
+    :goto_32
+    invoke-virtual {p0, v2}, Lcom/android/server/IcccManagerService;->closeQuietly(Ljava/io/Closeable;)V
+
+    invoke-virtual {p0, v4}, Lcom/android/server/IcccManagerService;->closeQuietly(Ljava/io/Closeable;)V
+
+    :goto_38
+    return-object v7
+
+    :cond_39
+    :try_start_39
+    sget-object v8, Lcom/android/server/IcccManagerService;->TAG:Ljava/lang/String;
+
+    const-string/jumbo v9, "The backup key length is ZERO"
+
+    invoke-static {v8, v9}, Landroid/util/Log;->e(Ljava/lang/String;Ljava/lang/String;)I
+    :try_end_41
+    .catch Ljava/io/FileNotFoundException; {:try_start_39 .. :try_end_41} :catch_71
+    .catch Ljava/io/IOException; {:try_start_39 .. :try_end_41} :catch_78
+    .catchall {:try_start_39 .. :try_end_41} :catchall_6a
+
+    move-object v2, v3
+
+    goto :goto_32
+
+    :cond_43
+    :try_start_43
+    sget-object v8, Lcom/android/server/IcccManagerService;->TAG:Ljava/lang/String;
+
+    const-string/jumbo v9, "The backup key does not exist"
+
+    invoke-static {v8, v9}, Landroid/util/Log;->e(Ljava/lang/String;Ljava/lang/String;)I
+    :try_end_4b
+    .catch Ljava/io/FileNotFoundException; {:try_start_43 .. :try_end_4b} :catch_4c
+    .catch Ljava/io/IOException; {:try_start_43 .. :try_end_4b} :catch_57
+    .catchall {:try_start_43 .. :try_end_4b} :catchall_62
+
+    goto :goto_32
+
+    :catch_4c
+    move-exception v0
+
+    :goto_4d
+    :try_start_4d
+    invoke-virtual {v0}, Ljava/io/FileNotFoundException;->printStackTrace()V
+    :try_end_50
+    .catchall {:try_start_4d .. :try_end_50} :catchall_62
+
+    invoke-virtual {p0, v2}, Lcom/android/server/IcccManagerService;->closeQuietly(Ljava/io/Closeable;)V
+
+    invoke-virtual {p0, v4}, Lcom/android/server/IcccManagerService;->closeQuietly(Ljava/io/Closeable;)V
+
+    goto :goto_38
+
+    :catch_57
+    move-exception v1
+
+    :goto_58
+    :try_start_58
+    invoke-virtual {v1}, Ljava/io/IOException;->printStackTrace()V
+    :try_end_5b
+    .catchall {:try_start_58 .. :try_end_5b} :catchall_62
+
+    invoke-virtual {p0, v2}, Lcom/android/server/IcccManagerService;->closeQuietly(Ljava/io/Closeable;)V
+
+    invoke-virtual {p0, v4}, Lcom/android/server/IcccManagerService;->closeQuietly(Ljava/io/Closeable;)V
+
+    goto :goto_38
+
+    :catchall_62
+    move-exception v8
+
+    :goto_63
+    invoke-virtual {p0, v2}, Lcom/android/server/IcccManagerService;->closeQuietly(Ljava/io/Closeable;)V
+
+    invoke-virtual {p0, v4}, Lcom/android/server/IcccManagerService;->closeQuietly(Ljava/io/Closeable;)V
+
+    throw v8
+
+    :catchall_6a
+    move-exception v8
+
+    move-object v2, v3
+
+    goto :goto_63
+
+    :catchall_6d
+    move-exception v8
+
+    move-object v4, v5
+
+    move-object v2, v3
+
+    goto :goto_63
+
+    :catch_71
+    move-exception v0
+
+    move-object v2, v3
+
+    goto :goto_4d
+
+    :catch_74
+    move-exception v0
+
+    move-object v4, v5
+
+    move-object v2, v3
+
+    goto :goto_4d
+
+    :catch_78
+    move-exception v1
+
+    move-object v2, v3
+
+    goto :goto_58
+
+    :catch_7b
+    move-exception v1
+
+    move-object v4, v5
+
+    move-object v2, v3
+
+    goto :goto_58
 .end method
 
 .method private declared-synchronized setSysScopeField()V
@@ -1071,168 +1422,190 @@
 .end method
 
 .method public declared-synchronized getDeviceStatus(I[B)[B
-    .registers 12
+    .registers 13
     .annotation system Ldalvik/annotation/Throws;
         value = {
             Landroid/os/RemoteException;
         }
     .end annotation
 
-    const/4 v8, 0x0
+    const/4 v9, 0x0
 
     monitor-enter p0
 
-    :try_start_2
-    const-string/jumbo v6, "getDeviceStatus"
+    const/4 v2, 0x0
 
-    invoke-static {v6}, Lcom/android/server/IcccManagerService;->checkCallerPermissionFor(Ljava/lang/String;)I
+    const/4 v3, 0x0
+
+    :try_start_4
+    const-string/jumbo v7, "getDeviceStatus"
+
+    invoke-static {v7}, Lcom/android/server/IcccManagerService;->checkCallerPermissionFor(Ljava/lang/String;)I
 
     invoke-static {}, Lcom/android/server/IcccManagerService;->iccc_load()I
 
-    move-result v6
+    move-result v7
 
-    if-eqz v6, :cond_18
+    if-eqz v7, :cond_1a
 
-    sget-object v6, Lcom/android/server/IcccManagerService;->TAG:Ljava/lang/String;
+    sget-object v7, Lcom/android/server/IcccManagerService;->TAG:Ljava/lang/String;
 
-    const-string/jumbo v7, "iccc_load failure"
+    const-string/jumbo v8, "iccc_load failure"
 
-    invoke-static {v6, v7}, Landroid/util/Log;->d(Ljava/lang/String;Ljava/lang/String;)I
-    :try_end_16
-    .catchall {:try_start_2 .. :try_end_16} :catchall_8a
+    invoke-static {v7, v8}, Landroid/util/Log;->d(Ljava/lang/String;Ljava/lang/String;)I
+    :try_end_18
+    .catchall {:try_start_4 .. :try_end_18} :catchall_a3
 
     monitor-exit p0
 
-    return-object v8
+    return-object v9
 
-    :cond_18
-    :try_start_18
+    :cond_1a
+    :try_start_1a
     new-instance v0, Ljava/io/File;
 
-    const-string/jumbo v6, "/data/misc/tz_iccc/"
+    const-string/jumbo v7, "/data/misc/tz_iccc/"
 
-    const-string/jumbo v7, "key.dat"
+    const-string/jumbo v8, "key.dat"
 
-    invoke-direct {v0, v6, v7}, Ljava/io/File;-><init>(Ljava/lang/String;Ljava/lang/String;)V
+    invoke-direct {v0, v7, v8}, Ljava/io/File;-><init>(Ljava/lang/String;Ljava/lang/String;)V
 
     invoke-virtual {v0}, Ljava/io/File;->exists()Z
 
-    move-result v6
+    move-result v7
 
-    if-nez v6, :cond_48
+    if-nez v7, :cond_78
 
     invoke-direct {p0}, Lcom/android/server/IcccManagerService;->generateIcccKey()[B
 
-    move-result-object v3
+    move-result-object v6
 
-    const/4 v1, 0x0
+    :cond_2f
+    :goto_2f
+    if-nez v6, :cond_97
 
-    :goto_2e
-    if-nez v3, :cond_4e
+    sget-object v7, Lcom/android/server/IcccManagerService;->TAG:Ljava/lang/String;
 
-    sget-object v6, Lcom/android/server/IcccManagerService;->TAG:Ljava/lang/String;
+    const-string/jumbo v8, "wrappedKey is null, delete ICCC key for a new try"
 
-    const-string/jumbo v7, "wrappedKey is null"
+    invoke-static {v7, v8}, Landroid/util/Log;->d(Ljava/lang/String;Ljava/lang/String;)I
 
-    invoke-static {v6, v7}, Landroid/util/Log;->d(Ljava/lang/String;Ljava/lang/String;)I
+    invoke-direct {p0}, Lcom/android/server/IcccManagerService;->deleteIcccKey()Z
 
+    move-result v7
+
+    if-nez v7, :cond_47
+
+    sget-object v7, Lcom/android/server/IcccManagerService;->TAG:Ljava/lang/String;
+
+    const-string/jumbo v8, "deleteIcccKey failure"
+
+    invoke-static {v7, v8}, Landroid/util/Log;->d(Ljava/lang/String;Ljava/lang/String;)I
+
+    :cond_47
+    :goto_47
     invoke-static {}, Lcom/android/server/IcccManagerService;->iccc_unload()I
 
-    move-result v6
+    move-result v7
 
-    if-eqz v6, :cond_46
+    if-eqz v7, :cond_55
 
-    sget-object v6, Lcom/android/server/IcccManagerService;->TAG:Ljava/lang/String;
+    sget-object v7, Lcom/android/server/IcccManagerService;->TAG:Ljava/lang/String;
 
-    const-string/jumbo v7, "iccc_unload failure"
+    const-string/jumbo v8, "iccc_unload failure"
 
-    invoke-static {v6, v7}, Landroid/util/Log;->d(Ljava/lang/String;Ljava/lang/String;)I
-    :try_end_46
-    .catchall {:try_start_18 .. :try_end_46} :catchall_8a
+    invoke-static {v7, v8}, Landroid/util/Log;->d(Ljava/lang/String;Ljava/lang/String;)I
 
-    :cond_46
+    :cond_55
+    if-nez v2, :cond_76
+
+    invoke-direct {p0}, Lcom/android/server/IcccManagerService;->releaseDrk()Z
+
+    if-eqz v3, :cond_60
+
+    array-length v7, v3
+
+    const/4 v8, 0x1
+
+    if-ne v7, v8, :cond_76
+
+    :cond_60
+    sget-object v7, Lcom/android/server/IcccManagerService;->TAG:Ljava/lang/String;
+
+    const-string/jumbo v8, "response is not as expected, delete ICCC key for a new try"
+
+    invoke-static {v7, v8}, Landroid/util/Log;->d(Ljava/lang/String;Ljava/lang/String;)I
+
+    invoke-direct {p0}, Lcom/android/server/IcccManagerService;->deleteIcccKey()Z
+
+    move-result v7
+
+    if-nez v7, :cond_76
+
+    sget-object v7, Lcom/android/server/IcccManagerService;->TAG:Ljava/lang/String;
+
+    const-string/jumbo v8, "deleteIcccKey failure"
+
+    invoke-static {v7, v8}, Landroid/util/Log;->d(Ljava/lang/String;Ljava/lang/String;)I
+    :try_end_76
+    .catchall {:try_start_1a .. :try_end_76} :catchall_a3
+
+    :cond_76
     monitor-exit p0
 
-    return-object v8
+    return-object v3
 
-    :cond_48
-    :try_start_48
+    :cond_78
+    :try_start_78
     invoke-direct {p0}, Lcom/android/server/IcccManagerService;->readIcccKey()[B
 
-    move-result-object v3
+    move-result-object v6
 
-    const/4 v1, 0x1
+    const/4 v2, 0x1
 
-    goto :goto_2e
+    if-nez v6, :cond_2f
 
-    :cond_4e
+    new-instance v1, Ljava/io/File;
+
+    const-string/jumbo v7, "/data/misc/tz_iccc/"
+
+    const-string/jumbo v8, "key.dat.bkp"
+
+    invoke-direct {v1, v7, v8}, Ljava/io/File;-><init>(Ljava/lang/String;Ljava/lang/String;)V
+
+    sget-object v7, Lcom/android/server/IcccManagerService;->TAG:Ljava/lang/String;
+
+    const-string/jumbo v8, "Failed to read ICCC wrappedKey. Try to restore backup"
+
+    invoke-static {v7, v8}, Landroid/util/Log;->d(Ljava/lang/String;Ljava/lang/String;)I
+
+    invoke-direct {p0, v1, v0}, Lcom/android/server/IcccManagerService;->restoreBackup(Ljava/io/File;Ljava/io/File;)[B
+
+    move-result-object v6
+
+    goto :goto_2f
+
+    :cond_97
     invoke-static {}, Landroid/os/Binder;->clearCallingIdentity()J
 
     move-result-wide v4
 
-    invoke-static {p1, p2, v3, v1}, Lcom/android/server/IcccManagerService;->iccc_device_status(I[B[BZ)[B
+    invoke-static {p1, p2, v6, v2}, Lcom/android/server/IcccManagerService;->iccc_device_status(I[B[BZ)[B
 
-    move-result-object v2
+    move-result-object v3
 
     invoke-static {v4, v5}, Landroid/os/Binder;->restoreCallingIdentity(J)V
+    :try_end_a2
+    .catchall {:try_start_78 .. :try_end_a2} :catchall_a3
 
-    invoke-static {}, Lcom/android/server/IcccManagerService;->iccc_unload()I
+    goto :goto_47
 
-    move-result v6
-
-    if-eqz v6, :cond_67
-
-    sget-object v6, Lcom/android/server/IcccManagerService;->TAG:Ljava/lang/String;
-
-    const-string/jumbo v7, "iccc_unload failure"
-
-    invoke-static {v6, v7}, Landroid/util/Log;->d(Ljava/lang/String;Ljava/lang/String;)I
-
-    :cond_67
-    if-nez v1, :cond_88
-
-    invoke-direct {p0}, Lcom/android/server/IcccManagerService;->releaseDrk()Z
-
-    if-eqz v2, :cond_72
-
-    array-length v6, v2
-
-    const/4 v7, 0x1
-
-    if-ne v6, v7, :cond_88
-
-    :cond_72
-    sget-object v6, Lcom/android/server/IcccManagerService;->TAG:Ljava/lang/String;
-
-    const-string/jumbo v7, "response is not as expected, delete ICCC key for a new try"
-
-    invoke-static {v6, v7}, Landroid/util/Log;->d(Ljava/lang/String;Ljava/lang/String;)I
-
-    invoke-direct {p0}, Lcom/android/server/IcccManagerService;->deleteIcccKey()Z
-
-    move-result v6
-
-    if-nez v6, :cond_88
-
-    sget-object v6, Lcom/android/server/IcccManagerService;->TAG:Ljava/lang/String;
-
-    const-string/jumbo v7, "deleteIcccKey failure"
-
-    invoke-static {v6, v7}, Landroid/util/Log;->d(Ljava/lang/String;Ljava/lang/String;)I
-    :try_end_88
-    .catchall {:try_start_48 .. :try_end_88} :catchall_8a
-
-    :cond_88
-    monitor-exit p0
-
-    return-object v2
-
-    :catchall_8a
-    move-exception v6
+    :catchall_a3
+    move-exception v7
 
     monitor-exit p0
 
-    throw v6
+    throw v7
 .end method
 
 .method public declared-synchronized getSecureData(I)I

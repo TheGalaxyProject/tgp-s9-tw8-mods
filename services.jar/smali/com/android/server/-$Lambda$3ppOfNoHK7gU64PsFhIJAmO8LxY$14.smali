@@ -17,7 +17,7 @@
 
     check-cast p1, Lcom/android/server/SdpManagerService;
 
-    invoke-static {v0, p1}, Lcom/android/server/LockSettingsService;->lambda$-com_android_server_LockSettingsService_150766(ILcom/android/server/SdpManagerService;)[B
+    invoke-static {v0, p1}, Lcom/android/server/LockSettingsService;->lambda$-com_android_server_LockSettingsService_150838(ILcom/android/server/SdpManagerService;)[B
 
     move-result-object v0
 

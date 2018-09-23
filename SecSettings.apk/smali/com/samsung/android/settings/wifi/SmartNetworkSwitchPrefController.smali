@@ -4,6 +4,9 @@
 
 # interfaces
 .implements Landroid/support/v7/preference/Preference$OnPreferenceChangeListener;
+.implements Lcom/android/settings/core/lifecycle/LifecycleObserver;
+.implements Lcom/android/settings/core/lifecycle/events/OnResume;
+.implements Lcom/android/settings/core/lifecycle/events/OnPause;
 
 
 # annotations
@@ -66,8 +69,8 @@
     return-void
 .end method
 
-.method public constructor <init>(Landroid/app/Activity;Landroid/app/Fragment;Landroid/content/Context;)V
-    .registers 7
+.method public constructor <init>(Landroid/app/Activity;Landroid/app/Fragment;Landroid/content/Context;Lcom/android/settings/core/lifecycle/Lifecycle;)V
+    .registers 8
 
     invoke-direct {p0, p3}, Lcom/android/settings/core/PreferenceController;-><init>(Landroid/content/Context;)V
 
@@ -124,6 +127,8 @@
     check-cast v0, Landroid/net/wifi/WifiManager;
 
     iput-object v0, p0, Lcom/samsung/android/settings/wifi/SmartNetworkSwitchPrefController;->mWifiManager:Landroid/net/wifi/WifiManager;
+
+    invoke-virtual {p4, p0}, Lcom/android/settings/core/lifecycle/Lifecycle;->addObserver(Lcom/android/settings/core/lifecycle/LifecycleObserver;)Lcom/android/settings/core/lifecycle/LifecycleObserver;
 
     return-void
 .end method
@@ -399,7 +404,7 @@
 
 # virtual methods
 .method public displayPreference(Landroid/support/v7/preference/PreferenceScreen;)V
-    .registers 7
+    .registers 5
 
     invoke-super {p0, p1}, Lcom/android/settings/core/PreferenceController;->displayPreference(Landroid/support/v7/preference/PreferenceScreen;)V
 
@@ -436,66 +441,6 @@
     move-result-object v1
 
     invoke-static {v0, v1}, Landroid/util/Log;->d(Ljava/lang/String;Ljava/lang/String;)I
-
-    new-instance v0, Landroid/content/IntentFilter;
-
-    invoke-direct {v0}, Landroid/content/IntentFilter;-><init>()V
-
-    iput-object v0, p0, Lcom/samsung/android/settings/wifi/SmartNetworkSwitchPrefController;->mFilter:Landroid/content/IntentFilter;
-
-    iget-object v0, p0, Lcom/samsung/android/settings/wifi/SmartNetworkSwitchPrefController;->mFilter:Landroid/content/IntentFilter;
-
-    const-string/jumbo v1, "android.net.wifi.WIFI_STATE_CHANGED"
-
-    invoke-virtual {v0, v1}, Landroid/content/IntentFilter;->addAction(Ljava/lang/String;)V
-
-    iget-object v0, p0, Lcom/samsung/android/settings/wifi/SmartNetworkSwitchPrefController;->mFilter:Landroid/content/IntentFilter;
-
-    const-string/jumbo v1, "android.intent.action.SIM_STATE_CHANGED"
-
-    invoke-virtual {v0, v1}, Landroid/content/IntentFilter;->addAction(Ljava/lang/String;)V
-
-    iget-object v0, p0, Lcom/samsung/android/settings/wifi/SmartNetworkSwitchPrefController;->mFilter:Landroid/content/IntentFilter;
-
-    const-string/jumbo v1, "android.intent.action.ANY_DATA_STATE"
-
-    invoke-virtual {v0, v1}, Landroid/content/IntentFilter;->addAction(Ljava/lang/String;)V
-
-    iget-object v0, p0, Lcom/samsung/android/settings/wifi/SmartNetworkSwitchPrefController;->mFilter:Landroid/content/IntentFilter;
-
-    const-string/jumbo v1, "android.intent.action.AIRPLANE_MODE"
-
-    invoke-virtual {v0, v1}, Landroid/content/IntentFilter;->addAction(Ljava/lang/String;)V
-
-    iget-object v0, p0, Lcom/samsung/android/settings/wifi/SmartNetworkSwitchPrefController;->mContext:Landroid/content/Context;
-
-    iget-object v1, p0, Lcom/samsung/android/settings/wifi/SmartNetworkSwitchPrefController;->mReceiver:Landroid/content/BroadcastReceiver;
-
-    iget-object v2, p0, Lcom/samsung/android/settings/wifi/SmartNetworkSwitchPrefController;->mFilter:Landroid/content/IntentFilter;
-
-    const-string/jumbo v3, "android.permission.CHANGE_NETWORK_STATE"
-
-    const/4 v4, 0x0
-
-    invoke-virtual {v0, v1, v2, v3, v4}, Landroid/content/Context;->registerReceiver(Landroid/content/BroadcastReceiver;Landroid/content/IntentFilter;Ljava/lang/String;Landroid/os/Handler;)Landroid/content/Intent;
-
-    iget-object v0, p0, Lcom/samsung/android/settings/wifi/SmartNetworkSwitchPrefController;->mContext:Landroid/content/Context;
-
-    invoke-virtual {v0}, Landroid/content/Context;->getContentResolver()Landroid/content/ContentResolver;
-
-    move-result-object v0
-
-    const-string/jumbo v1, "mobile_data"
-
-    invoke-static {v1}, Landroid/provider/Settings$Global;->getUriFor(Ljava/lang/String;)Landroid/net/Uri;
-
-    move-result-object v1
-
-    iget-object v2, p0, Lcom/samsung/android/settings/wifi/SmartNetworkSwitchPrefController;->mMobileDataObserver:Landroid/database/ContentObserver;
-
-    const/4 v3, 0x0
-
-    invoke-virtual {v0, v1, v3, v2}, Landroid/content/ContentResolver;->registerContentObserver(Landroid/net/Uri;ZLandroid/database/ContentObserver;)V
 
     invoke-direct {p0}, Lcom/samsung/android/settings/wifi/SmartNetworkSwitchPrefController;->updateSmartNetworkSwitchVisible()V
 
@@ -599,6 +544,28 @@
     iget-boolean v0, p0, Lcom/samsung/android/settings/wifi/SmartNetworkSwitchPrefController;->mIsAvailable:Z
 
     return v0
+.end method
+
+.method public onPause()V
+    .registers 3
+
+    iget-object v0, p0, Lcom/samsung/android/settings/wifi/SmartNetworkSwitchPrefController;->mContext:Landroid/content/Context;
+
+    iget-object v1, p0, Lcom/samsung/android/settings/wifi/SmartNetworkSwitchPrefController;->mReceiver:Landroid/content/BroadcastReceiver;
+
+    invoke-virtual {v0, v1}, Landroid/content/Context;->unregisterReceiver(Landroid/content/BroadcastReceiver;)V
+
+    iget-object v0, p0, Lcom/samsung/android/settings/wifi/SmartNetworkSwitchPrefController;->mContext:Landroid/content/Context;
+
+    invoke-virtual {v0}, Landroid/content/Context;->getContentResolver()Landroid/content/ContentResolver;
+
+    move-result-object v0
+
+    iget-object v1, p0, Lcom/samsung/android/settings/wifi/SmartNetworkSwitchPrefController;->mMobileDataObserver:Landroid/database/ContentObserver;
+
+    invoke-virtual {v0, v1}, Landroid/content/ContentResolver;->unregisterContentObserver(Landroid/database/ContentObserver;)V
+
+    return-void
 .end method
 
 .method public onPreferenceChange(Landroid/support/v7/preference/Preference;Ljava/lang/Object;)Z
@@ -730,6 +697,72 @@
 
     :cond_76
     return v5
+.end method
+
+.method public onResume()V
+    .registers 6
+
+    new-instance v0, Landroid/content/IntentFilter;
+
+    invoke-direct {v0}, Landroid/content/IntentFilter;-><init>()V
+
+    iput-object v0, p0, Lcom/samsung/android/settings/wifi/SmartNetworkSwitchPrefController;->mFilter:Landroid/content/IntentFilter;
+
+    iget-object v0, p0, Lcom/samsung/android/settings/wifi/SmartNetworkSwitchPrefController;->mFilter:Landroid/content/IntentFilter;
+
+    const-string/jumbo v1, "android.net.wifi.WIFI_STATE_CHANGED"
+
+    invoke-virtual {v0, v1}, Landroid/content/IntentFilter;->addAction(Ljava/lang/String;)V
+
+    iget-object v0, p0, Lcom/samsung/android/settings/wifi/SmartNetworkSwitchPrefController;->mFilter:Landroid/content/IntentFilter;
+
+    const-string/jumbo v1, "android.intent.action.SIM_STATE_CHANGED"
+
+    invoke-virtual {v0, v1}, Landroid/content/IntentFilter;->addAction(Ljava/lang/String;)V
+
+    iget-object v0, p0, Lcom/samsung/android/settings/wifi/SmartNetworkSwitchPrefController;->mFilter:Landroid/content/IntentFilter;
+
+    const-string/jumbo v1, "android.intent.action.ANY_DATA_STATE"
+
+    invoke-virtual {v0, v1}, Landroid/content/IntentFilter;->addAction(Ljava/lang/String;)V
+
+    iget-object v0, p0, Lcom/samsung/android/settings/wifi/SmartNetworkSwitchPrefController;->mFilter:Landroid/content/IntentFilter;
+
+    const-string/jumbo v1, "android.intent.action.AIRPLANE_MODE"
+
+    invoke-virtual {v0, v1}, Landroid/content/IntentFilter;->addAction(Ljava/lang/String;)V
+
+    iget-object v0, p0, Lcom/samsung/android/settings/wifi/SmartNetworkSwitchPrefController;->mContext:Landroid/content/Context;
+
+    iget-object v1, p0, Lcom/samsung/android/settings/wifi/SmartNetworkSwitchPrefController;->mReceiver:Landroid/content/BroadcastReceiver;
+
+    iget-object v2, p0, Lcom/samsung/android/settings/wifi/SmartNetworkSwitchPrefController;->mFilter:Landroid/content/IntentFilter;
+
+    const-string/jumbo v3, "android.permission.CHANGE_NETWORK_STATE"
+
+    const/4 v4, 0x0
+
+    invoke-virtual {v0, v1, v2, v3, v4}, Landroid/content/Context;->registerReceiver(Landroid/content/BroadcastReceiver;Landroid/content/IntentFilter;Ljava/lang/String;Landroid/os/Handler;)Landroid/content/Intent;
+
+    iget-object v0, p0, Lcom/samsung/android/settings/wifi/SmartNetworkSwitchPrefController;->mContext:Landroid/content/Context;
+
+    invoke-virtual {v0}, Landroid/content/Context;->getContentResolver()Landroid/content/ContentResolver;
+
+    move-result-object v0
+
+    const-string/jumbo v1, "mobile_data"
+
+    invoke-static {v1}, Landroid/provider/Settings$Global;->getUriFor(Ljava/lang/String;)Landroid/net/Uri;
+
+    move-result-object v1
+
+    iget-object v2, p0, Lcom/samsung/android/settings/wifi/SmartNetworkSwitchPrefController;->mMobileDataObserver:Landroid/database/ContentObserver;
+
+    const/4 v3, 0x0
+
+    invoke-virtual {v0, v1, v3, v2}, Landroid/content/ContentResolver;->registerContentObserver(Landroid/net/Uri;ZLandroid/database/ContentObserver;)V
+
+    return-void
 .end method
 
 .method public updateState(Landroid/support/v7/preference/Preference;)V

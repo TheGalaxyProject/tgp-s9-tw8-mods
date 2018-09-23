@@ -170,7 +170,7 @@
 
     sget-object v8, Lcom/samsung/android/knox/keystore/CCMProfile$AccessControlMethod;->LOCK_STATE:Lcom/samsung/android/knox/keystore/CCMProfile$AccessControlMethod;
 
-    invoke-static {v7, v3, v8}, Lcom/android/server/enterprise/ccm/ClientCertificateManager;->-wrap9(Lcom/android/server/enterprise/ccm/ClientCertificateManager;ILcom/samsung/android/knox/keystore/CCMProfile$AccessControlMethod;)V
+    invoke-static {v7, v3, v8}, Lcom/android/server/enterprise/ccm/ClientCertificateManager;->-wrap10(Lcom/android/server/enterprise/ccm/ClientCertificateManager;ILcom/samsung/android/knox/keystore/CCMProfile$AccessControlMethod;)V
 
     :cond_91
     :goto_91
@@ -181,7 +181,7 @@
 
     sget-object v8, Lcom/samsung/android/knox/keystore/CCMProfile$AccessControlMethod;->AFW:Lcom/samsung/android/knox/keystore/CCMProfile$AccessControlMethod;
 
-    invoke-static {v7, v3, v8}, Lcom/android/server/enterprise/ccm/ClientCertificateManager;->-wrap9(Lcom/android/server/enterprise/ccm/ClientCertificateManager;ILcom/samsung/android/knox/keystore/CCMProfile$AccessControlMethod;)V
+    invoke-static {v7, v3, v8}, Lcom/android/server/enterprise/ccm/ClientCertificateManager;->-wrap10(Lcom/android/server/enterprise/ccm/ClientCertificateManager;ILcom/samsung/android/knox/keystore/CCMProfile$AccessControlMethod;)V
 
     goto :goto_91
 
@@ -340,7 +340,7 @@
 
     sget-object v8, Lcom/samsung/android/knox/keystore/CCMProfile$AccessControlMethod;->AFW:Lcom/samsung/android/knox/keystore/CCMProfile$AccessControlMethod;
 
-    invoke-static {v7, v0, v8}, Lcom/android/server/enterprise/ccm/ClientCertificateManager;->-wrap9(Lcom/android/server/enterprise/ccm/ClientCertificateManager;ILcom/samsung/android/knox/keystore/CCMProfile$AccessControlMethod;)V
+    invoke-static {v7, v0, v8}, Lcom/android/server/enterprise/ccm/ClientCertificateManager;->-wrap10(Lcom/android/server/enterprise/ccm/ClientCertificateManager;ILcom/samsung/android/knox/keystore/CCMProfile$AccessControlMethod;)V
 
     goto/16 :goto_91
 .end method

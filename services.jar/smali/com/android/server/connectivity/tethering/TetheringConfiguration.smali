@@ -1235,7 +1235,7 @@
 
     move-result v4
 
-    if-eqz v4, :cond_489
+    if-eqz v4, :cond_4af
 
     invoke-static {}, Landroid/telephony/TelephonyManager;->getDefault()Landroid/telephony/TelephonyManager;
 
@@ -1253,7 +1253,7 @@
 
     move-result v4
 
-    if-eqz v4, :cond_485
+    if-eqz v4, :cond_4ab
 
     const-string/jumbo v33, "46003"
 
@@ -1330,6 +1330,42 @@
 
     invoke-direct {v7, v4}, Ljava/lang/String;-><init>(Ljava/lang/String;)V
 
+    const-string/jumbo v4, "dsds"
+
+    const-string/jumbo v5, "persist.radio.multisim.config"
+
+    invoke-static {v5}, Landroid/os/SystemProperties;->get(Ljava/lang/String;)Ljava/lang/String;
+
+    move-result-object v5
+
+    invoke-virtual {v4, v5}, Ljava/lang/String;->equals(Ljava/lang/Object;)Z
+
+    move-result v4
+
+    if-eqz v4, :cond_db
+
+    if-nez v36, :cond_4bf
+
+    new-instance v4, Ljava/lang/StringBuilder;
+
+    invoke-direct {v4}, Ljava/lang/StringBuilder;-><init>()V
+
+    invoke-virtual {v4, v7}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    move-result-object v4
+
+    const-string/jumbo v5, " and current = 1"
+
+    invoke-virtual {v4, v5}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    move-result-object v4
+
+    invoke-virtual {v4}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;
+
+    move-result-object v7
+
+    :cond_db
+    :goto_db
     const/16 v30, 0x0
 
     const/16 v29, 0x0
@@ -1344,7 +1380,7 @@
 
     move-result v4
 
-    if-eqz v4, :cond_f7
+    if-eqz v4, :cond_11d
 
     const-string/jumbo v4, "gsm.sim.operator.gid"
 
@@ -1358,7 +1394,7 @@
 
     move-result v4
 
-    if-nez v4, :cond_f7
+    if-nez v4, :cond_11d
 
     new-instance v4, Ljava/lang/StringBuilder;
 
@@ -1390,8 +1426,8 @@
 
     move-result-object v7
 
-    :cond_f7
-    :try_start_f7
+    :cond_11d
+    :try_start_11d
     invoke-virtual/range {p1 .. p1}, Landroid/content/Context;->getContentResolver()Landroid/content/ContentResolver;
 
     move-result-object v4
@@ -1408,15 +1444,15 @@
 
     move-result-object v23
 
-    if-eqz v23, :cond_251
+    if-eqz v23, :cond_277
 
     invoke-interface/range {v23 .. v23}, Landroid/database/Cursor;->moveToFirst()Z
 
     move-result v4
 
-    if-eqz v4, :cond_251
+    if-eqz v4, :cond_277
 
-    :goto_10c
+    :goto_132
     const-string/jumbo v4, "type"
 
     move-object/from16 v0, v23
@@ -1435,7 +1471,7 @@
 
     move-result v4
 
-    if-nez v4, :cond_143
+    if-nez v4, :cond_169
 
     const-string/jumbo v4, "dun"
 
@@ -1445,7 +1481,7 @@
 
     move-result v4
 
-    if-eqz v4, :cond_143
+    if-eqz v4, :cond_169
 
     const-string/jumbo v4, "default"
 
@@ -1457,7 +1493,7 @@
 
     xor-int/lit8 v4, v4, 0x1
 
-    if-eqz v4, :cond_143
+    if-eqz v4, :cond_169
 
     sget-object v4, Lcom/android/server/connectivity/tethering/TetheringConfiguration;->TAG:Ljava/lang/String;
 
@@ -1467,7 +1503,7 @@
 
     const/16 v27, 0x1
 
-    :cond_143
+    :cond_169
     const-string/jumbo v4, "mvno_type"
 
     move-object/from16 v0, v23
@@ -1500,7 +1536,7 @@
 
     move-result v4
 
-    if-nez v4, :cond_1af
+    if-nez v4, :cond_1d5
 
     invoke-static/range {v31 .. v31}, Landroid/text/TextUtils;->isEmpty(Ljava/lang/CharSequence;)Z
 
@@ -1508,7 +1544,7 @@
 
     xor-int/lit8 v4, v4, 0x1
 
-    if-eqz v4, :cond_1af
+    if-eqz v4, :cond_1d5
 
     move-object/from16 v0, p0
 
@@ -1522,7 +1558,7 @@
 
     move-result v4
 
-    if-eqz v4, :cond_499
+    if-eqz v4, :cond_4d5
 
     sget-object v4, Lcom/android/server/connectivity/tethering/TetheringConfiguration;->TAG:Ljava/lang/String;
 
@@ -1536,7 +1572,7 @@
 
     move-result v4
 
-    if-nez v4, :cond_1af
+    if-nez v4, :cond_1d5
 
     const-string/jumbo v4, "dun"
 
@@ -1546,7 +1582,7 @@
 
     move-result v4
 
-    if-eqz v4, :cond_1af
+    if-eqz v4, :cond_1d5
 
     const-string/jumbo v4, "default"
 
@@ -1558,7 +1594,7 @@
 
     xor-int/lit8 v4, v4, 0x1
 
-    if-eqz v4, :cond_1af
+    if-eqz v4, :cond_1d5
 
     sget-object v4, Lcom/android/server/connectivity/tethering/TetheringConfiguration;->TAG:Ljava/lang/String;
 
@@ -1568,8 +1604,8 @@
 
     const/16 v29, 0x1
 
-    :cond_1af
-    :goto_1af
+    :cond_1d5
+    :goto_1d5
     const-string/jumbo v4, "KDI"
 
     invoke-static {}, Lcom/android/internal/telephony/TelephonyFeatures;->getMainOperatorName()Ljava/lang/String;
@@ -1580,7 +1616,7 @@
 
     move-result v4
 
-    if-eqz v4, :cond_4e5
+    if-eqz v4, :cond_521
 
     const/4 v4, 0x0
 
@@ -1640,7 +1676,7 @@
 
     move-result v4
 
-    if-nez v4, :cond_21c
+    if-nez v4, :cond_242
 
     const-string/jumbo v4, "3"
 
@@ -1650,7 +1686,7 @@
 
     move-result v4
 
-    if-nez v4, :cond_21c
+    if-nez v4, :cond_242
 
     const-string/jumbo v4, "4"
 
@@ -1660,7 +1696,7 @@
 
     move-result v4
 
-    if-nez v4, :cond_21c
+    if-nez v4, :cond_242
 
     const-string/jumbo v4, "5"
 
@@ -1670,28 +1706,28 @@
 
     move-result v4
 
-    if-eqz v4, :cond_4e5
+    if-eqz v4, :cond_521
 
-    :cond_21c
+    :cond_242
     invoke-static/range {v18 .. v18}, Landroid/text/TextUtils;->isEmpty(Ljava/lang/CharSequence;)Z
 
     move-result v4
 
-    if-nez v4, :cond_22e
+    if-nez v4, :cond_254
 
     invoke-static/range {v19 .. v19}, Landroid/text/TextUtils;->isEmpty(Ljava/lang/CharSequence;)Z
 
     move-result v4
 
-    if-nez v4, :cond_22e
+    if-nez v4, :cond_254
 
     invoke-static/range {v16 .. v16}, Landroid/text/TextUtils;->isEmpty(Ljava/lang/CharSequence;)Z
 
     move-result v4
 
-    if-eqz v4, :cond_4e5
+    if-eqz v4, :cond_521
 
-    :cond_22e
+    :cond_254
     sget-object v4, Lcom/android/server/connectivity/tethering/TetheringConfiguration;->TAG:Ljava/lang/String;
 
     const-string/jumbo v5, "KDI db cr"
@@ -1725,16 +1761,16 @@
     const/4 v6, 0x0
 
     invoke-virtual {v4, v14, v5, v6}, Landroid/content/ContentResolver;->delete(Landroid/net/Uri;Ljava/lang/String;[Ljava/lang/String;)I
-    :try_end_251
-    .catch Landroid/database/sqlite/SQLiteException; {:try_start_f7 .. :try_end_251} :catch_4c3
-    .catchall {:try_start_f7 .. :try_end_251} :catchall_4ed
+    :try_end_277
+    .catch Landroid/database/sqlite/SQLiteException; {:try_start_11d .. :try_end_277} :catch_4ff
+    .catchall {:try_start_11d .. :try_end_277} :catchall_529
 
-    :cond_251
-    if-eqz v23, :cond_256
+    :cond_277
+    if-eqz v23, :cond_27c
 
     invoke-interface/range {v23 .. v23}, Landroid/database/Cursor;->close()V
 
-    :cond_256
+    :cond_27c
     const-string/jumbo v4, "SPR"
 
     invoke-static {}, Lcom/android/internal/telephony/TelephonyFeatures;->getMainOperatorName()Ljava/lang/String;
@@ -1745,7 +1781,7 @@
 
     move-result v4
 
-    if-eqz v4, :cond_2a7
+    if-eqz v4, :cond_2cd
 
     const-string/jumbo v4, "310120"
 
@@ -1755,7 +1791,7 @@
 
     move-result v4
 
-    if-nez v4, :cond_2a5
+    if-nez v4, :cond_2cb
 
     const-string/jumbo v4, "310000"
 
@@ -1765,7 +1801,7 @@
 
     move-result v4
 
-    if-nez v4, :cond_2a5
+    if-nez v4, :cond_2cb
 
     const-string/jumbo v4, "311870"
 
@@ -1775,7 +1811,7 @@
 
     move-result v4
 
-    if-nez v4, :cond_2a5
+    if-nez v4, :cond_2cb
 
     const-string/jumbo v4, "311490"
 
@@ -1785,7 +1821,7 @@
 
     move-result v4
 
-    if-nez v4, :cond_2a5
+    if-nez v4, :cond_2cb
 
     const-string/jumbo v4, "312530"
 
@@ -1795,7 +1831,7 @@
 
     move-result v4
 
-    if-nez v4, :cond_2a5
+    if-nez v4, :cond_2cb
 
     const-string/jumbo v4, "316010"
 
@@ -1805,12 +1841,12 @@
 
     move-result v4
 
-    if-eqz v4, :cond_2a7
+    if-eqz v4, :cond_2cd
 
-    :cond_2a5
+    :cond_2cb
     const/16 v27, 0x1
 
-    :cond_2a7
+    :cond_2cd
     const-string/jumbo v4, "KDI"
 
     invoke-static {}, Lcom/android/internal/telephony/TelephonyFeatures;->getMainOperatorName()Ljava/lang/String;
@@ -1821,17 +1857,17 @@
 
     move-result v4
 
-    if-eqz v4, :cond_2bc
+    if-eqz v4, :cond_2e2
 
     invoke-static/range {v36 .. v36}, Lcom/android/internal/telephony/TelephonyFeatures;->isKdiSim(I)Z
 
     move-result v4
 
-    if-eqz v4, :cond_2bc
+    if-eqz v4, :cond_2e2
 
     const/16 v27, 0x1
 
-    :cond_2bc
+    :cond_2e2
     const-string/jumbo v4, "gsm.apn.sim.operator.numeric"
 
     const-string/jumbo v5, ""
@@ -1850,7 +1886,7 @@
 
     move-result v4
 
-    if-nez v4, :cond_2e0
+    if-nez v4, :cond_306
 
     const-string/jumbo v4, "ACG"
 
@@ -1862,9 +1898,9 @@
 
     move-result v4
 
-    if-eqz v4, :cond_3b6
+    if-eqz v4, :cond_3dc
 
-    :cond_2e0
+    :cond_306
     new-instance v11, Ljava/lang/String;
 
     const-string/jumbo v4, ""
@@ -1881,11 +1917,11 @@
 
     move-result v4
 
-    if-eqz v4, :cond_4f9
+    if-eqz v4, :cond_535
 
     sget-object v4, Lcom/android/server/connectivity/tethering/TetheringConfiguration;->mAutoConfigurationType:Ljava/lang/String;
 
-    if-eqz v4, :cond_4f4
+    if-eqz v4, :cond_530
 
     sget-object v4, Lcom/android/server/connectivity/tethering/TetheringConfiguration;->mAutoConfigurationType:Ljava/lang/String;
 
@@ -1895,7 +1931,7 @@
 
     move-result v4
 
-    if-nez v4, :cond_30f
+    if-nez v4, :cond_335
 
     sget-object v4, Lcom/android/server/connectivity/tethering/TetheringConfiguration;->mAutoConfigurationType:Ljava/lang/String;
 
@@ -1905,9 +1941,9 @@
 
     move-result v4
 
-    if-eqz v4, :cond_4f4
+    if-eqz v4, :cond_530
 
-    :cond_30f
+    :cond_335
     new-instance v4, Ljava/lang/StringBuilder;
 
     invoke-direct {v4}, Ljava/lang/StringBuilder;-><init>()V
@@ -1932,8 +1968,8 @@
 
     move-result-object v11
 
-    :goto_32a
-    :try_start_32a
+    :goto_350
+    :try_start_350
     invoke-virtual/range {p1 .. p1}, Landroid/content/Context;->getContentResolver()Landroid/content/ContentResolver;
 
     move-result-object v8
@@ -1966,15 +2002,15 @@
 
     invoke-direct {v0, v4}, Ljava/lang/String;-><init>(Ljava/lang/String;)V
 
-    if-eqz v23, :cond_3a1
+    if-eqz v23, :cond_3c7
 
     invoke-interface/range {v23 .. v23}, Landroid/database/Cursor;->moveToFirst()Z
 
     move-result v4
 
-    if-eqz v4, :cond_3a1
+    if-eqz v4, :cond_3c7
 
-    :cond_353
+    :cond_379
     const-string/jumbo v4, "type"
 
     move-object/from16 v0, v23
@@ -2011,11 +2047,11 @@
 
     move-result v4
 
-    if-eqz v4, :cond_37e
+    if-eqz v4, :cond_3a4
 
     move-object/from16 v24, v22
 
-    :cond_37e
+    :cond_3a4
     const-string/jumbo v4, "dun"
 
     move-object/from16 v0, v41
@@ -2024,46 +2060,46 @@
 
     move-result v4
 
-    if-eqz v4, :cond_38b
+    if-eqz v4, :cond_3b1
 
     move-object/from16 v25, v22
 
-    :cond_38b
+    :cond_3b1
     invoke-interface/range {v23 .. v23}, Landroid/database/Cursor;->moveToNext()Z
 
     move-result v4
 
-    if-nez v4, :cond_353
+    if-nez v4, :cond_379
 
     invoke-virtual/range {v24 .. v25}, Ljava/lang/String;->equals(Ljava/lang/Object;)Z
 
     move-result v4
 
-    if-eqz v4, :cond_548
+    if-eqz v4, :cond_584
 
     sget-object v4, Lcom/android/server/connectivity/tethering/TetheringConfiguration;->TAG:Ljava/lang/String;
 
     const-string/jumbo v5, "LRA|ACG - dun has same apn as default"
 
     invoke-static {v4, v5}, Landroid/util/Log;->d(Ljava/lang/String;Ljava/lang/String;)I
-    :try_end_39f
-    .catch Landroid/database/sqlite/SQLiteException; {:try_start_32a .. :try_end_39f} :catch_554
-    .catchall {:try_start_32a .. :try_end_39f} :catchall_576
+    :try_end_3c5
+    .catch Landroid/database/sqlite/SQLiteException; {:try_start_350 .. :try_end_3c5} :catch_590
+    .catchall {:try_start_350 .. :try_end_3c5} :catchall_5b2
 
     const/16 v27, 0x0
 
-    :cond_3a1
-    :goto_3a1
-    if-eqz v23, :cond_3a6
+    :cond_3c7
+    :goto_3c7
+    if-eqz v23, :cond_3cc
 
     invoke-interface/range {v23 .. v23}, Landroid/database/Cursor;->close()V
 
-    :cond_3a6
+    :cond_3cc
     invoke-static {}, Lcom/android/server/connectivity/tethering/TetheringConfiguration;->isCdmaRat()Z
 
     move-result v4
 
-    if-eqz v4, :cond_3b6
+    if-eqz v4, :cond_3dc
 
     sget-object v4, Lcom/android/server/connectivity/tethering/TetheringConfiguration;->TAG:Ljava/lang/String;
 
@@ -2073,7 +2109,7 @@
 
     const/16 v27, 0x0
 
-    :cond_3b6
+    :cond_3dc
     const-string/jumbo v4, "KDI"
 
     invoke-static {}, Lcom/android/internal/telephony/TelephonyFeatures;->getMainOperatorName()Ljava/lang/String;
@@ -2084,7 +2120,7 @@
 
     move-result v4
 
-    if-eqz v4, :cond_41d
+    if-eqz v4, :cond_443
 
     const-string/jumbo v4, "gsm.operator.isroaming"
 
@@ -2094,11 +2130,11 @@
 
     move-result v4
 
-    if-eqz v4, :cond_3cf
+    if-eqz v4, :cond_3f5
 
     const/16 v27, 0x0
 
-    :cond_3cf
+    :cond_3f5
     const-string/jumbo v4, "gsm.network.type"
 
     const-string/jumbo v5, ""
@@ -2115,7 +2151,7 @@
 
     move-result v4
 
-    if-nez v4, :cond_41b
+    if-nez v4, :cond_441
 
     const-string/jumbo v4, "CDMA-IS95B"
 
@@ -2125,7 +2161,7 @@
 
     move-result v4
 
-    if-nez v4, :cond_41b
+    if-nez v4, :cond_441
 
     const-string/jumbo v4, "1xRTT"
 
@@ -2135,7 +2171,7 @@
 
     move-result v4
 
-    if-nez v4, :cond_41b
+    if-nez v4, :cond_441
 
     const-string/jumbo v4, "EvDo-rev.0"
 
@@ -2145,7 +2181,7 @@
 
     move-result v4
 
-    if-nez v4, :cond_41b
+    if-nez v4, :cond_441
 
     const-string/jumbo v4, "EvDo-rev.A"
 
@@ -2155,7 +2191,7 @@
 
     move-result v4
 
-    if-nez v4, :cond_41b
+    if-nez v4, :cond_441
 
     const-string/jumbo v4, "EvDo-rev.B"
 
@@ -2165,12 +2201,12 @@
 
     move-result v4
 
-    if-eqz v4, :cond_41d
+    if-eqz v4, :cond_443
 
-    :cond_41b
+    :cond_441
     const/16 v27, 0x0
 
-    :cond_41d
+    :cond_443
     const-string/jumbo v4, "KDI"
 
     invoke-static {}, Lcom/android/internal/telephony/TelephonyFeatures;->getMainOperatorName()Ljava/lang/String;
@@ -2181,7 +2217,7 @@
 
     move-result v4
 
-    if-eqz v4, :cond_43e
+    if-eqz v4, :cond_464
 
     invoke-virtual/range {p1 .. p1}, Landroid/content/Context;->getContentResolver()Landroid/content/ContentResolver;
 
@@ -2195,16 +2231,16 @@
 
     move-result v4
 
-    if-eqz v4, :cond_57d
+    if-eqz v4, :cond_5b9
 
     const/16 v21, 0x1
 
-    :goto_43a
-    if-eqz v21, :cond_43e
+    :goto_460
+    if-eqz v21, :cond_464
 
     const/16 v27, 0x0
 
-    :cond_43e
+    :cond_464
     const-string/jumbo v4, "DCM"
 
     invoke-static {}, Lcom/android/internal/telephony/TelephonyFeatures;->getMainOperatorName()Ljava/lang/String;
@@ -2215,7 +2251,7 @@
 
     move-result v4
 
-    if-eqz v4, :cond_45a
+    if-eqz v4, :cond_480
 
     const-string/jumbo v4, "44010"
 
@@ -2227,14 +2263,14 @@
 
     xor-int/lit8 v4, v4, 0x1
 
-    if-eqz v4, :cond_45a
+    if-eqz v4, :cond_480
 
     const/16 v27, 0x0
 
-    :cond_45a
-    if-eqz v30, :cond_468
+    :cond_480
+    if-eqz v30, :cond_48e
 
-    if-nez v29, :cond_468
+    if-nez v29, :cond_48e
 
     sget-object v4, Lcom/android/server/connectivity/tethering/TetheringConfiguration;->TAG:Ljava/lang/String;
 
@@ -2244,14 +2280,14 @@
 
     const/16 v27, 0x0
 
-    :cond_468
+    :cond_48e
     invoke-static {}, Landroid/os/Binder;->clearCallingIdentity()J
 
     move-result-wide v34
 
-    if-eqz v27, :cond_581
+    if-eqz v27, :cond_5bd
 
-    :try_start_46e
+    :try_start_494
     invoke-virtual/range {p1 .. p1}, Landroid/content/Context;->getContentResolver()Landroid/content/ContentResolver;
 
     move-result-object v4
@@ -2267,20 +2303,20 @@
     const-string/jumbo v5, "Set dun requiered as 1"
 
     invoke-static {v4, v5}, Landroid/util/Log;->e(Ljava/lang/String;Ljava/lang/String;)I
-    :try_end_481
-    .catchall {:try_start_46e .. :try_end_481} :catchall_58e
+    :try_end_4a7
+    .catchall {:try_start_494 .. :try_end_4a7} :catchall_5ca
 
-    :goto_481
+    :goto_4a7
     invoke-static/range {v34 .. v35}, Landroid/os/Binder;->restoreCallingIdentity(J)V
 
     return-void
 
-    :cond_485
+    :cond_4ab
     move-object/from16 v33, v20
 
     goto/16 :goto_67
 
-    :cond_489
+    :cond_4af
     const-string/jumbo v4, "CTG"
 
     move-object/from16 v0, v37
@@ -2295,8 +2331,29 @@
 
     goto/16 :goto_8f
 
-    :cond_499
-    :try_start_499
+    :cond_4bf
+    new-instance v4, Ljava/lang/StringBuilder;
+
+    invoke-direct {v4}, Ljava/lang/StringBuilder;-><init>()V
+
+    invoke-virtual {v4, v7}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    move-result-object v4
+
+    const-string/jumbo v5, " and current1 = 1"
+
+    invoke-virtual {v4, v5}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    move-result-object v4
+
+    invoke-virtual {v4}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;
+
+    move-result-object v7
+
+    goto/16 :goto_db
+
+    :cond_4d5
+    :try_start_4d5
     sget-object v4, Lcom/android/server/connectivity/tethering/TetheringConfiguration;->TAG:Ljava/lang/String;
 
     new-instance v5, Ljava/lang/StringBuilder;
@@ -2332,16 +2389,16 @@
     move-result-object v5
 
     invoke-static {v4, v5}, Landroid/util/Log;->e(Ljava/lang/String;Ljava/lang/String;)I
-    :try_end_4c1
-    .catch Landroid/database/sqlite/SQLiteException; {:try_start_499 .. :try_end_4c1} :catch_4c3
-    .catchall {:try_start_499 .. :try_end_4c1} :catchall_4ed
+    :try_end_4fd
+    .catch Landroid/database/sqlite/SQLiteException; {:try_start_4d5 .. :try_end_4fd} :catch_4ff
+    .catchall {:try_start_4d5 .. :try_end_4fd} :catchall_529
 
-    goto/16 :goto_1af
+    goto/16 :goto_1d5
 
-    :catch_4c3
+    :catch_4ff
     move-exception v26
 
-    :try_start_4c4
+    :try_start_500
     sget-object v4, Lcom/android/server/connectivity/tethering/TetheringConfiguration;->TAG:Ljava/lang/String;
 
     new-instance v5, Ljava/lang/StringBuilder;
@@ -2365,45 +2422,45 @@
     move-result-object v5
 
     invoke-static {v4, v5}, Landroid/util/Log;->e(Ljava/lang/String;Ljava/lang/String;)I
-    :try_end_4df
-    .catchall {:try_start_4c4 .. :try_end_4df} :catchall_4ed
+    :try_end_51b
+    .catchall {:try_start_500 .. :try_end_51b} :catchall_529
 
-    if-eqz v23, :cond_4e4
+    if-eqz v23, :cond_520
 
     invoke-interface/range {v23 .. v23}, Landroid/database/Cursor;->close()V
 
-    :cond_4e4
+    :cond_520
     return-void
 
-    :cond_4e5
-    :try_start_4e5
+    :cond_521
+    :try_start_521
     invoke-interface/range {v23 .. v23}, Landroid/database/Cursor;->moveToNext()Z
-    :try_end_4e8
-    .catch Landroid/database/sqlite/SQLiteException; {:try_start_4e5 .. :try_end_4e8} :catch_4c3
-    .catchall {:try_start_4e5 .. :try_end_4e8} :catchall_4ed
+    :try_end_524
+    .catch Landroid/database/sqlite/SQLiteException; {:try_start_521 .. :try_end_524} :catch_4ff
+    .catchall {:try_start_521 .. :try_end_524} :catchall_529
 
     move-result v4
 
-    if-eqz v4, :cond_251
+    if-eqz v4, :cond_277
 
-    goto/16 :goto_10c
+    goto/16 :goto_132
 
-    :catchall_4ed
+    :catchall_529
     move-exception v4
 
-    if-eqz v23, :cond_4f3
+    if-eqz v23, :cond_52f
 
     invoke-interface/range {v23 .. v23}, Landroid/database/Cursor;->close()V
 
-    :cond_4f3
+    :cond_52f
     throw v4
 
-    :cond_4f4
+    :cond_530
     const-string/jumbo v11, "numeric = \"311480\""
 
-    goto/16 :goto_32a
+    goto/16 :goto_350
 
-    :cond_4f9
+    :cond_535
     const-string/jumbo v4, "ACG"
 
     invoke-static {}, Lcom/android/internal/telephony/TelephonyFeatures;->getSubOperatorName()Ljava/lang/String;
@@ -2414,13 +2471,13 @@
 
     move-result v4
 
-    if-eqz v4, :cond_529
+    if-eqz v4, :cond_565
 
     invoke-static {}, Lcom/android/internal/telephony/TelephonyFeatures;->isUsaGlobalModel()Z
 
     move-result v4
 
-    if-eqz v4, :cond_529
+    if-eqz v4, :cond_565
 
     new-instance v4, Ljava/lang/StringBuilder;
 
@@ -2446,9 +2503,9 @@
 
     move-result-object v11
 
-    goto/16 :goto_32a
+    goto/16 :goto_350
 
-    :cond_529
+    :cond_565
     new-instance v4, Ljava/lang/StringBuilder;
 
     invoke-direct {v4}, Ljava/lang/StringBuilder;-><init>()V
@@ -2475,27 +2532,27 @@
 
     move-result-object v11
 
-    goto/16 :goto_32a
+    goto/16 :goto_350
 
-    :cond_548
-    :try_start_548
+    :cond_584
+    :try_start_584
     sget-object v4, Lcom/android/server/connectivity/tethering/TetheringConfiguration;->TAG:Ljava/lang/String;
 
     const-string/jumbo v5, "LRA|ACG - dun has different apn from default - dunRequired"
 
     invoke-static {v4, v5}, Landroid/util/Log;->d(Ljava/lang/String;Ljava/lang/String;)I
-    :try_end_550
-    .catch Landroid/database/sqlite/SQLiteException; {:try_start_548 .. :try_end_550} :catch_554
-    .catchall {:try_start_548 .. :try_end_550} :catchall_576
+    :try_end_58c
+    .catch Landroid/database/sqlite/SQLiteException; {:try_start_584 .. :try_end_58c} :catch_590
+    .catchall {:try_start_584 .. :try_end_58c} :catchall_5b2
 
     const/16 v27, 0x1
 
-    goto/16 :goto_3a1
+    goto/16 :goto_3c7
 
-    :catch_554
+    :catch_590
     move-exception v26
 
-    :try_start_555
+    :try_start_591
     sget-object v4, Lcom/android/server/connectivity/tethering/TetheringConfiguration;->TAG:Ljava/lang/String;
 
     new-instance v5, Ljava/lang/StringBuilder;
@@ -2519,33 +2576,33 @@
     move-result-object v5
 
     invoke-static {v4, v5}, Landroid/util/Log;->e(Ljava/lang/String;Ljava/lang/String;)I
-    :try_end_570
-    .catchall {:try_start_555 .. :try_end_570} :catchall_576
+    :try_end_5ac
+    .catchall {:try_start_591 .. :try_end_5ac} :catchall_5b2
 
-    if-eqz v23, :cond_575
+    if-eqz v23, :cond_5b1
 
     invoke-interface/range {v23 .. v23}, Landroid/database/Cursor;->close()V
 
-    :cond_575
+    :cond_5b1
     return-void
 
-    :catchall_576
+    :catchall_5b2
     move-exception v4
 
-    if-eqz v23, :cond_57c
+    if-eqz v23, :cond_5b8
 
     invoke-interface/range {v23 .. v23}, Landroid/database/Cursor;->close()V
 
-    :cond_57c
+    :cond_5b8
     throw v4
 
-    :cond_57d
+    :cond_5b9
     const/16 v21, 0x0
 
-    goto/16 :goto_43a
+    goto/16 :goto_460
 
-    :cond_581
-    :try_start_581
+    :cond_5bd
+    :try_start_5bd
     invoke-virtual/range {p1 .. p1}, Landroid/content/Context;->getContentResolver()Landroid/content/ContentResolver;
 
     move-result-object v4
@@ -2555,12 +2612,12 @@
     const/4 v6, 0x0
 
     invoke-static {v4, v5, v6}, Landroid/provider/Settings$Secure;->putInt(Landroid/content/ContentResolver;Ljava/lang/String;I)Z
-    :try_end_58c
-    .catchall {:try_start_581 .. :try_end_58c} :catchall_58e
+    :try_end_5c8
+    .catchall {:try_start_5bd .. :try_end_5c8} :catchall_5ca
 
-    goto/16 :goto_481
+    goto/16 :goto_4a7
 
-    :catchall_58e
+    :catchall_5ca
     move-exception v4
 
     invoke-static/range {v34 .. v35}, Landroid/os/Binder;->restoreCallingIdentity(J)V

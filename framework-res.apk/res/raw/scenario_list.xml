@@ -50,6 +50,8 @@
         <package name="cld.navi.mainframe" />
         <package name="com.autonavi.minimap.custom" />
         <package name="com.didi.echo" />
+        <package name="com.kakao.taxi" />
+        <package name="com.kakao.taxi.driver" />
     </Scenario>
     <Scenario name="Store">
         <package name="com.amazon.venezia" />

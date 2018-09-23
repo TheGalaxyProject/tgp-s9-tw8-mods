@@ -543,7 +543,7 @@
 
     move-result-object v3
 
-    const-string/jumbo v4, "disable_fingerprint"
+    const-string/jumbo v4, "isEnforcedPwdChanged"
 
     const/4 v5, 0x0
 
@@ -553,13 +553,36 @@
 
     if-eqz v3, :cond_7d
 
+    const-string/jumbo v3, "isEnforcedPwdChanged"
+
+    const/4 v4, 0x1
+
+    invoke-virtual {v2, v3, v4}, Landroid/content/Intent;->putExtra(Ljava/lang/String;Z)Landroid/content/Intent;
+
+    :cond_7d
+    iget-object v3, p0, Lcom/android/settings/ChooseLockSettingsHelper;->mActivity:Landroid/app/Activity;
+
+    invoke-virtual {v3}, Landroid/app/Activity;->getIntent()Landroid/content/Intent;
+
+    move-result-object v3
+
+    const-string/jumbo v4, "disable_fingerprint"
+
+    const/4 v5, 0x0
+
+    invoke-virtual {v3, v4, v5}, Landroid/content/Intent;->getBooleanExtra(Ljava/lang/String;Z)Z
+
+    move-result v3
+
+    if-eqz v3, :cond_94
+
     const-string/jumbo v3, "com.android.settings.ConfirmCredentials.allowFpAuthentication"
 
     const/4 v4, 0x0
 
     invoke-virtual {v2, v3, v4}, Landroid/content/Intent;->putExtra(Ljava/lang/String;Z)Landroid/content/Intent;
 
-    :cond_7d
+    :cond_94
     iget-object v3, p0, Lcom/android/settings/ChooseLockSettingsHelper;->mActivity:Landroid/app/Activity;
 
     invoke-virtual {v3}, Landroid/app/Activity;->getIntent()Landroid/content/Intent;
@@ -574,7 +597,7 @@
 
     move-result v3
 
-    if-eqz v3, :cond_94
+    if-eqz v3, :cond_ab
 
     const-string/jumbo v3, "com.android.settings.ConfirmCredentials.allowIrisAuthentication"
 
@@ -582,7 +605,7 @@
 
     invoke-virtual {v2, v3, v4}, Landroid/content/Intent;->putExtra(Ljava/lang/String;Z)Landroid/content/Intent;
 
-    :cond_94
+    :cond_ab
     iget-object v3, p0, Lcom/android/settings/ChooseLockSettingsHelper;->mActivity:Landroid/app/Activity;
 
     invoke-virtual {v3}, Landroid/app/Activity;->getIntent()Landroid/content/Intent;
@@ -597,7 +620,7 @@
 
     move-result v3
 
-    if-eqz v3, :cond_ab
+    if-eqz v3, :cond_c2
 
     const-string/jumbo v3, "com.android.settings.ConfirmCredentials.allowIntelligentScanAuthentication"
 
@@ -605,7 +628,7 @@
 
     invoke-virtual {v2, v3, v4}, Landroid/content/Intent;->putExtra(Ljava/lang/String;Z)Landroid/content/Intent;
 
-    :cond_ab
+    :cond_c2
     const-string/jumbo v3, ":settings:hide_drawer"
 
     const/4 v4, 0x1
@@ -626,7 +649,7 @@
 
     invoke-virtual {v2, v3, v4}, Landroid/content/Intent;->setClassName(Ljava/lang/String;Ljava/lang/String;)Landroid/content/Intent;
 
-    if-eqz p7, :cond_f2
+    if-eqz p7, :cond_109
 
     const/high16 v3, 0x2000000
 
@@ -634,7 +657,7 @@
 
     iget-object v3, p0, Lcom/android/settings/ChooseLockSettingsHelper;->mFragment:Landroid/app/Fragment;
 
-    if-eqz v3, :cond_e3
+    if-eqz v3, :cond_fa
 
     iget-object v3, p0, Lcom/android/settings/ChooseLockSettingsHelper;->mFragment:Landroid/app/Fragment;
 
@@ -652,12 +675,12 @@
 
     invoke-virtual {v3, v2}, Landroid/app/Fragment;->startActivity(Landroid/content/Intent;)V
 
-    :goto_e1
+    :goto_f8
     const/4 v3, 0x1
 
     return v3
 
-    :cond_e3
+    :cond_fa
     iget-object v3, p0, Lcom/android/settings/ChooseLockSettingsHelper;->mActivity:Landroid/app/Activity;
 
     invoke-virtual {v3}, Landroid/app/Activity;->getIntent()Landroid/content/Intent;
@@ -670,25 +693,25 @@
 
     invoke-virtual {v3, v2}, Landroid/app/Activity;->startActivity(Landroid/content/Intent;)V
 
-    goto :goto_e1
+    goto :goto_f8
 
-    :cond_f2
+    :cond_109
     iget-object v3, p0, Lcom/android/settings/ChooseLockSettingsHelper;->mFragment:Landroid/app/Fragment;
 
-    if-eqz v3, :cond_fc
+    if-eqz v3, :cond_113
 
     iget-object v3, p0, Lcom/android/settings/ChooseLockSettingsHelper;->mFragment:Landroid/app/Fragment;
 
     invoke-virtual {v3, v2, p1}, Landroid/app/Fragment;->startActivityForResult(Landroid/content/Intent;I)V
 
-    goto :goto_e1
+    goto :goto_f8
 
-    :cond_fc
+    :cond_113
     iget-object v3, p0, Lcom/android/settings/ChooseLockSettingsHelper;->mActivity:Landroid/app/Activity;
 
     invoke-virtual {v3, v2, p1}, Landroid/app/Activity;->startActivityForResult(Landroid/content/Intent;I)V
 
-    goto :goto_e1
+    goto :goto_f8
 .end method
 
 .method private launchConfirmationActivity(ILjava/lang/CharSequence;Ljava/lang/CharSequence;Ljava/lang/CharSequence;ZZZJI)Z

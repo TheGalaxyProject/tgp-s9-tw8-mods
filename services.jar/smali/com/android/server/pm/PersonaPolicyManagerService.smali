@@ -4788,24 +4788,76 @@
 .end method
 
 .method private setRCPDataPolicyForUser(ILjava/lang/String;Ljava/lang/String;Ljava/lang/String;)Z
-    .registers 13
+    .registers 15
 
-    const/4 v7, 0x0
+    const/4 v9, 0x0
 
     monitor-enter p0
 
     :try_start_2
+    const-string/jumbo v6, "PersonaPolicyManagerService"
+
+    new-instance v7, Ljava/lang/StringBuilder;
+
+    invoke-direct {v7}, Ljava/lang/StringBuilder;-><init>()V
+
+    const-string/jumbo v8, "setRCPDataPolicyForUser : "
+
+    invoke-virtual {v7, v8}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    move-result-object v7
+
+    invoke-virtual {v7, p1}, Ljava/lang/StringBuilder;->append(I)Ljava/lang/StringBuilder;
+
+    move-result-object v7
+
+    const-string/jumbo v8, ", appName : "
+
+    invoke-virtual {v7, v8}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    move-result-object v7
+
+    invoke-virtual {v7, p2}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    move-result-object v7
+
+    const-string/jumbo v8, ", policyProperty : "
+
+    invoke-virtual {v7, v8}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    move-result-object v7
+
+    invoke-virtual {v7, p3}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    move-result-object v7
+
+    const-string/jumbo v8, ", value : "
+
+    invoke-virtual {v7, v8}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    move-result-object v7
+
+    invoke-virtual {v7, p4}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    move-result-object v7
+
+    invoke-virtual {v7}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;
+
+    move-result-object v7
+
+    invoke-static {v6, v7}, Landroid/util/Log;->d(Ljava/lang/String;Ljava/lang/String;)I
+
     invoke-static {p1}, Lcom/samsung/android/knox/SemPersonaManager;->isKnoxId(I)Z
 
     move-result v6
 
-    if-eqz v6, :cond_5e
+    if-eqz v6, :cond_99
 
     invoke-virtual {p0, p1}, Lcom/android/server/pm/PersonaPolicyManagerService;->getPersonaData(I)Lcom/android/server/pm/PersonaPolicyManagerService$PersonaPolicyData;
 
     move-result-object v3
 
-    if-eqz v3, :cond_5c
+    if-eqz v3, :cond_97
 
     iget-object v6, v3, Lcom/android/server/pm/PersonaPolicyManagerService$PersonaPolicyData;->mRCPDataSettings:Ljava/util/HashMap;
 
@@ -4815,13 +4867,13 @@
 
     check-cast v0, Ljava/util/ArrayList;
 
-    if-nez v0, :cond_34
+    if-nez v0, :cond_6f
 
     new-instance v0, Ljava/util/ArrayList;
 
     invoke-direct {v0}, Ljava/util/ArrayList;-><init>()V
 
-    :goto_1d
+    :goto_58
     new-instance v4, Lcom/android/server/pm/PersonaPolicyManagerService$PersonaRCPSettings;
 
     invoke-direct {v4}, Lcom/android/server/pm/PersonaPolicyManagerService$PersonaRCPSettings;-><init>()V
@@ -4837,8 +4889,8 @@
     invoke-virtual {v6, p2, v0}, Ljava/util/HashMap;->put(Ljava/lang/Object;Ljava/lang/Object;)Ljava/lang/Object;
 
     invoke-direct {p0, p1}, Lcom/android/server/pm/PersonaPolicyManagerService;->saveSettingsLocked(I)V
-    :try_end_31
-    .catchall {:try_start_2 .. :try_end_31} :catchall_55
+    :try_end_6c
+    .catchall {:try_start_2 .. :try_end_6c} :catchall_90
 
     const/4 v6, 0x1
 
@@ -4846,8 +4898,8 @@
 
     return v6
 
-    :cond_34
-    :try_start_34
+    :cond_6f
+    :try_start_6f
     new-instance v5, Ljava/util/ArrayList;
 
     invoke-direct {v5}, Ljava/util/ArrayList;-><init>()V
@@ -4856,13 +4908,13 @@
 
     move-result-object v2
 
-    :cond_3d
-    :goto_3d
+    :cond_78
+    :goto_78
     invoke-interface {v2}, Ljava/util/Iterator;->hasNext()Z
 
     move-result v6
 
-    if-eqz v6, :cond_58
+    if-eqz v6, :cond_93
 
     invoke-interface {v2}, Ljava/util/Iterator;->next()Ljava/lang/Object;
 
@@ -4876,38 +4928,38 @@
 
     move-result v6
 
-    if-eqz v6, :cond_3d
+    if-eqz v6, :cond_78
 
     invoke-virtual {v5, v1}, Ljava/util/ArrayList;->add(Ljava/lang/Object;)Z
-    :try_end_54
-    .catchall {:try_start_34 .. :try_end_54} :catchall_55
+    :try_end_8f
+    .catchall {:try_start_6f .. :try_end_8f} :catchall_90
 
-    goto :goto_3d
+    goto :goto_78
 
-    :catchall_55
+    :catchall_90
     move-exception v6
 
     monitor-exit p0
 
     throw v6
 
-    :cond_58
-    :try_start_58
+    :cond_93
+    :try_start_93
     invoke-virtual {v0, v5}, Ljava/util/ArrayList;->removeAll(Ljava/util/Collection;)Z
-    :try_end_5b
-    .catchall {:try_start_58 .. :try_end_5b} :catchall_55
+    :try_end_96
+    .catchall {:try_start_93 .. :try_end_96} :catchall_90
 
-    goto :goto_1d
+    goto :goto_58
 
-    :cond_5c
+    :cond_97
     monitor-exit p0
 
-    return v7
+    return v9
 
-    :cond_5e
+    :cond_99
     monitor-exit p0
 
-    return v7
+    return v9
 .end method
 
 .method private setRCPNotificationPolicyForUser(ILjava/lang/String;Ljava/lang/String;Ljava/lang/String;)Z
@@ -7391,30 +7443,82 @@
 .end method
 
 .method public setRCPDataPolicy(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)Z
-    .registers 8
+    .registers 11
 
-    const-string/jumbo v3, "setRCPDataPolicy"
+    const-string/jumbo v4, "setRCPDataPolicy"
 
-    invoke-static {v3}, Lcom/android/server/pm/PersonaPolicyManagerService;->checkCallerPermissionFor(Ljava/lang/String;)I
+    invoke-static {v4}, Lcom/android/server/pm/PersonaPolicyManagerService;->checkCallerPermissionFor(Ljava/lang/String;)I
 
-    invoke-static {}, Landroid/os/Binder;->getCallingUid()I
+    const-string/jumbo v4, "EDM"
 
-    move-result v0
+    invoke-virtual {p3, v4}, Ljava/lang/String;->startsWith(Ljava/lang/String;)Z
 
-    invoke-static {v0}, Landroid/os/UserHandle;->getUserId(I)I
+    move-result v4
+
+    if-eqz v4, :cond_44
+
+    const-string/jumbo v4, ":"
+
+    invoke-virtual {p3, v4}, Ljava/lang/String;->split(Ljava/lang/String;)[Ljava/lang/String;
+
+    move-result-object v0
+
+    const/4 v4, 0x1
+
+    aget-object v4, v0, v4
+
+    invoke-static {v4}, Ljava/lang/Integer;->parseInt(Ljava/lang/String;)I
+
+    move-result v3
+
+    const/4 v4, 0x2
+
+    aget-object p3, v0, v4
+
+    :goto_20
+    invoke-direct {p0, v3, p1, p2, p3}, Lcom/android/server/pm/PersonaPolicyManagerService;->setRCPDataPolicyForUser(ILjava/lang/String;Ljava/lang/String;Ljava/lang/String;)Z
 
     move-result v2
 
-    invoke-direct {p0, v2, p1, p2, p3}, Lcom/android/server/pm/PersonaPolicyManagerService;->setRCPDataPolicyForUser(ILjava/lang/String;Ljava/lang/String;Ljava/lang/String;)Z
+    const-string/jumbo v4, "PersonaPolicyManagerService"
+
+    new-instance v5, Ljava/lang/StringBuilder;
+
+    invoke-direct {v5}, Ljava/lang/StringBuilder;-><init>()V
+
+    const-string/jumbo v6, "setRCPDataPolicy : "
+
+    invoke-virtual {v5, v6}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    move-result-object v5
+
+    invoke-virtual {v5, v2}, Ljava/lang/StringBuilder;->append(Z)Ljava/lang/StringBuilder;
+
+    move-result-object v5
+
+    invoke-virtual {v5}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;
+
+    move-result-object v5
+
+    invoke-static {v4, v5}, Landroid/util/Log;->d(Ljava/lang/String;Ljava/lang/String;)I
+
+    if-eqz v2, :cond_43
+
+    invoke-direct {p0, v3}, Lcom/android/server/pm/PersonaPolicyManagerService;->sendRCPPolicyChangedBroadcast(I)V
+
+    :cond_43
+    return v2
+
+    :cond_44
+    invoke-static {}, Landroid/os/Binder;->getCallingUid()I
 
     move-result v1
 
-    if-eqz v1, :cond_17
+    invoke-static {v1}, Landroid/os/UserHandle;->getUserId(I)I
 
-    invoke-direct {p0, v2}, Lcom/android/server/pm/PersonaPolicyManagerService;->sendRCPPolicyChangedBroadcast(I)V
+    move-result v3
 
-    :cond_17
-    return v1
+    goto :goto_20
 .end method
 
 .method public setRCPNotificationPolicy(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)Z
@@ -7452,9 +7556,13 @@
         }
     .end annotation
 
+    const-string/jumbo v1, "setRCPDataPolicy"
+
+    invoke-static {v1}, Lcom/android/server/pm/PersonaPolicyManagerService;->checkCallerPermissionFor(Ljava/lang/String;)I
+
     monitor-enter p0
 
-    :try_start_1
+    :try_start_7
     invoke-virtual {p0, p3}, Lcom/android/server/pm/PersonaPolicyManagerService;->getPersonaData(I)Lcom/android/server/pm/PersonaPolicyManagerService$PersonaPolicyData;
 
     move-result-object v0
@@ -7464,12 +7572,12 @@
     invoke-virtual {v1, p1, p2}, Ljava/util/HashMap;->put(Ljava/lang/Object;Ljava/lang/Object;)Ljava/lang/Object;
 
     invoke-direct {p0, p3}, Lcom/android/server/pm/PersonaPolicyManagerService;->saveSettingsLocked(I)V
-    :try_end_d
-    .catchall {:try_start_1 .. :try_end_d} :catchall_1e
+    :try_end_13
+    .catchall {:try_start_7 .. :try_end_13} :catchall_24
 
     monitor-exit p0
 
-    if-eqz p2, :cond_1c
+    if-eqz p2, :cond_22
 
     const-string/jumbo v1, "DisallowPackage"
 
@@ -7477,16 +7585,16 @@
 
     move-result v1
 
-    if-eqz v1, :cond_1c
+    if-eqz v1, :cond_22
 
     invoke-direct {p0, p2, p3}, Lcom/android/server/pm/PersonaPolicyManagerService;->setApplicationBlackList(Ljava/util/List;I)V
 
-    :cond_1c
+    :cond_22
     const/4 v1, 0x1
 
     return v1
 
-    :catchall_1e
+    :catchall_24
     move-exception v1
 
     monitor-exit p0

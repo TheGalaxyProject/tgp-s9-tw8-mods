@@ -17,7 +17,7 @@
 
     check-cast p1, Landroid/os/UserManagerInternal;
 
-    invoke-static {v0, p1}, Lcom/android/server/SdpManagerService;->lambda$-com_android_server_SdpManagerService_255265(ILandroid/os/UserManagerInternal;)Ljava/lang/Boolean;
+    invoke-static {v0, p1}, Lcom/android/server/SdpManagerService;->lambda$-com_android_server_SdpManagerService_255745(ILandroid/os/UserManagerInternal;)Ljava/lang/Boolean;
 
     move-result-object v0
 

@@ -35668,6 +35668,24 @@
     return v4
 .end method
 
+.method public static lockProfile(I)V
+    .registers 3
+
+    new-instance v0, Landroid/os/Bundle;
+
+    invoke-direct {v0}, Landroid/os/Bundle;-><init>()V
+
+    const-string/jumbo v1, "android.intent.extra.user_handle"
+
+    invoke-virtual {v0, v1, p0}, Landroid/os/Bundle;->putInt(Ljava/lang/String;I)V
+
+    const-string/jumbo v1, "knox.container.proxy.COMMAND_LOCK_PROFILE"
+
+    invoke-static {v1, v0}, Lcom/samsung/android/knox/ContainerProxy;->sendCommand(Ljava/lang/String;Landroid/os/Bundle;)Landroid/os/Bundle;
+
+    return-void
+.end method
+
 .method public static lockScreenShortcutDefault(Landroid/content/Context;Z)Ljava/lang/String;
     .registers 10
 

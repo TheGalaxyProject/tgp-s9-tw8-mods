@@ -11614,7 +11614,7 @@
 
     move-object/from16 v23, v0
 
-    if-eqz v23, :cond_3a1
+    if-eqz v23, :cond_3ae
 
     move-object/from16 v0, p0
 
@@ -11706,7 +11706,7 @@
 
     move-result v23
 
-    if-eqz v23, :cond_3a1
+    if-eqz v23, :cond_3ae
 
     invoke-interface/range {v21 .. v21}, Ljava/util/Iterator;->next()Ljava/lang/Object;
 
@@ -11748,7 +11748,7 @@
 
     move/from16 v23, v0
 
-    if-eqz v23, :cond_14a
+    if-eqz v23, :cond_157
 
     move-object/from16 v0, v20
 
@@ -11876,7 +11876,19 @@
 
     invoke-direct {v0, v1, v2}, Lcom/android/server/pm/PersonaManagerService;->installExistingPackageForPersona(ILjava/lang/String;)I
 
-    :try_start_120
+    move-object/from16 v0, v20
+
+    iget v0, v0, Landroid/content/pm/UserInfo;->id:I
+
+    move/from16 v23, v0
+
+    move-object/from16 v0, p0
+
+    move/from16 v1, v23
+
+    invoke-direct {v0, v1}, Lcom/android/server/pm/PersonaManagerService;->installKKCForFota(I)V
+
+    :try_start_12d
     new-instance v15, Landroid/content/ComponentName;
 
     const-string/jumbo v23, "com.samsung.android.contacts"
@@ -11914,11 +11926,11 @@
     move/from16 v3, v24
 
     invoke-virtual {v0, v15, v1, v2, v3}, Lcom/android/server/pm/PackageManagerService;->setComponentEnabledSetting(Landroid/content/ComponentName;III)V
-    :try_end_14a
-    .catch Ljava/lang/Exception; {:try_start_120 .. :try_end_14a} :catch_39b
+    :try_end_157
+    .catch Ljava/lang/Exception; {:try_start_12d .. :try_end_157} :catch_3a8
 
-    :cond_14a
-    :goto_14a
+    :cond_157
+    :goto_157
     invoke-virtual/range {v20 .. v20}, Landroid/content/pm/UserInfo;->isManagedProfile()Z
 
     move-result v23
@@ -11941,7 +11953,7 @@
 
     if-eqz v23, :cond_69
 
-    :try_start_160
+    :try_start_16d
     new-instance v7, Landroid/os/Bundle;
 
     invoke-direct {v7}, Landroid/os/Bundle;-><init>()V
@@ -12336,7 +12348,7 @@
 
     move-result-object v23
 
-    if-eqz v23, :cond_350
+    if-eqz v23, :cond_35d
 
     invoke-direct/range {p0 .. p0}, Lcom/android/server/pm/PersonaManagerService;->getEdmStorageProvider()Lcom/android/server/enterprise/storage/EdmStorageProvider;
 
@@ -12384,7 +12396,7 @@
 
     invoke-static/range {v23 .. v24}, Landroid/util/Log;->i(Ljava/lang/String;Ljava/lang/String;)I
 
-    :cond_350
+    :cond_35d
     move-object/from16 v0, v20
 
     iget v0, v0, Landroid/content/pm/UserInfo;->id:I
@@ -12422,12 +12434,12 @@
     move-result-object v24
 
     invoke-static/range {v23 .. v24}, Landroid/util/Log;->i(Ljava/lang/String;Ljava/lang/String;)I
-    :try_end_37a
-    .catch Ljava/lang/Exception; {:try_start_160 .. :try_end_37a} :catch_37c
+    :try_end_387
+    .catch Ljava/lang/Exception; {:try_start_16d .. :try_end_387} :catch_389
 
     goto/16 :goto_69
 
-    :catch_37c
+    :catch_389
     move-exception v8
 
     const-string/jumbo v23, "PersonaManagerService:FOTA"
@@ -12456,14 +12468,14 @@
 
     goto/16 :goto_69
 
-    :catch_39b
+    :catch_3a8
     move-exception v8
 
     invoke-virtual {v8}, Ljava/lang/Exception;->printStackTrace()V
 
-    goto/16 :goto_14a
+    goto/16 :goto_157
 
-    :cond_3a1
+    :cond_3ae
     return-void
 .end method
 
@@ -15298,6 +15310,35 @@
 
     :cond_68
     return v4
+.end method
+
+.method private installKKCForFota(I)V
+    .registers 6
+
+    const-string/jumbo v2, "PersonaManagerService:FOTA"
+
+    const-string/jumbo v3, "installKKCForFota"
+
+    invoke-static {v2, v3}, Landroid/util/Log;->d(Ljava/lang/String;Ljava/lang/String;)I
+
+    const/4 v0, 0x0
+
+    const-string/jumbo v1, "com.samsung.knox.keychain"
+
+    iget-object v2, p0, Lcom/android/server/pm/PersonaManagerService;->mPm:Lcom/android/server/pm/PackageManagerService;
+
+    const/4 v3, 0x0
+
+    invoke-virtual {v2, v1, v3, p1}, Lcom/android/server/pm/PackageManagerService;->getApplicationInfo(Ljava/lang/String;II)Landroid/content/pm/ApplicationInfo;
+
+    move-result-object v0
+
+    if-nez v0, :cond_19
+
+    invoke-direct {p0, p1, v1}, Lcom/android/server/pm/PersonaManagerService;->installExistingPackageForPersona(ILjava/lang/String;)I
+
+    :cond_19
+    return-void
 .end method
 
 .method private installKnoxApps(I)Z

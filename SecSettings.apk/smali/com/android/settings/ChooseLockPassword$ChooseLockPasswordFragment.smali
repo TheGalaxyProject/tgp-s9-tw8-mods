@@ -204,22 +204,6 @@
     return-object v0
 .end method
 
-.method static synthetic -get10(Lcom/android/settings/ChooseLockPassword$ChooseLockPasswordFragment;)I
-    .registers 2
-
-    iget v0, p0, Lcom/android/settings/ChooseLockPassword$ChooseLockPasswordFragment;->mPwdChangeTimeout:I
-
-    return v0
-.end method
-
-.method static synthetic -get11(Lcom/android/settings/ChooseLockPassword$ChooseLockPasswordFragment;)Lcom/android/settings/ChooseLockPassword$ChooseLockPasswordFragment$Stage;
-    .registers 2
-
-    iget-object v0, p0, Lcom/android/settings/ChooseLockPassword$ChooseLockPasswordFragment;->mUiStage:Lcom/android/settings/ChooseLockPassword$ChooseLockPasswordFragment$Stage;
-
-    return-object v0
-.end method
-
 .method static synthetic -get2(Lcom/android/settings/ChooseLockPassword$ChooseLockPasswordFragment;)Landroid/os/Handler;
     .registers 2
 
@@ -276,12 +260,12 @@
     return v0
 .end method
 
-.method static synthetic -get9(Lcom/android/settings/ChooseLockPassword$ChooseLockPasswordFragment;)I
+.method static synthetic -get9(Lcom/android/settings/ChooseLockPassword$ChooseLockPasswordFragment;)Lcom/android/settings/ChooseLockPassword$ChooseLockPasswordFragment$Stage;
     .registers 2
 
-    iget v0, p0, Lcom/android/settings/ChooseLockPassword$ChooseLockPasswordFragment;->mPwdChangeEnforceStatus:I
+    iget-object v0, p0, Lcom/android/settings/ChooseLockPassword$ChooseLockPasswordFragment;->mUiStage:Lcom/android/settings/ChooseLockPassword$ChooseLockPasswordFragment$Stage;
 
-    return v0
+    return-object v0
 .end method
 
 .method static synthetic -set0(Lcom/android/settings/ChooseLockPassword$ChooseLockPasswordFragment;Z)Z
@@ -334,15 +318,7 @@
     return v0
 .end method
 
-.method static synthetic -wrap1(Lcom/android/settings/ChooseLockPassword$ChooseLockPasswordFragment;II)V
-    .registers 3
-
-    invoke-direct {p0, p1, p2}, Lcom/android/settings/ChooseLockPassword$ChooseLockPasswordFragment;->scheduleNextPwdChange(II)V
-
-    return-void
-.end method
-
-.method static synthetic -wrap2(Lcom/android/settings/ChooseLockPassword$ChooseLockPasswordFragment;)V
+.method static synthetic -wrap1(Lcom/android/settings/ChooseLockPassword$ChooseLockPasswordFragment;)V
     .registers 1
 
     invoke-direct {p0}, Lcom/android/settings/ChooseLockPassword$ChooseLockPasswordFragment;->showSoftInput()V
@@ -6926,60 +6902,92 @@
 .end method
 
 .method public onResume()V
-    .registers 3
+    .registers 4
 
-    const/4 v0, 0x0
+    const/4 v1, 0x0
 
     invoke-super {p0}, Lcom/android/settings/core/InstrumentedPreferenceFragment;->onResume()V
 
-    iput-boolean v0, p0, Lcom/android/settings/ChooseLockPassword$ChooseLockPasswordFragment;->clickedEmergencyCall:Z
+    iput-boolean v1, p0, Lcom/android/settings/ChooseLockPassword$ChooseLockPasswordFragment;->clickedEmergencyCall:Z
 
-    iget v0, p0, Lcom/android/settings/ChooseLockPassword$ChooseLockPasswordFragment;->mPwdChangeEnforceStatus:I
+    iget v1, p0, Lcom/android/settings/ChooseLockPassword$ChooseLockPasswordFragment;->mPwdChangeEnforceStatus:I
 
-    if-gtz v0, :cond_10
+    if-gtz v1, :cond_10
 
     invoke-static {}, Lcom/android/settings/ChooseLockPassword;->-get19()Z
 
-    move-result v0
+    move-result v1
 
-    if-eqz v0, :cond_13
+    if-eqz v1, :cond_2d
 
     :cond_10
+    invoke-static {}, Lcom/android/settings/ChooseLockPassword;->-get19()Z
+
+    move-result v1
+
+    if-nez v1, :cond_48
+
+    iget v1, p0, Lcom/android/settings/ChooseLockPassword$ChooseLockPasswordFragment;->mUserId:I
+
+    invoke-static {v1}, Lcom/samsung/android/knox/SemPersonaManager;->isKnoxId(I)Z
+
+    move-result v1
+
+    if-eqz v1, :cond_48
+
+    invoke-virtual {p0}, Lcom/android/settings/ChooseLockPassword$ChooseLockPasswordFragment;->getContext()Landroid/content/Context;
+
+    move-result-object v1
+
+    invoke-static {v1}, Lcom/samsung/android/knox/SemPersonaManager;->isKioskModeEnabled(Landroid/content/Context;)Z
+
+    move-result v1
+
+    xor-int/lit8 v0, v1, 0x1
+
+    :goto_28
+    if-nez v0, :cond_2d
+
     invoke-direct {p0}, Lcom/android/settings/ChooseLockPassword$ChooseLockPasswordFragment;->disableStatusBar()V
 
-    :cond_13
-    iget-object v0, p0, Lcom/android/settings/ChooseLockPassword$ChooseLockPasswordFragment;->mUiStage:Lcom/android/settings/ChooseLockPassword$ChooseLockPasswordFragment$Stage;
-
-    invoke-virtual {p0, v0}, Lcom/android/settings/ChooseLockPassword$ChooseLockPasswordFragment;->updateStage(Lcom/android/settings/ChooseLockPassword$ChooseLockPasswordFragment$Stage;)V
-
-    iget-object v0, p0, Lcom/android/settings/ChooseLockPassword$ChooseLockPasswordFragment;->mSaveAndFinishWorker:Lcom/android/settings/ChooseLockPassword$SaveAndFinishWorker;
-
-    if-eqz v0, :cond_2e
-
-    iget-object v0, p0, Lcom/android/settings/ChooseLockPassword$ChooseLockPasswordFragment;->mSaveAndFinishWorker:Lcom/android/settings/ChooseLockPassword$SaveAndFinishWorker;
-
-    invoke-virtual {v0, p0}, Lcom/android/settings/ChooseLockPassword$SaveAndFinishWorker;->setListener(Lcom/android/settings/SaveChosenLockWorkerBase$Listener;)V
-
-    :goto_21
-    sget-boolean v0, Lcom/android/settings/ChooseLockPassword;->isChangePwdRequired:Z
-
-    if-eqz v0, :cond_2d
-
-    iget-object v0, p0, Lcom/android/settings/ChooseLockPassword$ChooseLockPasswordFragment;->mHeaderText:Lcom/samsung/android/settings/lockscreen/LockCustomTextView;
-
-    const v1, 0x7f121431
-
-    invoke-virtual {v0, v1}, Lcom/samsung/android/settings/lockscreen/LockCustomTextView;->setText(I)V
-
     :cond_2d
+    iget-object v1, p0, Lcom/android/settings/ChooseLockPassword$ChooseLockPasswordFragment;->mUiStage:Lcom/android/settings/ChooseLockPassword$ChooseLockPasswordFragment$Stage;
+
+    invoke-virtual {p0, v1}, Lcom/android/settings/ChooseLockPassword$ChooseLockPasswordFragment;->updateStage(Lcom/android/settings/ChooseLockPassword$ChooseLockPasswordFragment$Stage;)V
+
+    iget-object v1, p0, Lcom/android/settings/ChooseLockPassword$ChooseLockPasswordFragment;->mSaveAndFinishWorker:Lcom/android/settings/ChooseLockPassword$SaveAndFinishWorker;
+
+    if-eqz v1, :cond_4a
+
+    iget-object v1, p0, Lcom/android/settings/ChooseLockPassword$ChooseLockPasswordFragment;->mSaveAndFinishWorker:Lcom/android/settings/ChooseLockPassword$SaveAndFinishWorker;
+
+    invoke-virtual {v1, p0}, Lcom/android/settings/ChooseLockPassword$SaveAndFinishWorker;->setListener(Lcom/android/settings/SaveChosenLockWorkerBase$Listener;)V
+
+    :goto_3b
+    sget-boolean v1, Lcom/android/settings/ChooseLockPassword;->isChangePwdRequired:Z
+
+    if-eqz v1, :cond_47
+
+    iget-object v1, p0, Lcom/android/settings/ChooseLockPassword$ChooseLockPasswordFragment;->mHeaderText:Lcom/samsung/android/settings/lockscreen/LockCustomTextView;
+
+    const v2, 0x7f121431
+
+    invoke-virtual {v1, v2}, Lcom/samsung/android/settings/lockscreen/LockCustomTextView;->setText(I)V
+
+    :cond_47
     return-void
 
-    :cond_2e
-    iget-object v0, p0, Lcom/android/settings/ChooseLockPassword$ChooseLockPasswordFragment;->mPasswordEntry:Landroid/widget/TextView;
+    :cond_48
+    const/4 v0, 0x0
 
-    invoke-virtual {v0}, Landroid/widget/TextView;->requestFocus()Z
+    goto :goto_28
 
-    goto :goto_21
+    :cond_4a
+    iget-object v1, p0, Lcom/android/settings/ChooseLockPassword$ChooseLockPasswordFragment;->mPasswordEntry:Landroid/widget/TextView;
+
+    invoke-virtual {v1}, Landroid/widget/TextView;->requestFocus()Z
+
+    goto :goto_3b
 .end method
 
 .method public onSaveInstanceState(Landroid/os/Bundle;)V

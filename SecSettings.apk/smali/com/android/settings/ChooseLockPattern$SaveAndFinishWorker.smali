@@ -203,7 +203,7 @@
 
     invoke-virtual {v5, v6, v8, v9, v7}, Lcom/android/internal/widget/LockPatternUtils;->verifyPattern(Ljava/util/List;JI)[B
     :try_end_7e
-    .catch Lcom/android/internal/widget/LockPatternUtils$RequestThrottledException; {:try_start_49 .. :try_end_7e} :catch_af
+    .catch Lcom/android/internal/widget/LockPatternUtils$RequestThrottledException; {:try_start_49 .. :try_end_7e} :catch_e2
 
     move-result-object v3
 
@@ -247,9 +247,58 @@
     invoke-virtual {v1, v5, v3}, Landroid/content/Intent;->putExtra(Ljava/lang/String;[B)Landroid/content/Intent;
 
     :cond_ae
+    invoke-static {}, Lcom/android/settings/ChooseLockPattern;->-get13()Z
+
+    move-result v5
+
+    if-eqz v5, :cond_e1
+
+    iget v5, p0, Lcom/android/settings/ChooseLockPattern$SaveAndFinishWorker;->mUserId:I
+
+    invoke-static {v5}, Lcom/samsung/android/knox/SemPersonaManager;->isDoEnabled(I)Z
+
+    move-result v5
+
+    xor-int/lit8 v5, v5, 0x1
+
+    if-eqz v5, :cond_e1
+
+    invoke-virtual {p0}, Lcom/android/settings/ChooseLockPattern$SaveAndFinishWorker;->getActivity()Landroid/app/Activity;
+
+    move-result-object v5
+
+    invoke-virtual {v5}, Landroid/app/Activity;->getApplicationContext()Landroid/content/Context;
+
+    move-result-object v5
+
+    iget v6, p0, Lcom/android/settings/ChooseLockPattern$SaveAndFinishWorker;->mUserId:I
+
+    invoke-static {v5, v6}, Lcom/android/settings/Utils;->isChangeRequested(Landroid/content/Context;I)I
+
+    move-result v5
+
+    if-lez v5, :cond_e1
+
+    const-string/jumbo v5, "password"
+
+    iget-object v6, p0, Lcom/android/settings/ChooseLockPattern$SaveAndFinishWorker;->mUtils:Lcom/android/internal/widget/LockPatternUtils;
+
+    iget-object v6, p0, Lcom/android/settings/ChooseLockPattern$SaveAndFinishWorker;->mChosenPattern:Ljava/util/List;
+
+    invoke-static {v6}, Lcom/android/internal/widget/LockPatternUtils;->patternToString(Ljava/util/List;)Ljava/lang/String;
+
+    move-result-object v6
+
+    invoke-virtual {v1, v5, v6}, Landroid/content/Intent;->putExtra(Ljava/lang/String;Ljava/lang/String;)Landroid/content/Intent;
+
+    iget v5, p0, Lcom/android/settings/ChooseLockPattern$SaveAndFinishWorker;->mUserId:I
+
+    invoke-static {v5}, Lcom/android/settings/Utils;->lockProfile(I)V
+
+    :cond_e1
     return-object v1
 
-    :catch_af
+    :catch_e2
     move-exception v0
 
     const/4 v2, 0x0

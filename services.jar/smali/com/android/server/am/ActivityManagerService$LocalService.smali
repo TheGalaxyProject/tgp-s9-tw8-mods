@@ -1159,6 +1159,226 @@
     return-void
 .end method
 
+.method public removeTaskByCmpName(Ljava/lang/String;II)V
+    .registers 21
+
+    if-eqz p1, :cond_8
+
+    invoke-virtual/range {p1 .. p1}, Ljava/lang/String;->isEmpty()Z
+
+    move-result v13
+
+    if-eqz v13, :cond_9
+
+    :cond_8
+    return-void
+
+    :cond_9
+    const/16 v13, 0x3e8
+
+    move/from16 v0, p3
+
+    if-lt v0, v13, :cond_89
+
+    const/4 v2, 0x1
+
+    :goto_10
+    move-object/from16 v0, p0
+
+    iget-object v14, v0, Lcom/android/server/am/ActivityManagerService$LocalService;->this$0:Lcom/android/server/am/ActivityManagerService;
+
+    monitor-enter v14
+
+    :try_start_15
+    invoke-static {}, Lcom/android/server/am/ActivityManagerService;->boostPriorityForLockedSection()V
+
+    move-object/from16 v0, p0
+
+    iget-object v13, v0, Lcom/android/server/am/ActivityManagerService$LocalService;->this$0:Lcom/android/server/am/ActivityManagerService;
+
+    iget-object v13, v13, Lcom/android/server/am/ActivityManagerService;->mStackSupervisor:Lcom/android/server/am/ActivityStackSupervisor;
+
+    invoke-virtual {v13}, Lcom/android/server/am/ActivityStackSupervisor;->getStacks()Ljava/util/ArrayList;
+
+    move-result-object v9
+
+    invoke-interface {v9}, Ljava/lang/Iterable;->iterator()Ljava/util/Iterator;
+
+    move-result-object v8
+
+    :cond_26
+    invoke-interface {v8}, Ljava/util/Iterator;->hasNext()Z
+
+    move-result v13
+
+    if-eqz v13, :cond_ae
+
+    invoke-interface {v8}, Ljava/util/Iterator;->next()Ljava/lang/Object;
+
+    move-result-object v7
+
+    check-cast v7, Lcom/android/server/am/ActivityStack;
+
+    invoke-virtual {v7}, Lcom/android/server/am/ActivityStack;->getAllTasks()Ljava/util/ArrayList;
+
+    move-result-object v12
+
+    invoke-interface {v12}, Ljava/lang/Iterable;->iterator()Ljava/util/Iterator;
+
+    move-result-object v11
+
+    :cond_3a
+    invoke-interface {v11}, Ljava/util/Iterator;->hasNext()Z
+
+    move-result v13
+
+    if-eqz v13, :cond_26
+
+    invoke-interface {v11}, Ljava/util/Iterator;->next()Ljava/lang/Object;
+
+    move-result-object v10
+
+    check-cast v10, Lcom/android/server/am/TaskRecord;
+
+    iget v13, v10, Lcom/android/server/am/TaskRecord;->userId:I
+
+    move/from16 v0, p2
+
+    if-ne v13, v0, :cond_3a
+
+    if-eqz v2, :cond_54
+
+    iget v13, v10, Lcom/android/server/am/TaskRecord;->mCallingUid:I
+
+    move/from16 v0, p3
+
+    if-ne v13, v0, :cond_3a
+
+    :cond_54
+    iget-object v1, v10, Lcom/android/server/am/TaskRecord;->mActivities:Ljava/util/ArrayList;
+
+    const/4 v5, 0x0
+
+    :goto_57
+    invoke-virtual {v1}, Ljava/util/ArrayList;->size()I
+
+    move-result v13
+
+    if-ge v5, v13, :cond_3a
+
+    invoke-virtual {v1, v5}, Ljava/util/ArrayList;->get(I)Ljava/lang/Object;
+
+    move-result-object v6
+
+    check-cast v6, Lcom/android/server/am/ActivityRecord;
+
+    if-eqz v6, :cond_8b
+
+    iget-object v13, v6, Lcom/android/server/am/ActivityRecord;->intent:Landroid/content/Intent;
+
+    invoke-virtual {v13}, Landroid/content/Intent;->getComponent()Landroid/content/ComponentName;
+
+    move-result-object v13
+
+    invoke-virtual {v13}, Landroid/content/ComponentName;->flattenToShortString()Ljava/lang/String;
+
+    move-result-object v3
+
+    :goto_6f
+    move-object/from16 v0, p1
+
+    invoke-virtual {v3, v0}, Ljava/lang/String;->equals(Ljava/lang/Object;)Z
+    :try_end_74
+    .catchall {:try_start_15 .. :try_end_74} :catchall_b3
+
+    move-result v13
+
+    if-eqz v13, :cond_ab
+
+    :try_start_77
+    move-object/from16 v0, p0
+
+    iget-object v13, v0, Lcom/android/server/am/ActivityManagerService$LocalService;->this$0:Lcom/android/server/am/ActivityManagerService;
+
+    iget v15, v10, Lcom/android/server/am/TaskRecord;->taskId:I
+
+    const/16 v16, 0x10
+
+    move/from16 v0, v16
+
+    invoke-virtual {v13, v15, v0}, Lcom/android/server/am/ActivityManagerService;->semRemoveTask(II)Z
+    :try_end_84
+    .catch Ljava/lang/Exception; {:try_start_77 .. :try_end_84} :catch_8f
+    .catchall {:try_start_77 .. :try_end_84} :catchall_b3
+
+    monitor-exit v14
+
+    invoke-static {}, Lcom/android/server/am/ActivityManagerService;->resetPriorityAfterLockedSection()V
+
+    return-void
+
+    :cond_89
+    const/4 v2, 0x0
+
+    goto :goto_10
+
+    :cond_8b
+    :try_start_8b
+    const-string/jumbo v3, ""
+
+    goto :goto_6f
+
+    :catch_8f
+    move-exception v4
+
+    invoke-static {}, Lcom/android/server/am/ActivityManagerService;->-get0()Ljava/lang/String;
+
+    move-result-object v13
+
+    new-instance v15, Ljava/lang/StringBuilder;
+
+    invoke-direct {v15}, Ljava/lang/StringBuilder;-><init>()V
+
+    const-string/jumbo v16, "Failed to remove task - exception : "
+
+    invoke-virtual/range {v15 .. v16}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    move-result-object v15
+
+    invoke-virtual {v15, v4}, Ljava/lang/StringBuilder;->append(Ljava/lang/Object;)Ljava/lang/StringBuilder;
+
+    move-result-object v15
+
+    invoke-virtual {v15}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;
+
+    move-result-object v15
+
+    invoke-static {v13, v15}, Landroid/util/Log;->e(Ljava/lang/String;Ljava/lang/String;)I
+    :try_end_ab
+    .catchall {:try_start_8b .. :try_end_ab} :catchall_b3
+
+    :cond_ab
+    add-int/lit8 v5, v5, 0x1
+
+    goto :goto_57
+
+    :cond_ae
+    monitor-exit v14
+
+    invoke-static {}, Lcom/android/server/am/ActivityManagerService;->resetPriorityAfterLockedSection()V
+
+    return-void
+
+    :catchall_b3
+    move-exception v13
+
+    monitor-exit v14
+
+    invoke-static {}, Lcom/android/server/am/ActivityManagerService;->resetPriorityAfterLockedSection()V
+
+    throw v13
+.end method
+
 .method public saveANRState(Ljava/lang/String;)V
     .registers 13
 
